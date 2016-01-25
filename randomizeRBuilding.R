@@ -1,4 +1,4 @@
-# setwd("C:/Users/duschner/package/randomizeR/")
+# setwd("C:/Users/duschner/randomizeR/")
 # setwd("D:/David_lokal/Github/Rpackage/randomizeR")
 # setwd("U:/IDeAl/IDeAlGrit/randomizeR")
 # setwd("C:/Users/mmanolov/Documents/GitHub/rmbct/randomizeR")
@@ -31,7 +31,7 @@ build(current.code)
 # system(paste('R CMD Rd2pdf ',  'randomizeR'))
 
 
-install.packages("./randomizeR_1.1.9000.tar.gz", repos = NULL, type = "source")
+install.packages("randomizeR_1.1.9000.tar.gz", repos = NULL, type = "source")
 
 
 # require(randomizeR)

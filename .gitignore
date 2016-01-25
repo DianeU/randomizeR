@@ -7,8 +7,7 @@ inst/doc
 .Rhistory
 
 ## rmbct and rmbct.Rcheck
-rmbct
-rmbct.Rcheck
+randomizeR.Rcheck
 
 ## emacs produces ~data
 ~*
@@ -23,25 +22,28 @@ help.Rdata
 #RpackageBuilding.R
 
 ## .tar und .targz datei
-rmbct_1.0*
-rmbct-manual.pdf
-
-## the whole ./R/ directory including the .Rd files
-randomizeR/randomizeR/man
-randomizeR/*.pdf
-
-## the unnecessary vignette files
-randomizeR/randomizeR/vignettes/*.blg
-randomizeR/randomizeR/vignettes/*.pdf
-randomizeR/randomizeR/vignettes/*.tex
-randomizeR/randomizeR/vignettes/*.toc
-randomizeR/randomizeR/vignettes/*.gz
-randomizeR/randomizeR/vignettes/*.xml
-randomizeR/randomizeR/vignettes/*.log
-randomizeR/randomizeR/vignettes/*.bbl
-randomizeR/randomizeR/vignettes/*.csv
-
+randomizeR_1.0*
+randomizeR_1.1*
+randomizeR_1.1.9000.tar.gz
 
 ## the binary files which contain the package
 *.zip
 *.tar.gz
+
+## the whole ./R/ directory including the .Rd files
+randomizeR/randomizeR/man
+*.pdf
+
+## the unnecessary vignette files
+randomizeR/vignettes/*.blg
+randomizeR/vignettes/*.pdf
+randomizeR/vignettes/*.tex
+randomizeR/vignettes/*.toc
+randomizeR/vignettes/*.gz
+randomizeR/vignettes/*.xml
+randomizeR/vignettes/*.log
+randomizeR/vignettes/*.bbl
+randomizeR/vignettes/*.csv
+
+
+
