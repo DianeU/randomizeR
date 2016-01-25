@@ -1,0 +1,174 @@
+#' @include issue.R
+#' @include randSeq.R
+#' @include util.R
+#' @include endpoint.R
+#' @include assess.R
+#' @include desScores.R
+NULL
+
+###############################################
+# --------------------------------------------#
+# Class Evaluation                            #
+# --------------------------------------------#
+###############################################
+
+# --------------------------------------------
+# Function for validity check
+# --------------------------------------------
+
+# Validity check function for objects of the desirability class
+# 
+# @inheritParams overview 
+#
+# @return Returns a \code{TRUE}, if the settings of the object are valid.
+validateEvaluation <- function(object) {
+  errors <- character()
+  
+  if(length(errors) == 0) TRUE else errors
+}
+
+
+# --------------------------------------------
+# Class definition for evaluation
+# --------------------------------------------
+
+# Evaluation paramters generic
+setClass("evaluation",
+         slots = c(D = "data.frame", desFuncs = "character"),
+         validity = validateEvaluation)
+
+
+# --------------------------------------------
+# Accesssor functions for evaluation
+# --------------------------------------------
+
+#' Method defining the $ operator for the evaluation class
+#' 
+#' @inheritParams overview
+setMethod("$", "evaluation",
+          function(x, name) slot(x, name))
+
+
+# --------------------------------------------
+# Show function for desirability
+# --------------------------------------------
+
+setMethod("show", "evaluation", function(object) {
+  # headline
+  cat("\nObject of class \"", class(object)[1],"\"\n\n", sep="")
+  # iterate through all slots of the object
+  names <- slotNames(object)
+  names <- names[!(names == "D")] # without D
+  for(name in names) {
+    cat(name, "=", slot(object, name), "\n")
+  }
+  cat("\n") 
+  # The data.frame D is printed seperately dependent on its size.
+  if (dim(object@D)[1] <= 3) {
+    if (nchar(as.character(object@D[1, 1])) >= 10)
+      object@D[ ,1] <- paste(substr(object@D[, 1], 1, 9), "...")
+    print(object@D) 
+  } else {
+    cat("\nThe first 3 rows of", dim(object@D)[1], "rows of D: \n\n")
+    object <- object@D[1:3, ]
+    if (nchar(as.character(object[1, 1])) >= 10)
+      object[ ,1] <- paste(substr(object[, 1], 1, 9), "...")
+    print(object) 
+    cat("...")
+  }
+  cat("\n") 
+}  
+)
+
+
+# --------------------------------------------
+# Generic functions for using objects of type desScores
+# --------------------------------------------
+
+#' Evaluation of several randomization procedures with respect to certain desirability
+#' functions applied to specified issues.
+#'
+#' @inheritParams overview
+#' 
+#' @param ... at least one object of the class \code{desScores} or a list of objects of 
+#' the class \code{desScores}
+#'
+#' @details
+#'
+#' The \code{evaluate} function allows the user to compare and evaluate different 
+#' randomization procedures. It expects a number of objects that result when applying the 
+#' \code{getDesScores} function to an assess object and specified desirability functions. 
+#' The \code{evaluate} function summarizes the desirability scores of each randomization 
+#' procedure and encorporates them into a data frame. If the function is applied to only
+#' one object it corresponds simply to \code{summary(getDesScores(...))}.
+#'
+#' @examples 
+#' # Compare Random Allocation Rule to Big Stick Design with respect to different issues
+#' # and their corresponding desirability functions
+#' issue1 <- corGuess("CS")
+#' issue2 <- corGuess("DS")
+#' RAR <- getAllSeq(rarPar(4))
+#' BSD <- getAllSeq(bsdPar(4, mti = 2))
+#' A1 <- assess(RAR, issue1, issue2)
+#' A2 <- assess(BSD, issue1, issue2)
+#' 
+#' d1 <- derFunc(TV = 0.1, 0.7, 2)
+#' d2 <- derFunc(0.5, c(0.3, 0.8), c(1, 1))
+#' DesScore <- getDesScores(A1, d1, d2, weights = c(5/6, 1/6))
+#' DesScore2 <- getDesScores(A2, d1, d2)
+#' 
+#' evaluate(DesScore, DesScore2)
+#' 
+#'
+#' @return
+#' \code{S4} object of class \code{evaluation} summarizing the evaluation and comparison
+#' of randomization procedures with respect to desirability functions applied to specified 
+#' issues. 
+#'
+#' @seealso Representation of randomization procedures: \code{\link{randPar}}
+#' @seealso Generation of randomization sequences: \code{\link{genSeq}}
+#' @seealso \code{\link{issues}} for the desirability of randomization sequences
+#' @seealso Representation of Derringer-Suich desirability functions: \code{\link{derFunc}}
+#' 
+#' @name evaluate
+NULL
+
+#' @rdname evaluate
+#'
+#' @export
+setGeneric("evaluate", function(...) standardGeneric("evaluate"))
+
+# --------------------------------------------
+# Methods for Evaluation
+# --------------------------------------------
+
+#' @rdname evaluate
+setMethod("evaluate", signature(),
+          function(...) {
+            dScores <- list(...)
+            if(length(dScores) == 1 && is.list(dScores[[1]])){
+              dScores <- c(...)
+            }
+            stopifnot(all(sapply(dScores, function(x) is(x, "desScores"))))
+            n <- ncol(dScores[[1]]$D)
+            if(!all(unlist(lapply(dScores, function(x) all(n == ncol(x$D)))))){
+              stop("Error: Objects have different number of columns!")
+            }
+            colnames <- colnames(dScores[[1]]$D)
+            if(!all(unlist(lapply(dScores, function(x) all(colnames == colnames(x$D)))))){
+              stop("Error: Colnames do not coincide!")
+            }
+            
+            # Creates the first column which contains the designs of the different 
+            # randomization procedures
+            D <- data.frame("RandProc" = sapply(dScores, function(x) x@design))
+            # Uses summary(.) to generate the means of the desirability functions and
+            # puts it in one matrix
+            M <- lapply(dScores, function(x) summary(x)[1,])
+            M <- do.call(rbind, M)
+            D <- cbind(D, M)           
+            
+            new("evaluation", 
+                D = D, desFuncs = dScores[[1]]$desFuncs)   
+          }
+)

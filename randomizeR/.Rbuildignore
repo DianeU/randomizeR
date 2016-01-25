@@ -1,0 +1,12 @@
+^\./randomizeR/vignettes/figure/$
+^./randomizeR/vignettes/figure$
+^\./vignettes/figure/$
+^./vignettes/figure$
+^\./vignettes/comparison-*\.bbl
+^\./vignettes/comparison-*\.blg
+./vignettes/comparison-*\.bbl
+cran-comments.md
+NEWS.md
+^NEWS\.Rmd$
+^README\.Rmd$
+^README-.*\.png$

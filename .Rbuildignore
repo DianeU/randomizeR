@@ -1,0 +1,4 @@
+^\./randomizeR/vignettes/figure/$
+./randomizeR/vignettes/figure
+^\./randomizeR/vignettes/*.blg
+^\./randomizeR/vignettes/*.bbl
