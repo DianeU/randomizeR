@@ -1,7 +1,7 @@
 # setwd("C:/Users/duschner/randomizeR/")
 # setwd("D:/David_lokal/Github/Rpackage/randomizeR")
 # setwd("U:/IDeAl/IDeAlGrit/randomizeR")
-# setwd("C:/Users/mmanolov/Documents/GitHub/rmbct/randomizeR")
+# setwd("C:/Users/mmanolov/Documents/GitHub/randomizeR")
 
 library(knitr)
 library(devtools)
