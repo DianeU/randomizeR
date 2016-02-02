@@ -34,7 +34,8 @@ validateEvaluation <- function(object) {
 
 # Evaluation paramters generic
 setClass("evaluation",
-         slots = c(D = "data.frame", desFuncs = "character", weights = "numeric"),
+         slots = c(D = "data.frame", desFuncs = "character", weights = "numeric", 
+                   statistic = "character"),
          validity = validateEvaluation)
 
 
@@ -94,18 +95,22 @@ setMethod("show", "evaluation", function(object) {
 #' Evaluation of several randomization procedures with respect to certain desirability
 #' functions applied to specified issues.
 #'
+#'
 #' @inheritParams overview
 #' 
 #' @param ... at least one object of the class \code{desScores} or a list of objects of 
-#' the class \code{desScores}
-#'
+#' the class \code{desScores}.
+#' @param statistic character string that specifies on the basis of which statistic the 
+#' \code{evaluate} function should be applied. The statistic can be chosen from "mean", 
+#' "median", "min" or "max". 
+#' 
 #' @details
 #'
 #' The \code{evaluate} function allows the user to compare and evaluate different 
 #' randomization procedures. It expects a number of objects that result when applying the 
 #' \code{getDesScores} function to an assess object and specified desirability functions. 
 #' The \code{evaluate} function summarizes the desirability scores of each randomization 
-#' procedure and encorporates them into a data frame. If the function is applied to only
+#' procedure obny the basis of a prespecified statistic and encorporates them into a data frame. If the function is applied to only
 #' one object it corresponds simply to \code{summary(getDesScores(...))}.
 #'
 #' @examples 
@@ -124,32 +129,34 @@ setMethod("show", "evaluation", function(object) {
 #' DesScore2 <- getDesScores(A2, d1, d2)
 #' 
 #' evaluate(DesScore, DesScore2)
+#' evaluate(DesScore, DesScore2, statistic = "max")
 #' 
 #'
 #' @return
-#' \code{S4} object of class \code{evaluation} summarizing the evaluation and comparison
-#' of randomization procedures with respect to desirability functions applied to specified 
-#' issues. 
+#' \code{S4} object of class \code{evaluation} Comparison of randomization procedures 
+#' with respect to desirability functions applied to specified issues, summarized by a
+#' prespecified statistic. 
 #'
 #' @seealso Representation of randomization procedures: \code{\link{randPar}}
 #' @seealso Generation of randomization sequences: \code{\link{genSeq}}
 #' @seealso \code{\link{issues}} for the desirability of randomization sequences
-#' @seealso Representation of Derringer-Suich desirability functions: \code{\link{derFunc}}
 #' 
 #' @name evaluate
 NULL
 
 #' @rdname evaluate
 #'
+#' @family desirability topics
+#'
 #' @export
-setGeneric("evaluate", function(...) standardGeneric("evaluate"))
+setGeneric("evaluate", function(..., statistic) standardGeneric("evaluate"))
 
 # --------------------------------------------
 # Methods for Evaluation
 # --------------------------------------------
 
 #' @rdname evaluate
-setMethod("evaluate", signature(),
+setMethod("evaluate", signature(statistic = "missing"),
           function(...) {
             dScores <- list(...)
             if(length(dScores) == 1 && is.list(dScores[[1]])){
@@ -186,6 +193,57 @@ setMethod("evaluate", signature(),
             D <- cbind(D, M)           
             
             new("evaluation", 
-                D = D, desFuncs = dScores[[1]]$desFuncs, weights = dScores[[1]]$weights)   
+                D = D, desFuncs = dScores[[1]]$desFuncs, weights = dScores[[1]]$weights, 
+                statistic = "mean")   
           }
+)
+
+#' @rdname evaluate
+setMethod("evaluate", signature(statistic = "character"),
+          function(..., statistic) {
+            dScores <- list(...)
+            if(length(dScores) == 1 && is.list(dScores[[1]])){
+              dScores <- c(...)
+            }
+            
+            stats <- c("mean", "median", "min", "max")
+            stopifnot(statistic %in% stats)
+            stopifnot(all(sapply(dScores, function(x) is(x, "desScores"))))
+            n <- ncol(dScores[[1]]$D)
+            if(!all(unlist(lapply(dScores, function(x) all(n == ncol(x$D)))))){
+              stop("Error: Objects have different number of columns!")
+            }
+            colnames <- colnames(dScores[[1]]$D)
+            if(!all(unlist(lapply(dScores, function(x) all(colnames == colnames(x$D)))))){
+              stop("Error: Colnames do not coincide!")
+            }
+            desFuncs <- dScores[[1]]$desFuncs
+            if(!all(unlist(lapply(dScores, function(x) all(desFuncs == x$desFuncs))))){
+              warning("The desirability functions do not coincide. The show function only 
+                      displays the desirability functions of the first desScores object.")
+            }
+            weights <- dScores[[1]]$weights
+            if(!all(unlist(lapply(dScores, function(x) all(weights == x$weights))))){
+              warning("The weights do not coincide. The show function only 
+                      displays the weights of the first desScores object.")
+            }
+            
+            
+            # Creates the first column which contains the designs of the different 
+            # randomization procedures
+            D <- data.frame("RandProc" = sapply(dScores, function(x) x@design))
+            # colStats contains the row number of the corresponding statistics
+            colStats <- c(1, 7, 4, 3)
+            # ind determines which statistic was chosen
+            ind <- which(statistic == stats)
+            # Uses summary(.) to generate the statistic of the desirability functions and
+            # puts it in one matrix
+            M <- lapply(dScores, function(x) summary(x)[colStats[ind],])
+            M <- do.call(rbind, M)
+            D <- cbind(D, M)           
+            
+            new("evaluation", 
+                D = D, desFuncs = dScores[[1]]$desFuncs, weights = dScores[[1]]$weights, 
+                statistic = statistic)   
+            }
 )

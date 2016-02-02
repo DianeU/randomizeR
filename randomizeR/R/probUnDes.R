@@ -61,7 +61,11 @@ setMethod("show", "probUnDesirable", function(object) {
   names <- slotNames(object)
   names <- names[!(names == "D")] # without D
   for(name in names) {
-    cat(name, "=", slot(object, name), "\n")
+    if(is.numeric(slot(object, name))){
+      cat(name, "=", round(slot(object, name), digits = 3), "\n")
+    } else{
+      cat(name, "=", slot(object, name), "\n")
+    }
   }
   cat("\n") 
   # Note that this show function is different from show function for assess, evaluate etc.
@@ -81,6 +85,8 @@ setMethod("show", "probUnDesirable", function(object) {
 #' 
 #' Computing the probability of having desirabilty scores of zero for each desirability
 #' function applied to an issue. 
+#' 
+#' @family desirability topics
 #'
 #' @inheritParams overview
 #' 
@@ -116,8 +122,6 @@ setMethod("show", "probUnDesirable", function(object) {
 #' @seealso Representation of randomization procedures: \code{\link{randPar}}
 #' @seealso Generation of randomization sequences: \code{\link{genSeq}}
 #' @seealso \code{\link{issues}} for the desirability of randomization sequences
-#' @seealso Representation of Derringer-Suich desirability functions: \code{\link{derFunc}}
-#' @seealso Computing desirability scores: \code{\link{getDesScores}}
 #' 
 #' @name probUnDes
 NULL

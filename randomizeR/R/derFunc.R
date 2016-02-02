@@ -53,9 +53,10 @@ setClass("derFunc",
 #' 
 #' Represents the Derringer-Suich desirability approach.
 #' 
-#' @family desFunc
+#' @family desirability topics
 #' 
 #' @inheritParams overview
+#' 
 #' @param TV numeric specifying the optimal desired value called the target value.
 #' 
 #' @details 
@@ -86,8 +87,6 @@ setClass("derFunc",
 #' Derringer, G., and Suich, R., (1980) Simultaneous Optimization of Several Response 
 #' Variables. \emph{Journal of Quality Technology}, \strong{12}, 214-219. 
 #' 
-#' @seealso Applying desirability functions on issues of individual randomization sequences:
-#' \code{\link{getDesScores}}
 #' 
 #' @export
 derFunc <- function(TV, SLs, b){

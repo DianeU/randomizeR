@@ -99,7 +99,10 @@ setMethod("show", "desScores", function(object) {
 #'
 #' Applying desirability function on issues of individual randomization sequences.
 #'
+#' @family desirability topics
+#'
 #' @inheritParams overview
+#' 
 #' @param assess object of class \code{assessment}.
 #' @param ... at least one object of class \code{\link{derFunc}} or a list of objects of 
 #' the class \code{\link{derFunc}}.
@@ -127,8 +130,11 @@ setMethod("show", "desScores", function(object) {
 #' d1 <- derFunc(0.5, 0.75, 1)
 #' d2 <- derFunc(0.05, 0.1, 1)
 #' 
-#' getDesScores(A, d1, d2)
-#' getDesScores(A, d1, d2, weights = c(3/4, 1/4))
+#' D1 <- getDesScores(A, d1, d2)
+#' summary(D1)
+#' 
+#' D2 <- getDesScores(A, d1, d2, weights = c(3/4, 1/4))
+#' summary(D2)
 #'
 #' @return
 #' \code{S4} object of class \code{desirability} summarizing the desirability of the 
@@ -279,7 +285,7 @@ setMethod("summary", signature(object = "desScores"), function(object) {
     c(x1, x2, max(x), min(x), x05, x25, x50, x75, x95)
   }) 
   rownames(stat) <- c("mean", "sd", "max", "min", "x05", "x25", "x50", "x75", "x95")
-  stat
+  round(stat, digits=3)
 }
 )
 
