@@ -34,7 +34,7 @@ validateEvaluation <- function(object) {
 
 # Evaluation paramters generic
 setClass("evaluation",
-         slots = c(D = "data.frame", desFuncs = "character"),
+         slots = c(D = "data.frame", desFuncs = "character", weights = "numeric"),
          validity = validateEvaluation)
 
 
@@ -60,19 +60,25 @@ setMethod("show", "evaluation", function(object) {
   names <- slotNames(object)
   names <- names[!(names == "D")] # without D
   for(name in names) {
-    cat(name, "=", slot(object, name), "\n")
+    if(is.numeric(slot(object, name))){
+      cat(name, "=", round(slot(object, name), digits = 3), "\n")
+    } else{
+      cat(name, "=", slot(object, name), "\n")
+    }
   }
   cat("\n") 
   # The data.frame D is printed seperately dependent on its size.
   if (dim(object@D)[1] <= 3) {
     if (nchar(as.character(object@D[1, 1])) >= 10)
       object@D[ ,1] <- paste(substr(object@D[, 1], 1, 9), "...")
+    object@D[ ,-1] <- round(object@D[ ,-1], digits = 3)
     print(object@D) 
   } else {
     cat("\nThe first 3 rows of", dim(object@D)[1], "rows of D: \n\n")
     object <- object@D[1:3, ]
     if (nchar(as.character(object[1, 1])) >= 10)
       object[ ,1] <- paste(substr(object[, 1], 1, 9), "...")
+    object[ ,-1] <- round(object[ ,-1],digits = 3)
     print(object) 
     cat("...")
   }
@@ -149,6 +155,7 @@ setMethod("evaluate", signature(),
             if(length(dScores) == 1 && is.list(dScores[[1]])){
               dScores <- c(...)
             }
+            
             stopifnot(all(sapply(dScores, function(x) is(x, "desScores"))))
             n <- ncol(dScores[[1]]$D)
             if(!all(unlist(lapply(dScores, function(x) all(n == ncol(x$D)))))){
@@ -157,6 +164,16 @@ setMethod("evaluate", signature(),
             colnames <- colnames(dScores[[1]]$D)
             if(!all(unlist(lapply(dScores, function(x) all(colnames == colnames(x$D)))))){
               stop("Error: Colnames do not coincide!")
+            }
+            desFuncs <- dScores[[1]]$desFuncs
+            if(!all(unlist(lapply(dScores, function(x) all(desFuncs == x$desFuncs))))){
+              warning("The desirability functions do not coincide. The show function only 
+                      displays the desirability functions of the first desScores object.")
+            }
+            weights <- dScores[[1]]$weights
+            if(!all(unlist(lapply(dScores, function(x) all(weights == x$weights))))){
+              warning("The weights do not coincide. The show function only 
+                      displays the weights of the first desScores object.")
             }
             
             # Creates the first column which contains the designs of the different 
@@ -169,6 +186,6 @@ setMethod("evaluate", signature(),
             D <- cbind(D, M)           
             
             new("evaluation", 
-                D = D, desFuncs = dScores[[1]]$desFuncs)   
+                D = D, desFuncs = dScores[[1]]$desFuncs, weights = dScores[[1]]$weights)   
           }
 )

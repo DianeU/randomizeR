@@ -64,19 +64,25 @@ setMethod("show", "desScores", function(object) {
   names <- slotNames(object)
   names <- names[!(names == "D")] # without D
   for(name in names) {
-    cat(name, "=", slot(object, name), "\n")
+    if(is.numeric(slot(object, name))){
+      cat(name, "=", round(slot(object, name), digits = 3), "\n")
+    } else{
+      cat(name, "=", slot(object, name), "\n")
+    }
   }
   cat("\n") 
   # The data.frame D is printed seperately dependent on its size.
   if (dim(object@D)[1] <= 3) {
     if (nchar(as.character(object@D[1, 1])) >= 10)
       object@D[ ,1] <- paste(substr(object@D[, 1], 1, 9), "...")
+    object@D[ ,-1] <- round(object@D[ ,-1], digits = 3)
     print(object@D) 
   } else {
     cat("\nThe first 3 rows of", dim(object@D)[1], "rows of D: \n\n")
     object <- object@D[1:3, ]
     if (nchar(as.character(object[1, 1])) >= 10)
       object[ ,1] <- paste(substr(object[, 1], 1, 9), "...")
+    object[ ,-1] <- round(object[ ,-1],digits = 3)
     print(object) 
     cat("...")
   }
@@ -204,7 +210,7 @@ setMethod("getDesScores", signature(assess = "assessment", weights = "missing"),
                 D = D, design = assess@design,
                 N = assess@N, K = assess@K, groups = assess@groups, 
                 desFuncs = sapply(desFuns, function(x) getDesFunc(x)), 
-                weights = rep(1, lenDesFuns))   
+                weights = rep(1/lenDesFuns, lenDesFuns))   
           }
 )
 
