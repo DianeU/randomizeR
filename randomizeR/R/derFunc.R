@@ -51,7 +51,7 @@ setClass("derFunc",
 # --------------------------------------------
 #' Representing Derringer-Suich desirability functions
 #' 
-#' Represents the Derringer-Suich desirability approach
+#' Represents the Derringer-Suich desirability approach.
 #' 
 #' @family desFunc
 #' 
@@ -67,7 +67,8 @@ setClass("derFunc",
 #' value. By specifying \code{SLs} as a vector of length 2 a two-sided  desirability 
 #' function is created where the lower specified border is determined as the smaller value 
 #' of \code{SLs} and thus the upper specified border is determined as the greater value. 
-#' If there are no values specified for the weights, then they are automatically set to 1. \cr
+#' If there are no values specified for the weights, then they are automatically set to 1 
+#' (linear loss). \cr
 #' 
 #' @examples 
 #' # Create an object of a left-sided desirability function
