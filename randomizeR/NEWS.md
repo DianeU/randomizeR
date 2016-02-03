@@ -1,5 +1,6 @@
 # Changes in randomizeR version 1.1.9000
 
+* Bug ebc ungerade N, unerlaubt
 * Desirability-Functions (Mui)
 
 Please write new changes above this line.
