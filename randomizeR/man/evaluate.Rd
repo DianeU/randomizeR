@@ -36,8 +36,10 @@ The \code{evaluate} function allows the user to compare and evaluate different
 randomization procedures. It expects a number of objects that result when applying the
 \code{getDesScores} function to an assess object and specified desirability functions.
 The \code{evaluate} function summarizes the desirability scores of each randomization
-procedure obny the basis of a prespecified statistic and encorporates them into a data frame. If the function is applied to only
-one object it corresponds simply to \code{summary(getDesScores(...))}.
+procedure on the basis of a prespecified statistic and encorporates them into a data
+frame. If no statistic is specified then it is automatically set to \texttt{mean}. If
+the function is applied to only one object it corresponds simply to
+\code{summary(getDesScores(...))}.
 }
 \examples{
 # Compare Random Allocation Rule to Big Stick Design with respect to different issues

@@ -60,6 +60,7 @@ Collate:
     'derringerRs.R'
     'derringerTs.R'
     'desScores.R'
+    'desirability.R'
     'ebcSeq.R'
     'evaluate.R'
     'gbcdPar.R'
