@@ -40,7 +40,7 @@ A2 <- assess(BSD, issue1, issue2)
 d1 <- derFunc(TV = 0.1, 0.7, 2)
 d2 <- derFunc(0.5, c(0.3, 0.8), c(1, 1))
 
-# By applying the \\texttt{getDesScores} function to the assessment output together
+# By applying the \\code{getDesScores} function to the assessment output together
 # with the specified desirability functions the behaviour of randomization sequences
 # is evaluated and scaled to [0,1]:
 DesScore <- getDesScores(A1, d1, d2)
