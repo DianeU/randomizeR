@@ -16,7 +16,8 @@ Description: This tool enables the user to choose a randomization procedure
 Depends:
     R (>= 3.2.3),
     methods,
-    ggplot2
+    ggplot2,
+    plotrix
 License: GPL (>=3)
 LazyData: true
 Collate:
@@ -25,18 +26,18 @@ Collate:
     'abcdPar.R'
     'randSeq.R'
     'abcdSeq.R'
-    'util.R'
-    'testDec.R'
-    'getStat.R'
     'getExpectation.R'
     'normEndp.R'
     'endpoint.R'
-    'doublyT.R'
-    'selBias.R'
+    'util.R'
+    'getStat.R'
     'power.R'
     'imbalance.R'
     'corGuess.R'
+    'testDec.R'
+    'doublyT.R'
     'chronBias.R'
+    'selBias.R'
     'bias.R'
     'issue.R'
     'assess.R'

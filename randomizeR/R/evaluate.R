@@ -111,7 +111,7 @@ setMethod("show", "evaluation", function(object) {
 #' \code{getDesScores} function to an assess object and specified desirability functions. 
 #' The \code{evaluate} function summarizes the desirability scores of each randomization 
 #' procedure on the basis of a prespecified statistic and encorporates them into a data 
-#' frame. If no statistic is specified then it is automatically set to \texttt{mean}. If 
+#' frame. If no statistic is specified then it is automatically set to \code{mean}. If 
 #' the function is applied to only one object it corresponds simply to 
 #' \code{summary(getDesScores(...))}.
 #'
