@@ -7,3 +7,4 @@ inst/doc
 *.aux
 *.out
 *.synctex
+*.RD
