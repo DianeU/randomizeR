@@ -249,3 +249,95 @@ setMethod("evaluate", signature(statistic = "character"),
                 statistic = statistic)   
             }
 )
+
+
+# --------------------------------------------
+# Plot function for evaluate Object
+# --------------------------------------------
+
+#' Evaluation plotting
+#'
+#' Plot of an \code{evaluation} object.
+#' 
+#' @family desirability topics
+#' 
+#' @param evaluation object of type \code{evaluation}.
+#' @param labels labels used in the plot. Can be \code{NULL}.
+#' @param cols colors of the lines representing the  desirability scores in the plot. Can be \code{NULL}.
+#' 
+#' @examples 
+#' # Compare Random Allocation Rule to Big Stick Design with respect to different issues
+#' # and their corresponding desirability functions
+#' issue1 <- corGuess("CS")
+#' issue2 <- chronBias(type = "linT", theta = 1/4, method = "exact")
+#' RAR <- getAllSeq(rarPar(4))
+#' BSD <- getAllSeq(bsdPar(4, mti = 2))
+#' A1 <- assess(RAR, issue1, issue2, endp = normEndp(c(0,0), c(1,1)))
+#' A2 <- assess(BSD, issue1, issue2, endp = normEndp(c(0,0), c(1,1)))
+#' 
+#' d1 <- derFunc(TV = 0.5, 0.75, 2)
+#' d2 <- derFunc(0.05, c(0, 0.1), c(1, 1))
+#' DesScore <- getDesScores(A1, d1, d2, weights = c(5/6, 1/6))
+#' DesScore2 <- getDesScores(A2, d1, d2, weights = c(5/6, 1/6))
+#' 
+#' E <- evaluate(DesScore, DesScore2)
+#' plotEv(E)
+#' 
+#' @export
+plotEv <- function(evaluation , labels, cols) { 
+  stopifnot(is(evaluation, "evaluation" ))
+  
+  if (missing(labels)) {
+    labels <- rev(colnames(evaluation@D)[-1])
+  } else {
+    if (length(labels) != ncol(evaluation@D)-1) stop(paste("Length of labels must be ", ncol(evaluation@D)-1), ".", sep = "")
+  }
+  
+  if (missing(cols)) {
+    cols <- rainbow(nrow(evaluation@D))
+  } else {
+    if (length(labels) != nrow(evaluation@D)) stop(paste("Length of labels must be ", ncol(evaluation@D)-1), ".", sep = "")
+  }
+  
+  addTrans <- function(color, trans){
+    # This function adds transparancy to a color.
+    # Define transparancy with an integer between 0 and 255
+    # 0 being fully transparant and 255 being fully visable
+    # Works with either color and trans a vector of equal length,
+    # or one of the two of length 1.
+    if (length(color) != length(trans) &! any(c(length(color), length(trans)) == 1)) stop("Vector lengths not correct")
+    if (length(color) == 1 & length(trans) > 1) color <- rep(color, length(trans))
+    if (length(trans) == 1 & length(color) > 1) trans <- rep(trans, length(color))
+    num2hex <- function(x){
+      hex <- unlist(strsplit("0123456789ABCDEF", split = ""))
+      return(paste(hex[(x-x%%16)/16+1], hex[x%%16+1], sep = ""))
+    }
+    rgb <- rbind(col2rgb(color), trans)
+    res <- paste("#", apply(apply(rgb, 2, num2hex), 2, paste, collapse = ""), sep = "")
+    return(res)
+  }
+  
+  # backround colour
+  bgGrid <- addTrans("grey", 100)
+  
+  values <- as.numeric(evaluation@D[1,])[-1]
+  radial.plot(values, rp.type = "p", start = pi/2, clockwise = TRUE,
+              labels = labels, 
+              radial.lim = c(0,1), line.col = cols[1], lwd = 4,
+              grid.bg = bgGrid, show.grid.labels = 4)
+  
+  if (nrow(evaluation@D) > 1) {
+    for (i in (nrow(evaluation@D) - 1)) {
+      values <- as.numeric(evaluation@D[i+1,])[-1]
+      radial.plot(values, rp.type = "p", start = pi/2, clockwise = TRUE,
+                  labels = labels, 
+                  radial.lim = c(0,1), line.col = cols[i+1], lwd = 4,
+                  grid.bg = bgGrid, show.grid.labels = 4, add = TRUE)
+    }
+  }
+  
+  legend(0.65, 1.2, legend = as.character(evaluation@D[,1]),
+         bty = "n", col = cols,
+         lwd = 3)
+  
+}  

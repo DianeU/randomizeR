@@ -48,6 +48,7 @@ Variables. \emph{Journal of Quality Technology}, \strong{12}, 214-219.
 }
 \seealso{
 Other desirability topics: \code{\link{evaluate}},
-  \code{\link{getDesScores}}, \code{\link{probUnDes}}
+  \code{\link{getDesScores}}, \code{\link{plotDes}},
+  \code{\link{plotEv}}, \code{\link{probUnDes}}
 }
 

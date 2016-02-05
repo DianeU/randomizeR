@@ -290,5 +290,97 @@ setMethod("summary", signature(object = "desScores"), function(object) {
 )
 
 
+# --------------------------------------------
+# Plot function for desScore Object
+# --------------------------------------------
+
+#' desScore plotting
+#'
+#' Plot of an \code{desScore} object.
+#' 
+#' @family desirability topics
+#' 
+#' @param desScore object of type \code{desScore}.
+#' @param labels labels used in the plot. Can be \code{NULL}.
+#' @param colAv color of the line representing the average of the desirability scores in the plot.
+#' @param quantiles \code{logical} whether the quantiles should be depicted in the plot.
+#' 
+#' @examples 
+#' # Compute the desirability scores of the full set of PBR(4)
+#' sequences <- getAllSeq(rarPar(4))
+#' issue1 <- corGuess("CS")
+#' issue2 <- chronBias("linT", 1/4, "exact")
+#' endp <- normEndp(mu = c(0,0), sigma = c(1,1))
+#' A <- assess(sequences, issue1, issue2, endp = endp)
+#' d1 <- derFunc(0.5, 0.75, 1)
+#' d2 <- derFunc(0.05, 0.1, 1)
+#' 
+#' D <- getDesScores(A, d1, d2)
+#' summary(D)
+#' plotDes(D)
+#' plotDes(D, quantiles = TRUE)
+#' 
+#' @export
+plotDes <- function(desScore , labels, colAv = "red", quantiles = FALSE) { 
+  stopifnot(is(desScore, "desScores" ))
+  
+  sumDes <- summary(desScore)
+  meanVal <- rev(as.vector(sumDes[1,]))
+  if (missing(labels)) {
+    labels <- rev(colnames(sumDes))
+  } else {
+    if (length(labels) != ncol(desScore@D)-2) stop(paste("Length of labels must be ", ncol(desScore@D)-2), ".", sep = "")
+  }
+  
+  main <- desScore@design
+  addTrans <- function(color, trans){
+    # This function adds transparancy to a color.
+    # Define transparancy with an integer between 0 and 255
+    # 0 being fully transparant and 255 being fully visable
+    # Works with either color and trans a vector of equal length,
+    # or one of the two of length 1.
+    if (length(color) != length(trans) &! any(c(length(color), length(trans)) == 1)) stop("Vector lengths not correct")
+    if (length(color) == 1 & length(trans) > 1) color <- rep(color, length(trans))
+    if (length(trans) == 1 & length(color) > 1) trans <- rep(trans, length(color))
+    num2hex <- function(x){
+      hex <- unlist(strsplit("0123456789ABCDEF", split = ""))
+      return(paste(hex[(x-x%%16)/16+1], hex[x%%16+1], sep = ""))
+    }
+    rgb <- rbind(col2rgb(color), trans)
+    res <- paste("#", apply(apply(rgb, 2, num2hex), 2, paste, collapse = ""), sep = "")
+    return(res)
+  }
+  
+  # backround colour
+  bgGrid <- addTrans("grey", 100)
+  
+  radial.plot(meanVal, rp.type = "p", start = pi/2, clockwise = TRUE,
+              labels = labels, main = main,
+              radial.lim = c(0,1), line.col = colAv, lwd = 4,
+              grid.bg = bgGrid, show.grid.labels = 4)
+  
+  if (quantiles) {
+    cols <- c("orange", "green", "blue", "green", "orange")
+    lwd <- c(3, 2, 1, 2, 3)
+    for (i in 1:5) {
+      qu <- rev(as.vector(sumDes[i+4, ]))
+      
+      radial.plot(qu, rp.type = "p", start = pi/2, clockwise = TRUE,
+                  labels = labels, main = main,
+                  radial.lim = c(0,1), line.col = cols[i], lwd = 4,
+                  grid.bg = bgGrid, show.grid.labels = 4, add = TRUE,
+                  lty = lwd[i])
+      legend(0.65, 1.2, legend = expression("Mean", "Median",
+                                            paste(tilde(q)[0.05], ", ", tilde(q)[0.95]) ,
+                                            paste(tilde(q)[0.25], ", ", tilde(q)[0.75])),
+             lty=c(1, 1, 3, 2), bty = "n", col = c(colAv, "blue", "orange", "green"),
+             lwd = 3)
+    }
+    
+  }
+  
+}
+
+
 
 

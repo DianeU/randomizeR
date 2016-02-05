@@ -65,6 +65,7 @@ Generation of randomization sequences: \code{\link{genSeq}}
 \code{\link{issues}} for the desirability of randomization sequences
 
 Other desirability topics: \code{\link{derFunc}},
-  \code{\link{evaluate}}, \code{\link{probUnDes}}
+  \code{\link{evaluate}}, \code{\link{plotDes}},
+  \code{\link{plotEv}}, \code{\link{probUnDes}}
 }
 
