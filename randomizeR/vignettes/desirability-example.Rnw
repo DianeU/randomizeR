@@ -115,8 +115,7 @@ d2 <- derFunc(0.05, c(0, 0.1), c(1, 1))
 DesScore <- getDesScores(A1, d1, d2, weights = c(5/6, 1/6))
 DesScore2 <- getDesScores(A2, d1, d2, weights = c(5/6, 1/6))
 
-E <- evaluate(DesScore, DesScore2)
-E
+evaluate(DesScore, DesScore2)
 @
 Looking at the corresponding output of \texttt{getDesScores}, we recognize that the 
 desirability functions map a lot of values to zero, i.e. a lot of undesired sequences 
@@ -133,9 +132,9 @@ probUnDes(DesScore2)
 @
 Thus, the probability of having undesired sequences is more than twice as high for the
 Random Allocation Rule than for the Big Stick design. 
-To visualize the comparison of randomization procedures one can use the \texttt{plotEv} function. It can be applied to a \texttt{evaluation} object which results fromt he \texttt{evaluate} funciton. 
+A graphical method of displaying the comparison of randomization procedures is given by the \texttt{plotEv} function. It can be applied to an \texttt{evaluation} object which results from the \texttt{evaluate} function. 
 <<>>==
-plotEv(E)
+plotEv(evaluate(DesScore, DesScore2))
 @
 
 

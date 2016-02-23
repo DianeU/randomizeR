@@ -23,9 +23,13 @@ NULL
 #'    can be applied to an object of class \code{assessment} together with prespecified
 #'    desirability functions to compare the behaviour of randomization sequences (on a 
 #'    common scale [0,1]).
+#' \item \strong{\link{plotDes}}
+#'    plots a \code{desScores} object on a radar chart. 
 #' \item \strong{\link{evaluate}}
 #'    performs a comparison of sequences from different randomization sequences on the 
 #'    basis of object of the class \code{desScores}.
+#' \item \strong{\link{plotEv}}
+#'    plots an \code{evaluation} object on a radar chart. 
 #' \item \strong{\link{probUnDes}}
 #'    computes the proability of undesired randomization sequences with respect to 
 #'    certain issues and desirability functions.
@@ -36,23 +40,30 @@ NULL
 #' # randomization procedures with the help of desirability functions:
 #' 
 #' issue1 <- corGuess("CS")
-#' issue2 <- corGuess("DS")
+#' issue2 <- chronBias(type = "linT", theta = 1/4, method = "exact")
 #' RAR <- getAllSeq(rarPar(4))
 #' BSD <- getAllSeq(bsdPar(4, mti = 2))
-#' A1 <- assess(RAR, issue1, issue2)
-#' A2 <- assess(BSD, issue1, issue2)
+#' A1 <- assess(RAR, issue1, issue2, endp = normEndp(c(0,0), c(1,1)))
+#' A2 <- assess(BSD, issue1, issue2, endp = normEndp(c(0,0), c(1,1)))
 #' 
-#' d1 <- derFunc(TV = 0.1, 0.7, 2)
-#' d2 <- derFunc(0.5, c(0.3, 0.8), c(1, 1))
-#' 
+#' d1 <- derFunc(TV = 0.5, 0.75, 2)
+#' d2 <- derFunc(0.05, c(0, 0.1), c(1, 1))
+#'
 #' # By applying the \code{getDesScores} function to the assessment output together 
 #' # with the specified desirability functions the behaviour of randomization sequences 
 #' # is evaluated and scaled to [0,1]:
-#' DesScore <- getDesScores(A1, d1, d2)
-#' DesScore2 <- getDesScores(A2, d1, d2)
+#' DesScore <- getDesScores(A1, d1, d2, weights = c(5/6, 1/6))
+#' DesScore2 <- getDesScores(A2, d1, d2, weights = c(5/6, 1/6))
 #' 
-#' # Summarize the results of getDesScore with respect to the statistic "mean":
+#' # Plotting the desScores objects:
+#' plotDes(DesScore, quantiles = TRUE)
+#' plotDes(DesScore2, quantiles = TRUE)
+#' 
+#' # Summarizing the results of getDesScore with respect to the statistic "mean":
 #' evaluate(DesScore, DesScore2)
+#' 
+#' # Plotting the evaluation objects allows a visualized comparison:
+#' plotEv(evaluate(DesScore, DesScore2))
 #' 
 #' # Which randomzation procedure produces more undesired randomization sequences 
 #' # with respect to certain issues and desirability functions?
