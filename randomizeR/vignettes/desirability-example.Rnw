@@ -8,7 +8,7 @@
 
 \begin{document}
 
-\author{Diane Uschner}
+\author{David Schindler, Diane Uschner, Thi Mui Pham}
 \title{Tutorial: Interplay between functions related to desirability indices within 
 \texttt{randomizeR}.}
 \maketitle
@@ -16,13 +16,10 @@
 
 \section{Introduction}
 \texttt{randomizeR} is a user-friendly package that allows the user to assess and compare
-randomization procedures according to issues. This tutorial focuses on the comparison of
-randomization sequences on the basis of desirability functions. Currently, \texttt{randomizeR}
-encompasses the class of desirability functions introduced by Derringer and Suich (1980)
-and corresponding functions to evaluate and compare randomization sequences which have been assessed on the basis of desirability indices of specific issues. 
+randomization procedures according to certain criteria (called issues in this package). This tutorial focuses on the comparison of randomization sequences and procedures on the basis of desirability functions. Currently, \texttt{randomizeR} encompasses the class of desirability functions introduced by Derringer and Suich (1980) and corresponding functions to evaluate and compare randomization sequences which have been assessed on the basis of desirability indices of specific issues. 
 
-For each response $x$, a desirability function $d$ assigns numbers betweens 0 and 1 to
-the possible values of $x$ with $d(x) = 0$ representing a completely undesirable value and $d(x)=1$ representing a completely desirable or ideal reponse value. Therefore, response values with different domains are mapped to a common scale $[0,1]$, making them comparable. By combining individual desirabilities using the geometric mean, the \textit{overall desirability} is computed. 
+For each value $x$ of the criterion, a desirability function $d$ assigns numbers betweens 0 and 1 to
+the possible values of $x$ with $d(x) = 0$ representing a completely undesirable value and $d(x)=1$ representing a completely desirable or ideal reponse value. Therefore, response values with different domains are mapped to a common scale $[0,1]$, making them comparable. By combining individual desirabilities values of issues using the geometric mean, the \textit{overall desirability} is computed. 
 
 The Derringer-Suich approach expects a lower and upper specified border and an optimal desired value
 called the target value. There are three different kinds of desirability functions: The 
@@ -76,7 +73,7 @@ The desirability functions defined above are right- and left-sided respectively.
 By applying the \texttt{getDesScores} function to the assessment output together with the specified desirability functions the behaviour of randomization sequences is evaluated and scaled to $[0,1]$.
 <<getDesScores1>>=
 D1 <- getDesScores(A, d1, d2)
-D1$D
+round(D1$D, digits = 3)
 @
 Notice that regarding the expected proportion of correct guesses and with respect to the
 right-sided desirability function \texttt{d1} only two of six sequences are not mapped to zero. Thus, the response values of sequences $2-5$ are undesirable. On the other hand, regarding
