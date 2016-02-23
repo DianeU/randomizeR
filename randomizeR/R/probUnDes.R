@@ -141,7 +141,13 @@ setMethod("probUnDes", signature(desScore = "desScores"),
             stopifnot(is(desScore, "desScores"))
             D <- desScore$D[, -c(1,2), drop = FALSE]
             W <- apply(D, 2, function(x) which(x==0))
-            dColnames <- colnames(W)
+            if(is.matrix(W)){
+              dColnames <- colnames(W)
+            } else{
+              dColnames <-  names(W)
+              max.length <- max(sapply(W, length))
+              W <- data.frame(lapply(W, function(v) { c(v, rep(0, max.length-length(v)))}))
+            }
             P <- desScore$D[2]
             Z <- data.frame(t(apply(W, 2 , function(x) sum(P[x,]))))
             rownames(Z) <- "1"
