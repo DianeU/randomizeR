@@ -16,10 +16,12 @@
 
 \section{Introduction}
 \texttt{randomizeR} is a user-friendly package that allows the user to assess and compare
-randomization procedures according to certain criteria (called issues in this package). This tutorial focuses on the comparison of randomization sequences and procedures on the basis of desirability functions. Currently, \texttt{randomizeR} encompasses the class of desirability functions introduced by Derringer and Suich (1980) and corresponding functions to evaluate and compare randomization sequences which have been assessed on the basis of desirability indices of specific issues. 
+randomization procedures according to certain criteria (called issues in this package). This tutorial focuses on the comparison of randomization sequences and procedures on the basis of desirability functions. In this context, there are certain criteria and requirements given which have to be met by a randomization procedure. Desirability scores are a kind of linked optimization criteria that establish the connection between the given requirements and therby allow a comparison between them. 
+
+Currently, \texttt{randomizeR} encompasses the class of desirability functions introduced by Derringer and Suich (1980) and corresponding functions to evaluate and compare randomization sequences which have been assessed on the basis of desirability indices of specific issues. 
 
 For each value $x$ of the corresponding criterion, a desirability function $d$ assigns numbers betweens 0 and 1 to
-the possible values of $x$ with $d(x) = 0$ representing a completely undesirable value and $d(x)=1$ representing a completely desirable or ideal value. Therefore, values with different domains are mapped to a common scale $[0,1]$, making them comparable. By combining individual desirabilities values of issues using the geometric mean, the \textit{overall desirability} is computed. 
+the possible values of $x$ with $d(x) = 0$ representing a completely undesirable value and $d(x)=1$ representing a completely desirable or ideal value. Therefore, values with different domains are mapped to a common scale $[0,1]$, making them comparable. 
 
 The Derringer-Suich approach expects a lower and upper specified border and an optimal desired value
 called the target value. There are three different kinds of desirability functions: The 
@@ -72,7 +74,8 @@ d2 <- derFunc(0.05, 0.1, 1)
 d2
 @
 The desirability functions defined above are right- and left-sided respectively. 
-By applying the \texttt{getDesScores} function to the assessment output together with the specified desirability functions the behaviour of randomization sequences is evaluated and scaled to $[0,1]$.
+By applying the \texttt{getDesScores} function to the assessment output together with the specified desirability functions the behaviour of randomization sequences is evaluated and scaled to $[0,1]$. By combining the individual desirabilities values of the issues using the geometric mean, the \textit{overall desirability of a given randomization sequence} is computed. 
+
 <<getDesScores1>>=
 D1 <- getDesScores(A, d1, d2)
 print(D1$D, digits = 3)
@@ -90,7 +93,7 @@ getDesScores(A, d1, d2, weights = c(5/6, 1/6))
 @
 
 By applying the \texttt{summary} function to this object it summarizes the results
-by means of statistics like mean, median, min, max etc.
+by means of statistics like mean, median, min, max etc. Therefore, the third column of the \texttt{summary} output represents the \textit{overall desirability of a given randomization procedure}. 
 <<summary1>>=
 summary(D1)
 @
