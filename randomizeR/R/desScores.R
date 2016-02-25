@@ -282,7 +282,7 @@ setMethod("summary", signature(object = "desScores"), function(object) {
     x50 <- x[wv >= 0.5][1]
     x75 <- x[wv >= 0.75][1]
     x95 <- x[wv >= 0.95][1]
-    c(x1, x2, max(x[x>0]), min(x[x>0]), x05, x25, x50, x75, x95)
+    c(x1, x2, max(x[probs>0]), min(x[probs>0]), x05, x25, x50, x75, x95)
   }) 
   rownames(stat) <- c("mean", "sd", "max", "min", "x05", "x25", "x50", "x75", "x95")
   round(stat, digits=3)
