@@ -53,9 +53,12 @@ test_that("Arguments in evaluation object are set correctly", {
   DesScore3 <- getDesScores(A3, d1, d1)
   DesScore4 <- getDesScores(A2, d1, d1)
   
-  expect_equal(evaluate(DesScore, DesScore2)$weights, c(5/6, 1/6))
-  expect_equal(evaluate(DesScore2, DesScore4)$desFuncs, c(getDesFunc(d1), getDesFunc(d2)))
-  
+  E1 <- evaluate(DesScore, DesScore2)
+  expect_equal(E1$weights, c(5/6, 1/6))
+  expect_equal(E1$statistic, "mean")
+  E2 <- evaluate(DesScore2, DesScore4, statistic = "max")
+  expect_equal(E2$desFuncs, c(getDesFunc(d1), getDesFunc(d2)))
+  expect_equal(E2$statistic, "max")
 })
 
 

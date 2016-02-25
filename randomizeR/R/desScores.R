@@ -274,6 +274,7 @@ setMethod("summary", signature(object = "desScores"), function(object) {
     if (dim(D)[1] == 1) x2 <- NA else x2 <- sqrt(sum(probs*(x-x1)^2)/(1 - sum(probs^2))) 
     ## weighted quantiles
     sA <- data.frame(cbind(x, probs))
+    d <- x # Save unordered vector x for the computation of max and min (later)
     sA <- sA[order(x),]
     wv <- cumsum(sA[ ,2])
     x <- sA[,1]

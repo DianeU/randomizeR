@@ -261,6 +261,7 @@ setMethod("summary", signature(object = "assessment"), function(object) {
     if (dim(D)[1] == 1) x2 <- NA else x2 <- sqrt(sum(probs*(x-x1)^2)/(1 - sum(probs^2))) 
     ## weighted quantiles
     sA <- data.frame(cbind(x, probs))
+    d <- x # Save unordered vector x for the computation of max and min (later)
     sA <- sA[order(x),]
     wv <- cumsum(sA[ ,2])
     x <- sA[,1]
@@ -269,7 +270,7 @@ setMethod("summary", signature(object = "assessment"), function(object) {
     x50 <- x[wv >= 0.5][1]
     x75 <- x[wv >= 0.75][1]
     x95 <- x[wv >= 0.95][1]
-    c(x1, x2, max(x[probs>0]), min(x[probs>0]), x05, x25, x50, x75, x95)
+    c(x1, x2, max(d[probs>0]), min(d[probs>0]), x05, x25, x50, x75, x95)
   }) 
   rownames(stat) <- c("mean", "sd", "max", "min", "x05", "x25", "x50", "x75", "x95")
   round(stat, digits=3)
