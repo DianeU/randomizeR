@@ -1,10 +1,19 @@
-# Changes in randomizeR version 1.1.9000
+# Changes in randomizeR version 1.2.9000
 
-* Bug ebc ungerade N, unerlaubt
+
 * Desirability-Functions (Mui)
 
 Please write new changes above this line.
-____________________________________________
+_____________________________________________
+# Changes in randomizeR version 1.2
+
+## Bug Fixes
+* Efrons Bias Coin Admits odd N
+
+## Minor Changes
+* Changed test setting so that tests allocate less memory
+* Added authors of the current version
+
 # Changes in randomizeR version 1.1
 
 ## Bug Fixes

@@ -21,7 +21,6 @@ load_all(current.code)
 #load_all(current.code)
 #run_examples(current.code)
 #build_vignettes(current.code)
-#use_build_ignore("NEWS.md")
 check(current.code)
 
 build(current.code)
@@ -31,8 +30,7 @@ build(current.code)
 # system(paste('R CMD Rd2pdf ',  'randomizeR'))
 
 
-install.packages("randomizeR_1.1.9000.tar.gz", repos = NULL, type = "source")
-
+install.packages("randomizeR_1.2.9000.tar.gz", repos = NULL, type = "source")
 
 # library(randomizeR)
 # vignette(package = "randomizeR")

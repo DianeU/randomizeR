@@ -6,7 +6,5 @@
 ^\./vignettes/comparison-*\.blg
 ./vignettes/comparison-*\.bbl
 cran-comments.md
-NEWS.md
-^NEWS\.Rmd$
 ^README\.Rmd$
 ^README-.*\.png$
