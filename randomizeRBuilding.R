@@ -34,6 +34,6 @@ build(current.code)
 install.packages("randomizeR_1.1.9000.tar.gz", repos = NULL, type = "source")
 
 
-# require(randomizeR)
+# library(randomizeR)
 # vignette(package = "randomizeR")
 # vignette()
