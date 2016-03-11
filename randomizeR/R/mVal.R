@@ -98,9 +98,13 @@ setClass("mVal", slots = c( dist ="dmVal", depType="character", rSetType="charac
 #' @param dist dmVal object, represents distribution of missing values
 #' @param depType character, "at random", "treatment"
 #' @param rSetType character, "CRS" or "RRS"
+#' 
+#' @examples
+#' dm <- dmVal(distri = "bernoulli", dpara = 0.05, ngroups = 3)
+#' mVal(dm, depType = "at random", rSetType = "CRS")
+#' 
 #' @export
-
-mVal <- function( dist, depType, rSetType ) {
+mVal <- function(dist, depType, rSetType) {
   new("mVal", dist = dist, depType=depType, rSetType = rSetType)
 }
 

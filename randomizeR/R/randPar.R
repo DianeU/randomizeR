@@ -89,15 +89,14 @@ validateRandPar <- function(object) {
 # Class definition for randPar
 # --------------------------------------------
 
-#' Randomization paramters generic
+#' Randomization paramters 
 setClass("randPar", 
          slots = c(N = "numeric", K = "numeric" , ratio = "numeric",
            groups = "character"),
          validity = validateRandPar)
 
-# --------------------------------------------
-# Constructor function for randPar
-# --------------------------------------------
+
+
 
 #' Settings for randomization procedures
 #' 
