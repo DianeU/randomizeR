@@ -3,6 +3,13 @@
 
 * Desirability-Functions (Mui)
 
+## Bug Fixes
+* CreateParam needs parameter N for design PBR.
+
+# New Features
+* CreateParam takes parameter filledBlock for Design RPBR and RTBD.
+
+
 Please write new changes above this line.
 _____________________________________________
 # Changes in randomizeR version 1.2
