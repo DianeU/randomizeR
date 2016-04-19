@@ -43,6 +43,8 @@ createParam <- function(method, N, mti, bc, rb, p, ini, add, filledBlock) {
              error = function(e) {"error"})    
     tryCatch(eval(parse(text = (paste(x, " <<- ", y, sep = "")))),
              error = function(e) {"error"})
+    tryCatch(eval(parse(text = (paste("is.numeric(", x, ")", sep = "")))),
+             error = function(e) {FALSE})
   }
   slotns <- slotns[!(slotns %in% c("K", "ratio", "groups"))]
   # escape bug with N input in pbrPar and tbdPar
@@ -114,7 +116,7 @@ paramErrors <- function(method, N, mti, bc, rb, p, ini, add, filledBlock) {
   RPs <- sub("Par", "", Cls)
   out <- FALSE
   # error request for the method
-  if(!missing("method"))cr
+  if(!missing("method"))
     if(!(method %in% toupper(RPs)))
       out <- TRUE
   # error request for N
