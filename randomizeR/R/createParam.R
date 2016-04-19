@@ -55,8 +55,12 @@ createParam <- function(method, N, mti, bc, rb, p, ini, add, filledBlock) {
   if(dec){
       repeat{
         # checking if the value was ok
-        param <- readline(cat(paste("Value for the paramter ",
-                                    slotns[i], ": \n>", sep = "")))
+        if(slotns[i] == "N")
+          param <- readline(cat(paste("Value for the paramter ",
+                                      slotns[i], " (even number for RAR and MP): \n>", sep = "")))
+        else
+          param <- readline(cat(paste("Value for the paramter ",
+                                      slotns[i], ": \n>", sep = "")))
         test <- robEval(slotns[i], param)
         if(!test)
           next
@@ -120,9 +124,9 @@ paramErrors <- function(method, N, mti, bc, rb, p, ini, add, filledBlock) {
     if(!(method %in% toupper(RPs)))
       out <- TRUE
   # error request for N
-  if(!missing("N"))   
-    if(!(length(N) == 1 && is.numeric(N) && N > 0 && (N %% 2 == 0)))
-      out <- TRUE
+  if(!missing("N"))
+      if(!(length(N) == 1 && is.numeric(N) && N > 0))
+        out <- TRUE
   # error request for mti
   if(!missing("mti"))
     if(!(length(mti) == 1 && is.numeric(mti) && mti == ceiling(mti)))
