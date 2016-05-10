@@ -296,7 +296,7 @@ plotEv <- function(evaluation , labels, cols) {
   if (missing(cols)) {
     cols <- rainbow(nrow(evaluation@D))
   } else {
-    if (length(labels) != nrow(evaluation@D)) stop(paste("Length of labels must be ", ncol(evaluation@D)-1), ".", sep = "")
+    if (length(cols) != nrow(evaluation@D)) stop(paste("Length of cols must be ", ncol(evaluation@D)-1), ".", sep = "")
   }
   
   addTrans <- function(color, trans){
@@ -321,15 +321,15 @@ plotEv <- function(evaluation , labels, cols) {
   bgGrid <- addTrans("grey", 100)
   
   values <- as.numeric(evaluation@D[1,])[-1]
-  radial.plot(values, rp.type = "p", start = pi/2, clockwise = TRUE,
+  radial.plot(rev(values), rp.type = "p", start = pi/2, clockwise = TRUE,
               labels = labels, 
               radial.lim = c(0,1), line.col = cols[1], lwd = 4,
               grid.bg = bgGrid, show.grid.labels = 4)
   
   if (nrow(evaluation@D) > 1) {
-    for (i in (nrow(evaluation@D) - 1)) {
+    for (i in 1:(nrow(evaluation@D) - 1)) {
       values <- as.numeric(evaluation@D[i+1,])[-1]
-      radial.plot(values, rp.type = "p", start = pi/2, clockwise = TRUE,
+      radial.plot(rev(values), rp.type = "p", start = pi/2, clockwise = TRUE,
                   labels = labels, 
                   radial.lim = c(0,1), line.col = cols[i+1], lwd = 4,
                   grid.bg = bgGrid, show.grid.labels = 4, add = TRUE)
