@@ -9,6 +9,9 @@
 # New Features
 * CreateParam takes parameter filledBlock for Design RPBR and RTBD.
 
+# Minor changes
+* Improved help functions for issues.
+* Improved clarity of vignette.
 
 Please write new changes above this line.
 _____________________________________________

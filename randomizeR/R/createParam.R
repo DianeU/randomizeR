@@ -114,7 +114,7 @@ paramErrors <- function(method, N, mti, bc, rb, p, ini, add, filledBlock) {
   RPs <- sub("Par", "", Cls)
   out <- FALSE
   # error request for the method
-  if(!missing("method"))cr
+  if(!missing("method"))#cr
     if(!(method %in% toupper(RPs)))
       out <- TRUE
   # error request for N
