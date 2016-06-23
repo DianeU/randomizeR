@@ -7,8 +7,13 @@
 #' the comparison of randomization procedures.
 #' 
 #' @references
-#' W. F. Rosenberger and J. M. Lachin (2002) \emph{Randomization in Clinical Trials}.
+#' W. F. Rosenberger and J. M. Lachin (2002) \emph{Randomization in Clinical Trials}. 
 #' Wiley.
+#' 
+#' D. Uschner, D. Schindler, N. Heussen and R.-D. Hilgers (2016) \emph{randomizeR:
+#' An R package for the Assessment and Implementation of Randomization in Clinical 
+#' Trials}. Submitted to the Journal of Statistical Software.
+#' 
 #' 
 #' @section Acknowledgement:
 #' This research is embedded in the 
