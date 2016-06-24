@@ -31,7 +31,7 @@ build(current.code)
 # system(paste('R CMD Rd2pdf ',  'randomizeR'))
 
 
-install.packages("randomizeR_1.2.9000.tar.gz", repos = NULL, type = "source")
+install.packages("randomizeR_1.3.tar.gz", repos = NULL, type = "source")
 
 # library(randomizeR)
 # vignette(package = "randomizeR")

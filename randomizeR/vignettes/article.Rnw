@@ -566,7 +566,7 @@ The previous chapter was dedicated to introducing the basic terms and literature
 from the field. In the present chapter, we show how \pkg{randomizeR} addresses
 these purposes.
 
-The current version of \pkg{randomizeR} is based on R 3.2.4. It can be loaded in an R 
+The current version of \pkg{randomizeR} is based on R 3.3.0. It can be loaded in an R 
 session via:
 <<loading>>=
 library("randomizeR")
