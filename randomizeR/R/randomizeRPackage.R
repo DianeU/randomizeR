@@ -43,4 +43,5 @@
 #' @importFrom graphics abline axis box lines plot.new plot.window title
 #' @importFrom grDevices col2rgb rainbow
 #' @importFrom graphics legend
+#' @importFrom stats pbeta qf
 NULL

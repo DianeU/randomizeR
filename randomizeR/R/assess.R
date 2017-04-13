@@ -206,8 +206,8 @@ setMethod("assess", signature(randSeq = "randSeq", endp = "missing"),
             if (length(L) == 1 && is.list(L[[1]])) {
               L <- c(...)
             }
-            stopifnot(randSeq@K == 2, all(sapply(L, function(x)  is(x, "issue"))))
-            stopifnot(randSeq@ratio == c(1, 1))
+            stopifnot(all(sapply(L, function(x)  is(x, "issue"))))
+            stopifnot(all(sapply(randSeq@ratio, function(x) x == 1)))
             D <- data.frame("Sequence" = apply(getRandList(randSeq), 1, function(x) paste(x, sep = "", collapse = "")))
             if (.hasSlot(randSeq, "seed")) { 
               D$Relative_Frequency <- 1/dim(randSeq@M)[1]
@@ -230,8 +230,8 @@ setMethod("assess", signature(randSeq = "randSeq", endp = "endpoint"),
             if (length(L) == 1 && is.list(L[[1]])) {
               L <- c(...)
             }
-            stopifnot(randSeq@K == 2, all(sapply(L, function(x) is(x, "issue"))))
-            stopifnot(randSeq@ratio == c(1, 1))
+            stopifnot(all(sapply(L, function(x) is(x, "issue"))))
+            stopifnot(all(sapply(randSeq@ratio, function(x) x == 1)))
             D <- data.frame("Sequence" = apply(getRandList(randSeq), 1, function(x) paste(x, sep = "", collapse = "")))
             if (.hasSlot(randSeq, "seed")) { 
               D$Relative_Frequency <- 1/dim(randSeq@M)[1]

@@ -13,7 +13,7 @@
 # @return
 # vector of the simulated/exact p.value of a randomization sequence.
 testDec <- function(randSeq, bias, endp) {
-  stopifnot(is(randSeq, "randSeq"), randSeq@K == 2,
+  stopifnot(is(randSeq, "randSeq"), randSeq@K == length(endp@mu),
             #is(bias, "chronBias") || is(bias, "selBias") || is(bias, "power"), 
             is(endp, "normEndp"))
   if (bias@method == "sim") {
@@ -34,6 +34,13 @@ testDec <- function(randSeq, bias, endp) {
     } 
     )
   } else if (bias@method == "exact") {
-    doublyTValues(randSeq, bias, endp)
+    if(randSeq@K == 2){
+      doublyTValues(randSeq, bias, endp)
+    } else{
+      if(bias@type == "DS")
+        stop("Error: Selection bias for K > 2 can be calculated just for convergence strategy.")
+      doublyF_values(randSeq, bias, endp)$p
+    }
+      
   }       
 }

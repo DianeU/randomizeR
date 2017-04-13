@@ -64,6 +64,7 @@ Collate:
     'derringerTs.R'
     'desScores.R'
     'desirability.R'
+    'doublyF.R'
     'ebcSeq.R'
     'evaluate.R'
     'gbcdPar.R'
@@ -92,7 +93,6 @@ Collate:
     'udSeq.R'
 Suggests:
     testthat,
-    knitr,
-    quantreg
+    knitr
 VignetteBuilder: knitr
 RoxygenNote: 5.0.1

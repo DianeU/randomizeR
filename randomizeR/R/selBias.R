@@ -156,7 +156,7 @@ setMethod("getStat", signature(randSeq = "randSeq", issue = "selBias", endp = "m
 # @rdname getStat
 setMethod("getStat", signature(randSeq = "randSeq", issue = "selBias", endp = "normEndp"),
           function(randSeq, issue, endp) {
-            stopifnot(validObject(randSeq), validObject(issue), validObject(endp))
+            stopifnot(validObject(randSeq), validObject(issue), validObject(endp), randSeq@K == length(endp@mu))
             if (issue@method == "sim") {
               D <- data.frame(testDec(randSeq, issue, endp))
               colnames(D) <- paste("testDec(", issue@type, ")", sep = "")
