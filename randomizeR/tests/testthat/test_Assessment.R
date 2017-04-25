@@ -26,6 +26,14 @@ test_that("assess returns valid object", {
 	expect_error(assess(seqs, "issue"))
 	expect_error(assess(seqs, 42))
 	
+	
+	#### Assessment object with Selection Bias for K>2
+	seqs <- genSeq(crPar(12, 3), r = 1000)
+	i4 <- selBias("CS", 0.5, "exact", 0.05)
+	endp <- normEndp(c(0,0,0), c(1,1,1))
+	expect_is(assess(seqs, i4, endp = endp), "assessment")
+	expect_error(assess(seqs, i4, endp = normEndp(c(0,0), c(1,1))))
+	expect_error(assess(seqs, selBias("DS", 0.5, "exact", 0.05),endp = endp))
 })
 
 test_that("issues are computed right", {

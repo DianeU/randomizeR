@@ -139,6 +139,29 @@ doublyF_value <- function(R, means, eta, alpha=0.05){
 }
 
 
+
+
+#' Check function for occurance of all treatment groups in the sequence
+#'
+#' checks wheather each group has its value comming up at least once in the sequence
+#' 
+#' @param seq randomization sequence as inverted matrix
+#' @param K number of treatment arms
+#' 
+#' @return TRUE if all groups represented, FAlSE otherwise
+hasAllGroups <- function(seq, K){
+  for(i in 0:(K-1)){
+    if(!(i %in% seq)){
+      return(FALSE)
+    }
+  }
+  return(TRUE)
+}
+
+
+
+
+
 #' Rejection probability in case of selection bias in multi-arm trials
 #'
 #' calculates the non-centrality parameters of the F-distribution under third
@@ -160,7 +183,11 @@ doublyF_values <-   function(randSeq, bias, endp){
   R <- genSeq(crPar(N=N(randSeq), K=K(randSeq)))
   prob <- apply(seq, 1, function(x){
     R@M <- matrix(x, ncol = N(R))
-    doublyF_value(R, means, eta, alpha)
+    if(!hasAllGroups(R@M, R@K)){
+      data.frame(x = 0, df1 = 0, df2 = 0, lambda1 = 0, lambda2 = 0, p = 0)
+    } else {
+      doublyF_value(R, means, eta, alpha)
+    }
   })
   l1 <- sapply(prob, function(item) item$lambda1)
   l2 <- sapply(prob, function(item) item$lambda2)
