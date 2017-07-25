@@ -23,15 +23,14 @@ load_all(current.code)
 #run_examples(current.code)
 #build_vignettes(current.code)
 check(current.code)
-
 build(current.code)
 
 # generate manual
- if (file.exists("./randomizeR.pdf")) file.remove("./randomizeR.pdf")
- system(paste('R CMD Rd2pdf ',  'randomizeR'))
+ # if (file.exists("./randomizeR.pdf")) file.remove("./randomizeR.pdf")
+ # system(paste('R CMD Rd2pdf ',  'randomizeR'))
 
 
-install.packages("randomizeR_1.3.9000.tar.gz", repos = NULL, type = "source")
+install.packages("randomizeR_1.4.tar.gz", repos = NULL, type = "source")
 
 # library(randomizeR)
 # vignette(package = "randomizeR")

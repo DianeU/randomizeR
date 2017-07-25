@@ -128,7 +128,7 @@ setMethod("show", "evaluation", function(object) {
 #' d1 <- derFunc(TV = 0.1, 0.7, 2)
 #' d2 <- derFunc(0.5, c(0.3, 0.8), c(1, 1))
 #' DesScore <- getDesScores(A1, d1, d2, weights = c(5/6, 1/6))
-#' DesScore2 <- getDesScores(A2, d1, d2)
+#' DesScore2 <- getDesScores(A2, d1, d2, weights = c(5/6, 1/6))
 #' 
 #' evaluate(DesScore, DesScore2)
 #' evaluate(DesScore, DesScore2, statistic = "max")
@@ -138,6 +138,10 @@ setMethod("show", "evaluation", function(object) {
 #' \code{S4} object of class \code{evaluation} Comparison of randomization procedures 
 #' with respect to desirability functions applied to specified issues, summarized by a
 #' prespecified statistic. 
+#' 
+#' @references 
+#' D. Schindler \emph{Assessment of Randomization Procedures in the Presence of 
+#' Selection and Chronological Bias}. PhD Thesis.
 #'
 #' @seealso Representation of randomization procedures: \code{\link{randPar}}
 #' @seealso Generation of randomization sequences: \code{\link{genSeq}}

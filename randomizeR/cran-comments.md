@@ -1,6 +1,5 @@
 ## Test environments
-* local Windows 7 install (63-bit), R 3.3.1
-* Ubuntu 15.10 (32-bit), R 3.3.0
+* local Windows 7 install (64-bit), R 3.4.0
 * win-builder (devel and release)
 
 ## R CMD check results
