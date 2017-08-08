@@ -1,7 +1,7 @@
 Package: randomizeR
 Title: Randomization for Clinical Trials
 Version: 1.4
-Date: 2017-15-05
+Date: 2017-08-01
 Authors@R: c(
     person(given="David", family="Schindler", email="dschindler@ukaachen.de", role="aut"),
     person(given="Diane", family="Uschner", email="duschner@ukaachen.de", role=c("aut","cre")),
@@ -13,7 +13,7 @@ Authors@R: c(
 Description: This tool enables the user to choose a randomization procedure
     based on sound scientific criteria. It comprises the generation of
     randomization sequences as well the assessment of randomization procedures
-    based on carefully selected criteria. Furthermore, randomizeR provides a
+    based on carefully selected criteria. Furthermore, 'randomizeR' provides a
     function for the comparison of randomization procedures.
 Depends:
     R (>= 3.3.0),
