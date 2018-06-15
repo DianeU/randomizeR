@@ -24,7 +24,7 @@ load_all(current.code)
 #build_vignettes(current.code)
 check(current.code)
 build(current.code)
-devtools::release(pkg=current.code)
+#devtools::release(pkg=current.code)
 
 # generate manual
  # if (file.exists("./randomizeR.pdf")) file.remove("./randomizeR.pdf")
