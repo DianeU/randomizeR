@@ -11,8 +11,8 @@
 #' Wiley.
 #' 
 #' Uschner D, Schindler D, Hilgers R and Heussen N (2018). "randomizeR: An R Package for the
-#' Assessment and Implementation of Randomization in Clinical Trials." _Journal of Statistical
-#' Software_, \strong{85}(8), pp. 1-22. doi: 10.18637/jss.v085.i08 (URL: \url{http://doi.org/10.18637/jss.v085.i08}).
+#' Assessment and Implementation of Randomization in Clinical Trials." \emph{Journal of Statistical
+#' Software}, \strong{85}(8), pp. 1-22. doi: 10.18637/jss.v085.i08 (URL: \url{http://doi.org/10.18637/jss.v085.i08}).
 #' 
 #' D. Schindler (2016) \emph{Assessment of Randomization Procedures in the Presence of 
 #' Selection and Chronological Bias}. PhD Thesis.
