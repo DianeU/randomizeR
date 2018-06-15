@@ -40,7 +40,7 @@ validateSelBias <- function(object) {
     msg <- paste("eta is length ", lengthEta, ". Should be 1.", sep = "")
     errors <- c(errors, msg)
   }
-  
+
   lengthMethod <- length(object@method)
   if (lengthMethod != 1) {
     msg <- paste("Method is length ", lengthMethod, ". Should be 1.", sep = "")

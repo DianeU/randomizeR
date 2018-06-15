@@ -85,7 +85,7 @@ setMethod("getExpectation", signature(randSeq = "randSeq", issue = "combinedBias
               expectationSB <- getExpectation(randSeq, selBias, endp)
             else
               expectationSB <- makeBiasedExpectation(randSeq, endp@mu, selBias)
-            expectationCB <- getExpectation(randSeq, chronBias, endp)
+            expectationCB <- getExpectation(randSeq, chronBias)
             expectationSB + expectationCB
 })
 
@@ -111,7 +111,7 @@ setMethod("getExpectation", signature(randSeq = "randSeq", issue = "combinedBias
                 expectationSB <- makeBiasedExpectation(randSeq, endp@mu, selBias)
               }
             }
-            expectationCB <- getExpectation(randSeq, chronBias, endp)
+            expectationCB <- getExpectation(randSeq, chronBias)
             expectationSB + expectationCB
 })
 

@@ -227,7 +227,7 @@ setMethod("getExpectation", signature(randSeq = "randSeq", issue = "chronBias", 
 #' @rdname getExpectation
 setMethod("getExpectation", signature(randSeq = "randSeq", issue = "chronBias", endp = "missing"),
           function(randSeq, issue) {
-            stopifnot(randSeq@K == 2)
+            #stopifnot(randSeq@K == 2)
             validObject(randSeq); validObject(issue)
             n <- N(randSeq)
             # linear time trend
