@@ -1,11 +1,12 @@
 Package: randomizeR
 Title: Randomization for Clinical Trials
-Version: 1.4
-Date: 2017-08-01
+Version: 2.0
+Date: 2018-10-01
 Authors@R: c(
     person(given="David", family="Schindler", email="dschindler@ukaachen.de", role="aut"),
     person(given="Diane", family="Uschner", email="duschner@ukaachen.de", role=c("aut","cre")),
     person(given="Martin", family="Manolov", email="martin.manolov@rwth-aachen.de", role="ctb"),
+	person(given="Marcia Viviane", family="Rueckbeil", email="mrueckbeil@ukaachen.de", role ="ctb"),
 	person(given="Thi Mui", family="Pham", email="thi.mui.pham@rwth-aachen.de", role="ctb"),
 	person(given="Ralf-Dieter", family="Hilgers", email="rhilgers@ukaachen.de", role=c("aut","ths")),
 	person(given="Nicole", family="Heussen", email="nheussen@ukaachen.de", role=c("aut","ths"))
@@ -17,10 +18,11 @@ Description: This tool enables the user to choose a randomization procedure
     function for the comparison of randomization procedures.
 Roxygen: list(markdown = TRUE)
 Depends:
-    R (>= 3.3.0),
+    R (>= 3.5.0),
     methods,
     ggplot2,
-    plotrix
+    plotrix, 
+    survival
 License: GPL (>=3)
 LazyData: true
 Collate: 
@@ -29,7 +31,9 @@ Collate:
     'abcdPar.R'
     'randSeq.R'
     'abcdSeq.R'
+    'survEndp.R'
     'getExpectation.R'
+    'expEndp.R'
     'normEndp.R'
     'endpoint.R'
     'util.R'
@@ -37,6 +41,7 @@ Collate:
     'power.R'
     'imbalance.R'
     'corGuess.R'
+    'logRankDistribution.R'
     'doublyF.R'
     'testDec.R'
     'doublyT.R'
@@ -96,4 +101,4 @@ Suggests:
     testthat,
     knitr
 VignetteBuilder: knitr
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0.9000

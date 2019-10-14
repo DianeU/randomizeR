@@ -99,9 +99,15 @@ setMethod("show", "comparison", function(object) {
 #' (comp <- compare(corGuess, RAR, BSD))
 #' plot(comp)
 #'
-#' # compare the same procedures with respect to selection bias
+#' # compare the same procedures with respect to selection bias for a normal endpoint
 #' endp <- normEndp(c(2, 2), c(1, 1))
 #' selBias <- selBias("CS", 4, "exact")
+#' (comp <- compare(selBias, RAR, BSD, endp = endp))
+#' plot(comp)
+#' 
+#' # compare the same procedures with respect to selection bias for an exponential endpoint
+#' endp <- expEndp(lambda = c(0.5, 0.5), cenRate=0.1, accrualTime=1, cenTime=5)
+#' selBias <- selBias("CS", 0.1, "exact")
 #' (comp <- compare(selBias, RAR, BSD, endp = endp))
 #' plot(comp)
 #'

@@ -1,3 +1,20 @@
+# Changes in randomizeR version 2.0
+
+# Bug Fixes
+* Minor bug fixes
+
+# New Features
+* Added a class for survival endpoints
+* Added a class for exponential endpoints
+* Selection bias support for exponential endpoints
+* Chronological bias support exponential endpoints
+* Assessment of chronological and selection bias for exponential endpoints
+
+## Minor Changes
+* Added authors of the current version
+
+# Major changes
+* Changed parameterization of chronological bias
 
 # Changes in randomizeR version 1.4
 

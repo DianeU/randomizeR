@@ -52,8 +52,6 @@ getbiasCS2 <- function(R, K, avoid){
 #' @param bias selection or chronological bias object, containing eta(or theta) and alpha
 #' 
 #' @return vector of length N with the biased expectation for each patient.
-#' 
-#' @export
 makeBiasedExpectation <-  function(R, mu, bias){
   eta <- bias@eta
   means <- as.vector(makeDesignMatrix(R) %*% mu)
@@ -197,8 +195,6 @@ hasAllGroups <- function(seq, K){
 #' 
 #' @return data frame with the sequences and their corresponding ncps and rejection
 #' probabilities.
-#'
-#' @export
 doublyF_values <- function(randSeq, bias, endp){
   seq <- randSeq@M
 
