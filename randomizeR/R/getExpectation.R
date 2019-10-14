@@ -24,10 +24,16 @@
 #' }
 #'
 #' @examples 
+#' # get Expectation for a normal endpoint
 #' myPar <- bsdPar(10, 2)
 #' M <- genSeq(myPar, 2)
 #' cs <- selBias("CS", 2, "sim")
 #' endp <- normEndp(mu = c(2, 2), sigma = c(1, 1))
+#' getExpectation(M, cs, endp)
+#' 
+#' # get Expectation for an exponential endpoint
+#' cs <- selBias("CS", 0.1 , "sim")
+#' endp <- expEndp(lambda = c(0.5, 1))
 #' getExpectation(M, cs, endp)
 #' 
 #' @name getExpectation

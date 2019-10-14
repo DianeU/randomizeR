@@ -123,10 +123,12 @@ setClass("selBias", slots = c(eta = "numeric", type = "character",
 #'  \item{\code{method="exact"}}{Represents the exact type-I-error proabability 
 #'  given the level \code{alpha}, the selection effect \code{eta} and the 
 #'  biasing strategy \code{type}. When calling \code{assess} for a \code{selBias} 
-#'  object with \code{method="exact"}, the exact \emph{p}-value of each 
-#'  randomization sequence is computed. So far, this is only supported for
-#'  normal endpoints. Then the type-I-error probability is
-#'  the sum of the corresponding quantiles of the doubly noncentral t-distribution.
+#'  object with \code{method="exact"}, the \emph{p}-value of each randomization 
+#'  sequence is computed. For normal endpoints and two treatment groups these p-values 
+#'  are exact values which can be calculated from the sum of the corresponding quantiles 
+#'  of the doubly noncentral t-distribution. For more than two treatment groups, exact 
+#'  p-values are computed using a doubly noncentral F distribution. For exponential 
+#'  endpoints the p-values are obtained using an approximation formula. 
 #'  }
 #' }
 #' 
@@ -134,7 +136,7 @@ setClass("selBias", slots = c(eta = "numeric", type = "character",
 #' \code{S4} object of class \code{selBias}, a formal representation of the
 #' issue of selection bias in a clinical trial.
 #'
-#' @seealso Compute exact or simulated type-I-error: \code{\link{assess}}.
+#' @seealso Compute exact or simulated rejection probability: \code{\link{assess}}.
 #'
 #' @references
 #' D. Blackwell and J.L. Hodges Jr. (1957) Design for the control of 
@@ -160,6 +162,22 @@ setMethod("getStat", signature(randSeq = "randSeq", issue = "selBias", endp = "m
 setMethod("getStat", signature(randSeq = "randSeq", issue = "selBias", endp = "normEndp"),
           function(randSeq, issue, endp) {
             stopifnot(validObject(randSeq), validObject(issue), validObject(endp), randSeq@K == length(endp@mu))
+            if (issue@method == "sim") {
+              D <- data.frame(testDec(randSeq, issue, endp))
+              colnames(D) <- paste("testDec(", issue@type, ")", sep = "")
+              D
+            } else {
+              D <- data.frame(testDec(randSeq, issue, endp))
+              colnames(D) <- paste("P(rej)(", issue@type, ")", sep = "")
+              D
+            }
+          }
+)
+
+# @rdname getStat
+setMethod("getStat", signature(randSeq = "randSeq", issue = "selBias", endp = "expEndp"),
+          function(randSeq, issue, endp) {
+            stopifnot(validObject(randSeq), validObject(issue), validObject(endp), randSeq@K == length(endp@lambda))
             if (issue@method == "sim") {
               D <- data.frame(testDec(randSeq, issue, endp))
               colnames(D) <- paste("testDec(", issue@type, ")", sep = "")
@@ -206,6 +224,36 @@ setMethod("getExpectation", signature(randSeq = "randSeq", issue = "selBias",
             issue[randSeq@M == 0] <- issue[randSeq@M == 0] + endp@mu[1]
             issue[randSeq@M == 1] <- issue[randSeq@M == 1] + endp@mu[2]
             issue
+          }
+)
+
+#' @rdname getExpectation
+setMethod("getExpectation", signature(randSeq = "randSeq", issue = "selBias",
+                                      endp = "expEndp"),
+          function(randSeq, issue, endp) {
+            stopifnot(randSeq@K == 2, randSeq@K == length(endp@lambda))
+            validObject(randSeq); validObject(issue); validObject(endp)
+            if (issue@type == "CS") {
+              # convergence strategy
+              issue <- t(apply(randSeq@M, 1, function(x) {
+                issue <- sign(cumsum(2*x - 1)) * issue@eta
+                issue <- issue[-length(issue)]
+                issue <- c(0, issue)
+                issue
+              }))
+            }
+            else if (issue@type == "DS") {
+              # convergence strategy
+              issue <- t(apply(randSeq@M, 1, function(x) {
+                issue <- sign(cumsum(2*x - 1)) * issue@eta * (-1)
+                issue <- issue[-length(issue)]
+                issue <- c(0, issue)
+                issue
+              }))
+            }
+            issue[randSeq@M == 0] <- exp(issue[randSeq@M == 0]) * endp@lambda[1]
+            issue[randSeq@M == 1] <- exp(issue[randSeq@M == 1]) * endp@lambda[2]
+            1/issue
           }
 )
 

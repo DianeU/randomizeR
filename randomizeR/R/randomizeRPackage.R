@@ -40,10 +40,12 @@
 #' @import methods
 #' @import ggplot2
 #' @import plotrix
+#' @import survival
 #' @importFrom stats dpois pt qpois qt rbinom rnorm t.test
 #' @importFrom utils capture.output packageVersion sessionInfo write.table
 #' @importFrom graphics abline axis box lines plot.new plot.window title
 #' @importFrom grDevices col2rgb rainbow
 #' @importFrom graphics legend
-#' @importFrom stats pbeta qf
+#' @importFrom stats pbeta 
+#' @importFrom stats integrate dexp pchisq pexp pnorm punif qexp qf qnorm rexp runif      
 NULL
