@@ -3,7 +3,10 @@
 # setwd("U:/IDeAl/IDeAlGrit")
 # setwd("C:/Users/mmanolov/Documents/GitHub/randomizeR")
 # setwd("C:/Users/kfuge/Documents/GitHub/randomizeR")
-setwd("C:/Users/Marcia/Documents/randomizeR-Logrank")
+# setwd("C:/Users/Marcia/Documents/randomizeR-Logrank")
+# setwd("C:/Users/Marcia/Documents/randomizeR-Logrank")
+setwd("C:/Users/mmart/Desktop/randomizeR")
+
 
 library(knitr)
 library(devtools)
@@ -20,22 +23,22 @@ current.code <- as.package("randomizeR")
 # devtools::use_vignette("randomizeR")
 # in case something was deleted or renamed, run (twice)
 # load_all(current.code, recompile = TRUE)
-document(current.code)
-load_all(current.code) 
-#test(current.code)
-#load_all(current.code)
-#run_examples(current.code)
-#build_vignettes(current.code)
-check(current.code)
-build(current.code)
+ document(current.code)
+# load_all(current.code) 
+ test(current.code)
+# load_all(current.code)
+# run_examples(current.code)
+# build_vignettes(current.code)
+# check(current.code)
+# build(current.code)
 ### devtools::release(pkg=current.code) ### Publish package on CRAN
 
 # generate manual
- # if (file.exists("./randomizeR.pdf")) file.remove("./randomizeR.pdf")
- # system(paste('R CMD Rd2pdf ',  'randomizeR'))
+if (file.exists("./randomizeR.pdf")) file.remove("./randomizeR.pdf")
+   system(paste('R CMD Rd2pdf ',  'randomizeR'))
 
 
-install.packages("randomizeR_2.0.tar.gz", repos = NULL, type = "source")
+#install.packages("randomizeR_2.0.tar.gz", repos = NULL, type = "source")
 
 # library(randomizeR)
 # vignette(package = "randomizeR")

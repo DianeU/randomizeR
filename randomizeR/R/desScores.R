@@ -47,7 +47,7 @@ setClass("desScores",
 # --------------------------------------------
 
 #' Method defining the $ operator for the assessemnt class
-#' 
+#' @keywords  internal
 #' @inheritParams overview
 setMethod("$", "desScores",
           function(x, name) slot(x, name))

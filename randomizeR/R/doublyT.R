@@ -9,7 +9,7 @@
 #' Computes the value of the distribution function of the doubly noncentral t-distribution at \code{x}.
 #'
 #' @inheritParams overview
-#' 
+#' @keywords internal
 #' @return Distribution value of the doubly noncentral t-distribution at \code{x}.
 doublyT <- function(x, df, lambda1, lambda2, lb = 0, ub) {
   values <- lb:ub
@@ -23,7 +23,7 @@ doublyT <- function(x, df, lambda1, lambda2, lb = 0, ub) {
 #' @param randSeq object of the class randSeq.
 #' @param bias object of the class bias.
 #' @param endp object of the class endpoint.
-#' 
+#' @keywords internal
 #' @return matrix containing the noncentrality parameters delta and lambda of all randomization sequences.
 genNcps <- function(randSeq, bias, endp) {
   stopifnot(is(randSeq, "randSeq"), randSeq@K == 2,
@@ -77,7 +77,7 @@ genNcps <- function(randSeq, bias, endp) {
 #' @param randSeq object of the class randSeq.
 #' @param bias object of the class bias.
 #' @param endp object of the class endpoint.
-#' 
+#' @keywords internal
 #' @return the biased type-one-error probability (resp. power) of all randomization sequences.
 doublyTValues <- function(randSeq, bias, endp) {
   stopifnot(is(randSeq, "randSeq"), randSeq@K == 2,

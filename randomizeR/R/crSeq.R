@@ -41,7 +41,7 @@ setClass("rCrSeq", contains = c("rRandSeq","crSeq"))
 # Methods for crSeq
 # --------------------------------------------
 
-#' @rdname getProbabilities
+
 setMethod("getProb", signature = c(obj = "crSeq"),
           function(obj) {
             validObject(obj)
@@ -53,7 +53,6 @@ setMethod("getProb", signature = c(obj = "crSeq"),
           }
 )
 
-#' @rdname getDesign
 setMethod("getDesign", 
           signature(obj = "crSeq"),
           function(obj) {

@@ -44,7 +44,7 @@ setClass("rMpSeq", contains = c("rRandSeq","mpSeq"))
 # Methods for mpSeq
 # --------------------------------------------
 
-#' @rdname getProbabilities
+
 setMethod("getProb", signature = c(obj = "mpSeq"),
           function(obj) {
             # every sequence euqiprobable, generate same probability
@@ -54,7 +54,7 @@ setMethod("getProb", signature = c(obj = "mpSeq"),
           }
 )
 
-#' @rdname getDesign
+
 setMethod("getDesign", 
           signature(obj = "mpSeq"),
           function(obj) {

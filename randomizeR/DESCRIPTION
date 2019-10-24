@@ -1,7 +1,8 @@
 Package: randomizeR
 Title: Randomization for Clinical Trials
 Version: 2.0
-Date: 2018-10-01
+Date: 2019-10-01
+Encoding: UTF-8
 Authors@R: c(
     person(given="David", family="Schindler", email="dschindler@ukaachen.de", role="aut"),
     person(given="Diane", family="Uschner", email="duschner@ukaachen.de", role=c("aut","cre")),
@@ -101,4 +102,4 @@ Suggests:
     testthat,
     knitr
 VignetteBuilder: knitr
-RoxygenNote: 6.1.0.9000
+RoxygenNote: 6.1.1

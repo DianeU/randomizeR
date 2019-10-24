@@ -131,6 +131,22 @@ setClass("selBias", slots = c(eta = "numeric", type = "character",
 #'  endpoints the p-values are obtained using an approximation formula. 
 #'  }
 #' }
+#' \describe{
+#'  \item{\code{type="CS"}}{
+#'  
+#'  
+#'  
+#'  
+#'  
+#'  }
+#'  \item{\code{type="DS"}}{
+#'  
+#'  
+#'  
+#'  
+#'  }
+#' }
+#' 
 #' 
 #' @return
 #' \code{S4} object of class \code{selBias}, a formal representation of the
@@ -144,6 +160,11 @@ setClass("selBias", slots = c(eta = "numeric", type = "character",
 #' 
 #' M. Proschan (1994) Influence of selection bias on the type-I-error rate  
 #' under random permuted block designs. \emph{Statistica Sinica}, \strong{4}, 219-31. 
+#' 
+#' @examples
+#' # Initalize the selection bias to be convergent with an selection effect of eta = 0.25
+#' # Calculate the exact Type 1-Error probabilities  
+#' cs <- selBias("CS", 0.25, "exact")
 #' 
 #' @export
 selBias <- function(type, eta, method, alpha = 0.05) { 

@@ -12,7 +12,7 @@
 #' @param randSeq object of the class randSeq.
 #' @param bias object of the class bias.
 #' @param endp object of the class endpoint.
-#' 
+#' @keywords internal
 #' @return a simulated test decision for each randomization sequence.
 logRankDecSim <- function(randSeq, bias, endp){
   stopifnot(is(randSeq, "randSeq"), randSeq@K == 2,
@@ -55,7 +55,7 @@ logRankDecSim <- function(randSeq, bias, endp){
 #' @param randSeq object of the class randSeq.
 #' @param bias object of the class bias.
 #' @param endp object of the class endpoint.
-#' 
+#' @keywords internal
 #' @return the rejection probability (type I error probability resp. power) of all randomization sequences.
 logRankRejectionProb <- function(randSeq, bias, endp) {
   stopifnot(is(randSeq, "randSeq"), randSeq@K == 2,

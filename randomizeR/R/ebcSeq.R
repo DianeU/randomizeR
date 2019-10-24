@@ -43,7 +43,7 @@ setClass("rEbcSeq", contains = c("rRandSeq", "ebcSeq"))
 # Methods for ebcSeq
 # --------------------------------------------
 
-#' @rdname getProbabilities
+
 setMethod("getProb", signature = c(obj = "ebcSeq"),
           function(obj) {
             if(obj@K == 2) {
@@ -62,7 +62,7 @@ setMethod("getProb", signature = c(obj = "ebcSeq"),
           }  
 )
 
-#' @rdname getDesign
+
 setMethod("getDesign", 
           signature(obj = "ebcSeq"),
           function(obj) {

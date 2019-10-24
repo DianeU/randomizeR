@@ -94,7 +94,7 @@ bsdPar <- function(N, mti, groups = LETTERS[1:2]) {
 #' It will contain a zero (resp. 1) at position \code{i}, when patient \code{i}
 #' is allocated to treatment A (resp. B).
 #' 
-#' @export
+#' @keywords internal
 #' 
 #' @references 
 #' J. F. Soares and C. F. Jeff Wu (1983) Some Restricted Randomization Rules in
@@ -125,7 +125,6 @@ bsdRand <- function(N, mti, K = 2) {
 # Methods for bsdPar
 # --------------------------------------------
 
-#' @rdname generateAllSequences
 setMethod("getAllSeq", signature(obj = "bsdPar"),
           function(obj) {
             allSeqs <- compltSet(obj)
@@ -143,7 +142,7 @@ setMethod("getAllSeq", signature(obj = "bsdPar"),
           }
 )
 
-#' @rdname generateRandomSequences
+ 
 setMethod("genSeq", signature(obj = "bsdPar", r = "numeric", seed = "numeric"),
           function(obj, r, seed) {
             set.seed(seed)
@@ -159,7 +158,7 @@ setMethod("genSeq", signature(obj = "bsdPar", r = "numeric", seed = "numeric"),
 		            seed = seed)
           }
 )
-#' @rdname generateRandomSequences
+ 
 setMethod("genSeq", signature(obj = "bsdPar", r = "numeric", seed = "missing"),
           function(obj, r, seed) {
 	    seed <- sample(.Machine$integer.max, 1)
@@ -178,7 +177,7 @@ setMethod("genSeq", signature(obj = "bsdPar", r = "numeric", seed = "missing"),
 )
 
 
-#' @rdname generateRandomSequences
+ 
 setMethod("genSeq", signature(obj = "bsdPar", r = "missing", seed = "numeric"),
           function(obj, r, seed) {
             set.seed(seed)
@@ -194,7 +193,7 @@ setMethod("genSeq", signature(obj = "bsdPar", r = "missing", seed = "numeric"),
 )
 
 
-#' @rdname generateRandomSequences
+ 
 setMethod("genSeq", signature(obj = "bsdPar", r = "missing", seed = "missing"),
           function(obj, r, seed) {
             seed <- sample(.Machine$integer.max, 1)
@@ -210,7 +209,6 @@ setMethod("genSeq", signature(obj = "bsdPar", r = "missing", seed = "missing"),
           }
 )
 
-#' @rdname getDesign
 setMethod("getDesign", 
           signature(obj = "bsdPar"),
           function(obj) {

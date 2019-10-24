@@ -88,7 +88,7 @@ bbcdPar <- function(N, a, groups = LETTERS[1:2]) {
 #' It will contain a zero (resp. 1) at position \code{i}, when patient \code{i}
 #' is allocated to treatment A (resp. B).
 #' 
-#' @export
+#' @keywords internal
 #' 
 #' @references
 #' A. B. Antognini and Maroussa Zagoraiou (2014) Balance and randomness in sequential
@@ -130,7 +130,6 @@ bbcdRand <- function(N, a, K = 2) {
 # Methods for bbcdPar
 # --------------------------------------------
 
-#' @rdname generateAllSequences
 setMethod("getAllSeq", signature(obj = "bbcdPar"),
           function(obj) {
             allSeqs <- compltSet(obj) 
@@ -148,7 +147,6 @@ setMethod("getAllSeq", signature(obj = "bbcdPar"),
           }
 )
 
-#' @rdname generateRandomSequences
 setMethod("genSeq", signature(obj = "bbcdPar", r = "numeric", seed = "numeric"),
           function(obj, r, seed) {
             set.seed(seed)
@@ -164,7 +162,7 @@ setMethod("genSeq", signature(obj = "bbcdPar", r = "numeric", seed = "numeric"),
                 seed = seed)
           }
 )
-#' @rdname generateRandomSequences
+
 setMethod("genSeq", signature(obj = "bbcdPar", r = "numeric", seed = "missing"),
           function(obj, r, seed) {
             seed <- sample(.Machine$integer.max, 1)
@@ -183,7 +181,6 @@ setMethod("genSeq", signature(obj = "bbcdPar", r = "numeric", seed = "missing"),
 )
 
 
-#' @rdname generateRandomSequences
 setMethod("genSeq", signature(obj = "bbcdPar", r = "missing", seed = "numeric"),
           function(obj, r, seed) {
             set.seed(seed)
@@ -199,7 +196,7 @@ setMethod("genSeq", signature(obj = "bbcdPar", r = "missing", seed = "numeric"),
 )
 
 
-#' @rdname generateRandomSequences
+
 setMethod("genSeq", signature(obj = "bbcdPar", r = "missing", seed = "missing"),
           function(obj, r, seed) {
             seed <- sample(.Machine$integer.max, 1)
@@ -215,7 +212,7 @@ setMethod("genSeq", signature(obj = "bbcdPar", r = "missing", seed = "missing"),
           }
 )
 
-#' @rdname getDesign
+
 setMethod("getDesign", 
           signature(obj = "bbcdPar"),
           function(obj) {

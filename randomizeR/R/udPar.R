@@ -137,7 +137,6 @@ urnRand <- function(N, ini, add) {
 # Methods for udPar
 # --------------------------------------------
 
-#' @rdname generateAllSequences
 setMethod("getAllSeq", signature(obj = "udPar"),
           function(obj) {
                 if(obj@ini == 0) {
@@ -164,7 +163,7 @@ setMethod("getAllSeq", signature(obj = "udPar"),
           }
 )
 
-#' @rdname generateRandomSequences
+
 setMethod("genSeq", signature(obj = "udPar", r = "numeric", seed = "numeric"),
           function(obj, r, seed) {
 	    set.seed(seed)
@@ -182,7 +181,7 @@ setMethod("genSeq", signature(obj = "udPar", r = "numeric", seed = "numeric"),
           }
 )
 
-#' @rdname generateRandomSequences
+
 setMethod("genSeq", signature(obj = "udPar", r = "missing", seed = "numeric"),
           function(obj, r, seed) {
             set.seed(seed)
@@ -200,7 +199,7 @@ setMethod("genSeq", signature(obj = "udPar", r = "missing", seed = "numeric"),
 )
 
 
-#' @rdname generateRandomSequences 
+ 
 setMethod("genSeq", signature(obj = "udPar", r = "numeric", seed = "missing"),
           function(obj, r, seed) {
 	    seed <- sample(.Machine$integer.max, 1)
@@ -219,7 +218,7 @@ setMethod("genSeq", signature(obj = "udPar", r = "numeric", seed = "missing"),
           }
 )
 
-#' @rdname generateRandomSequences
+
 setMethod("genSeq", signature(obj = "udPar", r = "missing", seed = "missing"),
           function(obj, r, seed) {
             seed <- sample(.Machine$integer.max, 1)
@@ -237,7 +236,6 @@ setMethod("genSeq", signature(obj = "udPar", r = "missing", seed = "missing"),
           }
 )
 
-#' @rdname getDesign
 setMethod("getDesign", 
           signature(obj = "udPar"),
           function(obj) {

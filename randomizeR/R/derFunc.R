@@ -41,7 +41,7 @@ validateDerFunc <- function(object) {
 # Class definition for derFunc
 # --------------------------------------------
 
-#' Parameters generic
+# Parameters generic
 setClass("derFunc", 
          slots = c(TV = "numeric"),
          validity = validateDerFunc)
@@ -129,12 +129,12 @@ setMethod("show", "derFunc", function(object) {
 # --------------------------------------------
 
 #' Method defining the $ operator for the derFunc class
-#' 
+#' @keywords internal
 #' @inheritParams overview
 setMethod("$", "derFunc",
           function(x, name) slot(x, name))
 
-#' Function returning the sample size slot of an S4 object
+#' Function returning the targeet value slot of an S4 object
 #'
 #' @param obj object inheriting from derFunc 
 #' 

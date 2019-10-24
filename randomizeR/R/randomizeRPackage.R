@@ -17,6 +17,13 @@
 #' D. Schindler (2016) \emph{Assessment of Randomization Procedures in the Presence of 
 #' Selection and Chronological Bias}. PhD Thesis.
 #' 
+#' Uschner D, Hilgers RD, Heussen N (2018). "The impact of selection bias in randomized multi-arm parallel group clinical trials."
+#' PLOS ONE, 13(1): e0192065. doi : 10.1371/journal.pone.0192065  (URL: \url{https://doi.org/10.1371/journal.pone.0192065}).
+#'
+#' Rueckbeil MV, Hilgers RD, Heussen N (2019). "Randomization in survival studies: An evaluation method that takes into account selection and chronological bias."
+#' PLOS ONE, 14(6): e0217946. doi: 10.1371/journal.pone.0217946  (URL: \url{https://doi.org/10.1371/journal.pone.0217946}).
+#' 
+#' 
 #' @section Acknowledgement:
 #' This research is embedded in the 
 #' \href{http://www.ideal.rwth-aachen.de/}{IDeAl project}, which has received 

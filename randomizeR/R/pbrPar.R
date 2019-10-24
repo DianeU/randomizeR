@@ -124,7 +124,6 @@ blockSeq <- function(k, K = 2, ratio = rep(1, K)) {
 # Methods for pbrPar
 # --------------------------------------------
 
-#' @rdname generateAllSequences
 setMethod("getAllSeq", 
           signature(obj = "pbrPar"),
           function(obj) {
@@ -146,7 +145,7 @@ setMethod("getAllSeq",
           }
 )
 
-#' @rdname generateRandomSequences
+
 setMethod("genSeq", 
           signature(obj = "pbrPar", r = "missing", seed = "numeric"),
           function(obj, r, seed) {
@@ -163,7 +162,7 @@ setMethod("genSeq",
           }
 )
 
-#' @rdname generateRandomSequences
+
 setMethod("genSeq", 
           signature(obj = "pbrPar", r = "numeric", seed = "numeric"),
           function(obj, r, seed) {
@@ -182,7 +181,7 @@ setMethod("genSeq",
 )
 
 
-#' @rdname generateRandomSequences
+
 setMethod("genSeq", 
           signature(obj = "pbrPar", r = "missing", seed = "missing"),
           function(obj, r, seed) {
@@ -200,7 +199,7 @@ setMethod("genSeq",
           }
 )
 
-#' @rdname generateRandomSequences
+
 setMethod("genSeq", 
           signature(obj = "pbrPar", r = "numeric", seed = "missing"),
           function(obj, r, seed) {
@@ -219,7 +218,6 @@ setMethod("genSeq",
           }
 )
 
-#' @rdname getDesign
 setMethod("getDesign", 
           signature(obj = "pbrPar"),
           function(obj) {

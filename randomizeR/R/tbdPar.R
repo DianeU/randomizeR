@@ -115,7 +115,6 @@ tbdRand <- function(N, bc = N, K = 2, ratio = rep(1, K)) {
 # Methods for tbdPar
 # --------------------------------------------
 
-#' @rdname generateAllSequences
 setMethod("getAllSeq", signature(obj = "tbdPar"),
           function(obj) {
             if(obj@K != 2 || !identical(obj@ratio, c(1,1))) {
@@ -136,7 +135,7 @@ setMethod("getAllSeq", signature(obj = "tbdPar"),
           }
 )
 
-#' @rdname generateRandomSequences
+
 setMethod("genSeq", signature(obj = "tbdPar", r = "numeric", seed = "numeric"),
           function(obj, r, seed) {
 	    set.seed(seed)
@@ -153,7 +152,7 @@ setMethod("genSeq", signature(obj = "tbdPar", r = "numeric", seed = "numeric"),
           }
 )
 
-#' @rdname generateRandomSequences
+
 setMethod("genSeq", signature(obj = "tbdPar", r = "missing", seed = "numeric"),
           function(obj, r, seed) {
             set.seed(seed)
@@ -168,7 +167,7 @@ setMethod("genSeq", signature(obj = "tbdPar", r = "missing", seed = "numeric"),
           }
 )
 
-#' @rdname generateRandomSequences
+
 setMethod("genSeq", signature(obj = "tbdPar", r = "numeric", seed = "missing"),
           function(obj, r, seed) {
 	    seed <- sample(.Machine$integer.max, 1)
@@ -186,7 +185,7 @@ setMethod("genSeq", signature(obj = "tbdPar", r = "numeric", seed = "missing"),
           }
 )
 
-#' @rdname generateRandomSequences
+
 setMethod("genSeq", signature(obj = "tbdPar", r = "missing", seed = "missing"),
           function(obj, r, seed) {
 	    seed <- sample(.Machine$integer.max, 1)
@@ -202,7 +201,6 @@ setMethod("genSeq", signature(obj = "tbdPar", r = "missing", seed = "missing"),
           }
 )
 
-#' @rdname getDesign
 setMethod("getDesign", 
           signature(obj = "tbdPar"),
           function(obj) {

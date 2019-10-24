@@ -102,7 +102,7 @@ rpbrPar <- function(N, rb, K = 2, ratio = rep(1, K), groups = LETTERS[1:K],
 # --------------------------------------------
 
 
-#' @rdname generateRandomSequences
+
 setMethod("genSeq", signature(obj = "rpbrPar", r = "missing", seed = "numeric"),
           function(obj, r, seed) {
             set.seed(seed)
@@ -121,7 +121,7 @@ setMethod("genSeq", signature(obj = "rpbrPar", r = "missing", seed = "numeric"),
           }
 )
 
-#' @rdname generateRandomSequences
+
 setMethod("genSeq", signature(obj = "rpbrPar", r = "numeric", seed = "numeric"),
           function(obj, r, seed) {
             set.seed(seed)
@@ -142,7 +142,7 @@ setMethod("genSeq", signature(obj = "rpbrPar", r = "numeric", seed = "numeric"),
 )
 
 
-#' @rdname generateRandomSequences
+
 setMethod("genSeq", signature(obj = "rpbrPar", r = "missing", seed = "missing"),
           function(obj, r, seed) {
             seed <- sample(.Machine$integer.max, 1)
@@ -161,7 +161,7 @@ setMethod("genSeq", signature(obj = "rpbrPar", r = "missing", seed = "missing"),
           }
 )
 
-#' @rdname generateRandomSequences
+
 setMethod("genSeq", signature(obj = "rpbrPar", r = "numeric", seed = "missing"),
           function(obj, r, seed) {
             seed <- sample(.Machine$integer.max, 1)
@@ -183,7 +183,6 @@ setMethod("genSeq", signature(obj = "rpbrPar", r = "numeric", seed = "missing"),
 )
 
 
-#' @rdname getDesign
 setMethod("getDesign", 
           signature(obj = "rpbrPar"),
           function(obj) {

@@ -43,7 +43,7 @@ setClass("rHadaSeq", contains = c("rRandSeq","hadaSeq"))
 # Methods for hadaSeq
 # --------------------------------------------
 
-#' @rdname getProbabilities
+
 setMethod("getProb", signature = c(obj = "hadaSeq"),
           function(obj){
             r <- ncol(obj@M)
@@ -52,7 +52,7 @@ setMethod("getProb", signature = c(obj = "hadaSeq"),
           }
 )
 
-#' @rdname getDesign
+
 setMethod("getDesign", 
           signature(obj = "hadaSeq"),
           function(obj) {

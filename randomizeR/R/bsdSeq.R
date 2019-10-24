@@ -43,7 +43,7 @@ setClass("rBsdSeq", contains = c("rRandSeq", "bsdSeq"))
 # Methods for bsdSeq
 # --------------------------------------------
 
-#' @rdname getProbabilities
+
 setMethod("getProb", signature = c(obj = "bsdSeq"),
           function(obj) {
             if(obj@K == 2) {
@@ -60,7 +60,6 @@ setMethod("getProb", signature = c(obj = "bsdSeq"),
           }  
 )
 
-#' @rdname getDesign
 setMethod("getDesign", 
           signature(obj = "bsdSeq"),
           function(obj) {

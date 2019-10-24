@@ -127,7 +127,6 @@ efronRand <- function(bc, p, mti, K = 2) {
 # Methods for ebcPar
 # --------------------------------------------
 
-#' @rdname generateAllSequences
 setMethod("getAllSeq", signature(obj = "ebcPar"),
           function(obj) {
             new("ebcSeq", M = compltSet(obj), p = coin(obj),
@@ -138,7 +137,7 @@ setMethod("getAllSeq", signature(obj = "ebcPar"),
           }
 )
 
-#' @rdname generateRandomSequences
+ 
 setMethod("genSeq", signature(obj = "ebcPar", r = "numeric", seed = "numeric"),
           function(obj, r, seed) {
             set.seed(seed)
@@ -155,7 +154,7 @@ setMethod("genSeq", signature(obj = "ebcPar", r = "numeric", seed = "numeric"),
           }
 )
 
-#' @rdname generateRandomSequences
+ 
 setMethod("genSeq", signature(obj = "ebcPar", r = "missing", seed = "numeric"),
           function(obj, r, seed) {
             set.seed(seed)
@@ -171,7 +170,7 @@ setMethod("genSeq", signature(obj = "ebcPar", r = "missing", seed = "numeric"),
 )
 
 
-#' @rdname generateRandomSequences
+ 
 setMethod("genSeq", signature(obj = "ebcPar", r = "numeric", seed = "missing"),
           function(obj, r, seed) {
             seed <- sample(.Machine$integer.max, 1)
@@ -189,7 +188,7 @@ setMethod("genSeq", signature(obj = "ebcPar", r = "numeric", seed = "missing"),
           }
 )
 
-#' @rdname generateRandomSequences
+ 
 setMethod("genSeq", signature(obj = "ebcPar", r = "missing", seed = "missing"),
           function(obj, r, seed) {
             seed <- sample(.Machine$integer.max, 1)
@@ -205,7 +204,7 @@ setMethod("genSeq", signature(obj = "ebcPar", r = "missing", seed = "missing"),
           }
 )
 
-#' @rdname getDesign
+
 setMethod("getDesign", 
           signature(obj = "ebcPar"),
           function(obj) {
