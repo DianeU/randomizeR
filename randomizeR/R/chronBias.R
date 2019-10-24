@@ -257,6 +257,38 @@ setMethod("getExpectation", signature(randSeq = "randSeq", issue = "chronBias", 
           }
 )
 
+#' @rdname getExpectation
+setMethod("getExpectation", signature(randSeq = "randSeq", issue = "chronBias", endp = "weibEndp"),
+          function(randSeq, issue, endp) {
+            stopifnot(randSeq@K == 2)
+            validObject(randSeq); validObject(issue); validObject(endp)
+            n <- N(randSeq)
+            # linear time trend
+            if (issue@type == "linT") {
+              issue <- t(apply(randSeq@M, 1, function(x) {
+                0:(n-1)/(n-1) * issue@theta
+              }))
+            }
+            # logarithmic time trend			
+            else if (issue@type == "logT") {
+              issue <- t(apply(randSeq@M, 1, function(x) {
+                log(1:n)/log(n) * issue@theta
+              }))  
+            } 
+            # step time trend
+            else if (issue@type == "stepT") {
+              stopifnot(randSeq@N > issue@saltus)
+              issue <- t(apply(randSeq@M, 1, function(x) {
+                c(rep(0, issue@saltus), rep(issue@theta, n - issue@saltus))
+              }))  
+            }
+            issue[randSeq@M == 0] <- exp(issue[randSeq@M == 0])^{-1/endp@shape[1]} * 
+              endp@scale[1] * gamma(1+1/endp@shape[1])
+            issue[randSeq@M == 1] <- exp(issue[randSeq@M == 1])^{-1/endp@shape[2]} * 
+              endp@scale[2] * gamma(1+1/endp@shape[2])
+            issue
+          }
+)
 
 #' @rdname getExpectation
 setMethod("getExpectation", signature(randSeq = "randSeq", issue = "chronBias", endp = "missing"),
@@ -285,3 +317,45 @@ setMethod("getExpectation", signature(randSeq = "randSeq", issue = "chronBias", 
           }
 )
 
+
+# --------------------------------------------
+# Get Parameters for chronBias
+# --------------------------------------------
+
+#' @rdname getDistributionPars
+setMethod("getDistributionPars", signature(randSeq = "randSeq", issue = "chronBias", 
+                                           endp = "weibEndp"), 
+          function(randSeq, issue, endp) {
+            stopifnot(randSeq@K == 2)
+            validObject(randSeq); validObject(issue); validObject(endp)
+            n <- N(randSeq)
+            # linear time trend
+            if (issue@type == "linT") {
+              issue <- t(apply(randSeq@M, 1, function(x) {
+                0:(n-1)/(n-1) * issue@theta
+              }))
+            }
+            # logarithmic time trend			
+            else if (issue@type == "logT") {
+              issue <- t(apply(randSeq@M, 1, function(x) {
+                log(1:n)/log(n) * issue@theta
+              }))  
+            } 
+            # step time trend
+            else if (issue@type == "stepT") {
+              stopifnot(randSeq@N > issue@saltus)
+              issue <- t(apply(randSeq@M, 1, function(x) {
+                c(rep(0, issue@saltus), rep(issue@theta, n - issue@saltus))
+              }))  
+            }
+            shape <- matrix(numeric(0), ncol = ncol(randSeq@M), 
+                            nrow = nrow(randSeq@M))
+            scale <- matrix(numeric(0), ncol = ncol(randSeq@M), 
+                            nrow = nrow(randSeq@M))
+            for(i in 0:(randSeq@K-1)) {
+              shape[randSeq@M == i] <- endp@shape[i+1]
+              scale[randSeq@M == i] <- exp(issue[randSeq@M == i])^{-1/endp@shape[i+1]} * endp@scale[i+1]
+            }  
+            list(shape = shape, scale = scale)
+          }
+)

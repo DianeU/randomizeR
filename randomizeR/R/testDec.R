@@ -17,7 +17,7 @@
 testDec <- function(randSeq, bias, endp) {
   stopifnot(is(randSeq, "randSeq"), 
             #is(bias, "chronBias") || is(bias, "selBias") || is(bias, "power"), 
-            is(endp, "normEndp") || is(endp, "expEndp") )
+            is(endp, "normEndp") || is(endp, "expEndp") || is(endp, "weibEndp"))
   
   if (is(endp, "normEndp"))
   {
@@ -91,4 +91,30 @@ testDec <- function(randSeq, bias, endp) {
     
   }
   
+  
+  else if (is(endp, "weibEndp"))
+  {
+    stopifnot(randSeq@K == 2)
+    # if(is(bias, "chronBias")){
+    #   stop("Error: Weibull endpoints only permit the consideration of allocation bias.")
+    # }
+    # if(is(bias, "combinedBias")){
+    #   stop("Error: Weibull endpoints only permit the consideration of allocation bias.")
+    # }
+    if(is(bias, "selBias") && bias@type == "CS2"){
+      stop("Error: Selection bias for Weibull endpoints can only be calculated for convergence and divergence strategy.")
+    }
+    if(is(bias, "combinedBias") && bias@typeSB == "CS2"){
+      stop("Error: Selection bias for Weibull endpoints can only be calculated for convergence and divergence strategy.")
+    }
+    
+    if (bias@method == "sim") {
+      logRankDecSim(randSeq, bias, endp)
+    }
+    else if (bias@method == "exact") {
+      message("The rejection probabilities are calculated using an approximation formula.")
+      logRankRejectionProb(randSeq, bias, endp)
+    }
+    
+  }
 }

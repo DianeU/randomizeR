@@ -47,12 +47,18 @@ validateSurvEndp <- function(object) {
     errors <- c(errors, msg)
   }
   
-  if(length(object@cenTime) == 1 && length(object@accrualTime) == 1){
-    if (!(object@cenTime > object@accrualTime)) {
+  if(!is.na(object@cenTime) && !is.na(object@accrualTime)){
+    if (length(object@cenTime)==length(object@accrualTime) && !(object@cenTime > object@accrualTime)) {
       msg <- ("The censoring time must be greater than the accrual time.")
       errors <- c(errors, msg)
     }
   }
+
+  if (!(all(object@weights >= 0))) {
+    msg <- ("The Fleming-Harrington weight parameters must be non-negative")
+    errors <- c(errors, msg)   
+  }
+  
   if (length(errors) == 0) TRUE else errors
 }
 
@@ -63,7 +69,7 @@ validateSurvEndp <- function(object) {
 
 # Representation of the exponential endpoints
 setClass("survEndp", 
-         slots = c(cenRate="numeric", accrualTime="numeric", cenTime="numeric"),
+         slots = c(cenRate="numeric", accrualTime="numeric", cenTime="numeric", weights = "numeric"),
          validity = validateSurvEndp)
 
 
@@ -86,6 +92,6 @@ setClass("survEndp",
 #' @family endopoint types
 #' 
 #' @export
-survEndp <- function(cenRate, accrualTime, cenTime) {
-  new("survEndp", cenRate = cenRate, accrualTime = accrualTime, cenTime = cenTime)
+survEndp <- function(cenRate, accrualTime, cenTime, interval, weights) {
+  new("survEndp", cenRate = cenRate, accrualTime = accrualTime, cenTime = cenTime, weights = weights)
 }

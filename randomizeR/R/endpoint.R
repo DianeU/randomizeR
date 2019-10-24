@@ -1,5 +1,6 @@
 #' @include normEndp.R
 #' @include expEndp.R
+#' @include weibEndp.R
 NULL
 
 ###############################################
@@ -13,7 +14,7 @@ NULL
 # Common representation of the endpoints.
 #
 # @name endpoint
-setClassUnion("endpoint", c("normEndp","expEndp"))
+setClassUnion("endpoint", c("normEndp","expEndp", "weibEndp"))
 
 
 # --------------------------------------------
@@ -41,6 +42,20 @@ lambda <- function(obj) {
   if (.hasSlot(obj, "lambda")) obj@lambda else stop("object has no slot named lambda.") 
 }
 
+#' Method returning the shape parameter of an weibEndp S4 object
+#' 
+#' @param obj object of class weibEndp
+shape <- function(obj) {
+  if (.hasSlot(obj, "shape")) obj@shape else stop("object has no slot named shape.") 
+}
+
+#' Method returning the scale parameter of an weibEndp S4 object
+#' 
+#' @param obj object of class weibEndp
+scale <- function(obj) {
+  if (.hasSlot(obj, "scale")) obj@scale else stop("object has no slot named scale.") 
+}
+
 #' Method defining the $ operator for the endpoint class
 #' 
 #' @inheritParams overview
@@ -49,7 +64,7 @@ setMethod("$", "endpoint",
 
 
 # --------------------------------------------
-# Show function for endopoints
+# Show function for endpoints
 # --------------------------------------------
 
 setMethod("show", signature = "endpoint", definition = function(object){

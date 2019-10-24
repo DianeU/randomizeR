@@ -19,9 +19,11 @@ Description: This tool enables the user to choose a randomization procedure
 Roxygen: list(markdown = TRUE)
 Depends:
     R (>= 3.5.0),
+    coin,
     methods,
     ggplot2,
     plotrix, 
+    PwrGSD,
     survival
 License: GPL (>=3)
 LazyData: true
@@ -33,6 +35,7 @@ Collate:
     'abcdSeq.R'
     'survEndp.R'
     'getExpectation.R'
+    'weibEndp.R'
     'expEndp.R'
     'normEndp.R'
     'endpoint.R'

@@ -106,6 +106,21 @@ setMethod("getExpectation", signature(randSeq = "randSeq", issue = "combinedBias
             expectationCombined
 })
 
+#' @rdname getExpectation
+setMethod("getExpectation", signature(randSeq = "randSeq", issue = "combinedBias",
+                                      endp = "weibEndp"),
+          function(randSeq, issue, endp) {
+            stopifnot(randSeq@K == 2)
+            validObject(randSeq); validObject(endp)
+            chronBias <- chronBias(issue@typeCB, issue@theta, issue@method, issue@alpha)
+            selBias <- selBias(issue@typeSB, issue@eta, issue@method, issue@alpha)
+            expectationSB <- getExpectation(randSeq, selBias, endp)
+            expectationCB <- getExpectation(randSeq, chronBias, endp)
+            expectationNB <- getExpectation(randSeq, issue = "missing", endp)
+            # Combined expectation
+            expectationCombined <- expectationSB * expectationCB / expectationNB
+            expectationCombined
+})
 
 #' @rdname getExpectation
 setMethod("getExpectation", signature(randSeq = "randSeq", issue = "combinedBiasStepTrend",
@@ -151,6 +166,23 @@ setMethod("getExpectation", signature(randSeq = "randSeq", issue = "combinedBias
             expectationCombined
 })
 
+#' @rdname getExpectation
+setMethod("getExpectation", signature(randSeq = "randSeq", issue = "combinedBiasStepTrend",
+                                      endp = "weibEndp"),
+          function(randSeq, issue, endp) {
+            stopifnot(randSeq@K == 2)
+            validObject(randSeq); validObject(endp)
+            chronBias <- chronBias(issue@typeCB, issue@theta, issue@method, issue@saltus,
+                                   issue@alpha)
+            selBias <- selBias(issue@typeSB, issue@eta, issue@method, issue@alpha)
+            expectationSB <- getExpectation(randSeq, selBias, endp)
+            expectationCB <- getExpectation(randSeq, chronBias, endp)
+            expectationNB <- getExpectation(randSeq, issue = "missing", endp)
+            # Combined expectation
+            expectationCombined <- expectationSB * expectationCB / expectationNB
+            expectationCombined
+})
+
 # @rdname getStat
 setMethod("getStat", signature(randSeq = "randSeq", issue = "combinedBias",
                                endp = "endpoint"),
@@ -169,8 +201,6 @@ setMethod("getStat", signature(randSeq = "randSeq", issue = "combinedBias",
           }
 )
 
-
-
 # @rdname getStat
 setMethod("getStat", signature(randSeq = "randSeq", issue = "combinedBiasStepTrend",
                                endp = "endpoint"),
@@ -185,5 +215,60 @@ setMethod("getStat", signature(randSeq = "randSeq", issue = "combinedBiasStepTre
               colnames(D) <- paste("rejection prob.", " ", issue@method, "(combined)", sep = "")
               D
             }
+          }
+)
+
+
+
+# --------------------------------------------
+# Get Parameters for combined Bias
+# --------------------------------------------
+
+#' @rdname getDistributionPars
+setMethod("getDistributionPars", signature(randSeq = "randSeq", issue = "combinedBias", 
+                                           endp = "weibEndp"), 
+          function(randSeq, issue, endp) {
+            stopifnot(randSeq@K == 2)
+            validObject(randSeq); validObject(endp)
+            chronBias <- chronBias(issue@typeCB, issue@theta, issue@method, issue@alpha)
+            selBias <- selBias(issue@typeSB, issue@eta, issue@method, issue@alpha)
+            scaleSB <- getDistributionPars(randSeq, selBias, endp)$scale
+            scaleCB <- getDistributionPars(randSeq, chronBias, endp)$scale
+
+            # Combined distribution parameters
+            shape <- matrix(numeric(0), ncol = ncol(randSeq@M), 
+                            nrow = nrow(randSeq@M))
+            scale <- matrix(numeric(0), ncol = ncol(randSeq@M), 
+                            nrow = nrow(randSeq@M))
+            for(i in 0:(randSeq@K-1)) {
+              shape[randSeq@M == i] <- endp@shape[i+1]
+              scale[randSeq@M == i] <- scaleSB[randSeq@M == i]*scaleCB[randSeq@M == i]/endp@scale[i+1]
+            }  
+            list(shape = shape, scale = scale)
+          }
+)
+
+#' @rdname getDistributionPars
+setMethod("getDistributionPars", signature(randSeq = "randSeq", issue = "combinedBiasStepTrend", 
+                                           endp = "weibEndp"), 
+          function(randSeq, issue, endp) {
+            stopifnot(randSeq@K == 2)
+            validObject(randSeq); validObject(endp)
+            chronBias <- chronBias(issue@typeCB, issue@theta, issue@method, issue@saltus,
+                                   issue@alpha)
+            selBias <- selBias(issue@typeSB, issue@eta, issue@method, issue@alpha)
+            scaleSB <- getDistributionPars(randSeq, selBias, endp)$scale
+            scaleCB <- getDistributionPars(randSeq, chronBias, endp)$scale
+            
+            # Combined distribution parameters
+            shape <- matrix(numeric(0), ncol = ncol(randSeq@M), 
+                            nrow = nrow(randSeq@M))
+            scale <- matrix(numeric(0), ncol = ncol(randSeq@M), 
+                            nrow = nrow(randSeq@M))
+            for(i in 0:(randSeq@K-1)) {
+              shape[randSeq@M == i] <- endp@shape[i+1]
+              scale[randSeq@M == i] <- scaleSB[randSeq@M == i]*scaleCB[randSeq@M == i]/endp@scale[i+1]
+            }  
+            list(shape = shape, scale = scale)
           }
 )

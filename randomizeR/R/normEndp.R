@@ -79,7 +79,7 @@ setMethod("getExpectation", signature(randSeq = "randSeq", issue = "missing",
                                       endp = "normEndp"), 
           function(randSeq, endp) {
             stopifnot(randSeq@K == length(endp@mu))
-            validObject(randSeq); validObject(normEndp)
+            validObject(randSeq); validObject(endp)
             expectation <- matrix(numeric(0), ncol = ncol(randSeq@M), 
                       nrow = nrow(randSeq@M))
             for(i in 0:(randSeq@K-1)) {
@@ -88,4 +88,24 @@ setMethod("getExpectation", signature(randSeq = "randSeq", issue = "missing",
             expectation
           }
 )
+
+#' @rdname getDistributionPars
+setMethod("getDistributionPars", signature(randSeq = "randSeq", issue = "missing", 
+                                           endp = "weibEndp"), 
+          function(randSeq, endp) {
+            stopifnot(randSeq@K == length(endp@mu))
+            validObject(randSeq); validObject(endp)
+            
+            mu <- matrix(numeric(0), ncol = ncol(randSeq@M), 
+                            nrow = nrow(randSeq@M))
+            sigma <- matrix(numeric(0), ncol = ncol(randSeq@M), 
+                            nrow = nrow(randSeq@M))
+            for(i in 0:(randSeq@K-1)) {
+              mu[randSeq@M == i] <- endp@mu[i+1]
+              sigma[randSeq@M == i] <- endp@sigma[i+1]
+            }  
+            list(mu = mu, sigma = sigma)
+          }
+)
+
 

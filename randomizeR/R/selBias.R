@@ -177,7 +177,7 @@ setMethod("getStat", signature(randSeq = "randSeq", issue = "selBias", endp = "n
 # @rdname getStat
 setMethod("getStat", signature(randSeq = "randSeq", issue = "selBias", endp = "expEndp"),
           function(randSeq, issue, endp) {
-            stopifnot(validObject(randSeq), validObject(issue), validObject(endp), randSeq@K == length(endp@lambda))
+            stopifnot(validObject(randSeq), validObject(issue), validObject(endp), randSeq@K == 2)
             if (issue@method == "sim") {
               D <- data.frame(testDec(randSeq, issue, endp))
               colnames(D) <- paste("testDec(", issue@type, ")", sep = "")
@@ -189,6 +189,26 @@ setMethod("getStat", signature(randSeq = "randSeq", issue = "selBias", endp = "e
             }
           }
 )
+
+# @rdname getStat
+setMethod("getStat", signature(randSeq = "randSeq", issue = "selBias", endp = "weibEndp"),
+          function(randSeq, issue, endp) {
+            stopifnot(validObject(randSeq), validObject(issue), validObject(endp), randSeq@K == 2)
+            if (issue@method == "sim") {
+              D <- data.frame(testDec(randSeq, issue, endp))
+              colnames(D) <- paste("testDec(", issue@type, ")", sep = "")
+              D
+            } else {
+              D <- data.frame(testDec(randSeq, issue, endp))
+              colnames(D) <- paste("P(rej)(", issue@type, ")", sep = "")
+              D
+            }
+          }
+)
+
+# --------------------------------------------
+# Get Expectation for selBias
+# --------------------------------------------
 
 #' @rdname getExpectation
 setMethod("getExpectation", signature(randSeq = "randSeq", issue = "selBias",
@@ -214,6 +234,7 @@ setMethod("getExpectation", signature(randSeq = "randSeq", issue = "selBias",
                 issue
               }))
             } else if (issue@type == "DS") {
+              # divergence strategy
               issue <- t(apply(randSeq@M, 1, function(x) {
                 issue <- sign(cumsum(2*x - 1)) * issue@eta * (-1)
                 issue <- issue[-length(issue)]
@@ -243,7 +264,7 @@ setMethod("getExpectation", signature(randSeq = "randSeq", issue = "selBias",
               }))
             }
             else if (issue@type == "DS") {
-              # convergence strategy
+              # divergence strategy
               issue <- t(apply(randSeq@M, 1, function(x) {
                 issue <- sign(cumsum(2*x - 1)) * issue@eta * (-1)
                 issue <- issue[-length(issue)]
@@ -254,6 +275,38 @@ setMethod("getExpectation", signature(randSeq = "randSeq", issue = "selBias",
             issue[randSeq@M == 0] <- exp(issue[randSeq@M == 0]) * endp@lambda[1]
             issue[randSeq@M == 1] <- exp(issue[randSeq@M == 1]) * endp@lambda[2]
             1/issue
+          }
+)
+
+#' @rdname getExpectation
+setMethod("getExpectation", signature(randSeq = "randSeq", issue = "selBias",
+                                      endp = "weibEndp"),
+          function(randSeq, issue, endp) {
+            stopifnot(randSeq@K == 2)
+            validObject(randSeq); validObject(issue); validObject(endp)
+            if (issue@type == "CS") {
+              # convergence strategy
+              issue <- t(apply(randSeq@M, 1, function(x) {
+                issue <- sign(cumsum(2*x - 1)) * issue@eta
+                issue <- issue[-length(issue)]
+                issue <- c(0, issue)
+                issue
+              }))
+            }
+            else if (issue@type == "DS") {
+              # divergence strategy
+              issue <- t(apply(randSeq@M, 1, function(x) {
+                issue <- sign(cumsum(2*x - 1)) * issue@eta * (-1)
+                issue <- issue[-length(issue)]
+                issue <- c(0, issue)
+                issue
+              }))
+            }
+            issue[randSeq@M == 0] <- exp(issue[randSeq@M == 0])^{-1/endp@shape[1]} * 
+              endp@scale[1] * gamma(1+1/endp@shape[1])
+            issue[randSeq@M == 1] <- exp(issue[randSeq@M == 1])^{-1/endp@shape[2]} * 
+              endp@scale[2] * gamma(1+1/endp@shape[2])
+            issue
           }
 )
 
@@ -290,5 +343,45 @@ setMethod("getExpectation", signature(randSeq = "randSeq", issue = "selBias",
             }
 
             issue
+          }
+)
+
+# --------------------------------------------
+# Get Parameters for selBias
+# --------------------------------------------
+
+#' @rdname getDistributionPars
+setMethod("getDistributionPars", signature(randSeq = "randSeq", issue = "selBias", 
+                                           endp = "weibEndp"), 
+          function(randSeq, issue, endp) {
+            stopifnot(randSeq@K == 2)
+            validObject(randSeq); validObject(issue); validObject(endp)
+            if (issue@type == "CS") {
+              # convergence strategy
+              issue <- t(apply(randSeq@M, 1, function(x) {
+                issue <- sign(cumsum(2*x - 1)) * issue@eta
+                issue <- issue[-length(issue)]
+                issue <- c(0, issue)
+                issue
+              }))
+            }
+            else if (issue@type == "DS") {
+              # divergence strategy
+              issue <- t(apply(randSeq@M, 1, function(x) {
+                issue <- sign(cumsum(2*x - 1)) * issue@eta * (-1)
+                issue <- issue[-length(issue)]
+                issue <- c(0, issue)
+                issue
+              }))
+            }
+            shape <- matrix(numeric(0), ncol = ncol(randSeq@M), 
+                            nrow = nrow(randSeq@M))
+            scale <- matrix(numeric(0), ncol = ncol(randSeq@M), 
+                            nrow = nrow(randSeq@M))
+            for(i in 0:(randSeq@K-1)) {
+              shape[randSeq@M == i] <- endp@shape[i+1]
+              scale[randSeq@M == i] <- exp(issue[randSeq@M == i])^{-1/endp@shape[i+1]} * endp@scale[i+1]
+            }  
+            list(shape = shape, scale = scale)
           }
 )

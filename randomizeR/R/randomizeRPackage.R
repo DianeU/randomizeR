@@ -46,6 +46,8 @@
 #' @importFrom graphics abline axis box lines plot.new plot.window title
 #' @importFrom grDevices col2rgb rainbow
 #' @importFrom graphics legend
+#' @importFrom coin logrank_test
+#' @importFrom PwrGSD wtdlogrank
 #' @importFrom stats pbeta 
 #' @importFrom stats integrate dexp pchisq pexp pnorm punif qexp qf qnorm rexp runif      
 NULL
