@@ -93,7 +93,7 @@ hadaRand <- function(bc) {
 # --------------------------------------------
 # Methods for hadaPar
 # --------------------------------------------
-
+#' @rdname generateAllSequences
 setMethod("getAllSeq", signature(obj = "hadaPar"),
           function(obj) {
             if(obj@N > 12) stop("Only possible up to N equals 12.")
@@ -110,7 +110,7 @@ setMethod("getAllSeq", signature(obj = "hadaPar"),
           }
 )
 
-
+#' @rdname generateRandomSequences
 setMethod("genSeq", signature(obj = "hadaPar", r = "numeric", seed = "numeric"),
           function(obj, r, seed) {
             set.seed(seed)
@@ -124,7 +124,7 @@ setMethod("genSeq", signature(obj = "hadaPar", r = "numeric", seed = "numeric"),
           }
 )
 
-
+#' @rdname generateRandomSequences
 setMethod("genSeq", signature(obj = "hadaPar", r = "missing", seed = "numeric"),
           function(obj, r, seed) {
             set.seed(seed)
@@ -140,7 +140,7 @@ setMethod("genSeq", signature(obj = "hadaPar", r = "missing", seed = "numeric"),
 )
 
 
-
+#' @rdname generateRandomSequences
 setMethod("genSeq", signature(obj = "hadaPar", r = "numeric", seed = "missing"),
           function(obj, r, seed) {
             seed <- sample(.Machine$integer.max, 1)
@@ -155,7 +155,7 @@ setMethod("genSeq", signature(obj = "hadaPar", r = "numeric", seed = "missing"),
           }
 )
 
-
+#' @rdname generateRandomSequences
 setMethod("genSeq", signature(obj = "hadaPar", r = "missing", seed = "missing"),
           function(obj, r, seed) {
             seed <- sample(.Machine$integer.max, 1)
@@ -170,7 +170,7 @@ setMethod("genSeq", signature(obj = "hadaPar", r = "missing", seed = "missing"),
 		            seed = seed)
           }
 )
-
+#' @rdname getDesign
 setMethod("getDesign", 
           signature(obj = "hadaPar"),
           function(obj) {

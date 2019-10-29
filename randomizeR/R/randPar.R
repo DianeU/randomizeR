@@ -323,15 +323,15 @@ setMethod("show", "randPar", function(object) {
 #' @examples
 #' 
 #' 
-#' ## All randomization sequences of Efron's Biased Coin Design with p = 0.667 for N = 6
+#' # All randomization sequences of Efron's Biased Coin Design with p = 0.667 for N = 6
 #' myPar <- ebcPar(6, 0.667)
 #' getAllSeq(myPar)
 #' 
-#' ## All randomization sequences Big Stick Design with mti = 2 for N = 6
+#' # All randomization sequences of Big Stick Design with mti = 2 for N = 6
 #' myPar <- bsdPar(6, 2)
 #' getAllSeq(myPar)
 #' 
-#' ## All randomization sequences of Permuted Block Randomization with block sizes 4 and 2
+#' # All randomization sequences of Permuted Block Randomization with block sizes 4 and 2
 #' myPar <- pbrPar(c(4, 2))
 #' getAllSeq(myPar)
 #' 
@@ -376,17 +376,17 @@ setGeneric("getAllSeq", function(obj) standardGeneric("getAllSeq"))
 #' 
 #' @examples
 #' 
-#' ## Generate randomization sequences using Complete Randomization for N = 10
+#' # Generate randomization sequences using Complete Randomization for N = 10
 #' myPar <- crPar(10)
 #' genSeq(myPar, 4)
 #' genSeq(myPar)
 
-#' ## Generate randomization sequences using the Random Allocation Rule for N = 10
+#' # Generate randomization sequences using the Random Allocation Rule for N = 10
 #' myPar <- rarPar(10)
 #' genSeq(myPar, 4)
 #' genSeq(myPar)
 #' 
-#' ## Generate randomization sequences using the Maximal Procedure with mti = 2 and N = 10
+#' # Generate randomization sequences using the Maximal Procedure with mti = 2 and N = 10
 #' myPar <- mpPar(10, 2)
 #' genSeq(myPar, 4)
 #' genSeq(myPar)

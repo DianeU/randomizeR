@@ -44,7 +44,7 @@ setClass("rTbdSeq", contains = c("rRandSeq", "tbdSeq"))
 # Methods for tbdSeq
 # --------------------------------------------
 
-
+#' @rdname getProbabilities
 setMethod("getProb", signature = c(obj = "tbdSeq"),
           function(obj) {
             # every sequence equally probable, generate same probability
@@ -59,7 +59,7 @@ setMethod("getProb", signature = c(obj = "tbdSeq"),
           }
 )
 
-
+#' @rdname getDesign
 setMethod("getDesign", 
           signature(obj = "tbdSeq"),
           function(obj) {

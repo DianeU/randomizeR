@@ -33,7 +33,7 @@ setClass("rRtbdSeq", slots=c(rb = "numeric", bc = "list", filledBlock = "logical
 # Methods for rtbdSeq
 # --------------------------------------------
 
-
+#' @rdname getDesign
 setMethod("getDesign", 
           signature(obj = "rRtbdSeq"),
           function(obj) {

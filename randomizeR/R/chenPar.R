@@ -137,7 +137,7 @@ chenRand <- function(N, mti, p, K = 2) {
 # --------------------------------------------
 # Methods for chenPar
 # --------------------------------------------
-
+#' @rdname generateAllSequences
 setMethod("getAllSeq", signature(obj = "chenPar"),
           function(obj) {
             allSeqs <- compltSet(obj)
@@ -156,7 +156,7 @@ setMethod("getAllSeq", signature(obj = "chenPar"),
           }
 )
 
- 
+#' @rdname generateRandomSequences
 setMethod("genSeq", signature(obj = "chenPar", r = "numeric", seed = "numeric"),
           function(obj, r, seed) {
             set.seed(seed)
@@ -173,7 +173,7 @@ setMethod("genSeq", signature(obj = "chenPar", r = "numeric", seed = "numeric"),
                 seed = seed)
           }
 )
- 
+#' @rdname generateRandomSequences
 setMethod("genSeq", signature(obj = "chenPar", r = "numeric", seed = "missing"),
           function(obj, r, seed) {
             seed <- sample(.Machine$integer.max, 1)
@@ -193,7 +193,7 @@ setMethod("genSeq", signature(obj = "chenPar", r = "numeric", seed = "missing"),
 )
 
 
- 
+#' @rdname generateRandomSequences 
 setMethod("genSeq", signature(obj = "chenPar", r = "missing", seed = "numeric"),
           function(obj, r, seed) {
             set.seed(seed)
@@ -210,7 +210,7 @@ setMethod("genSeq", signature(obj = "chenPar", r = "missing", seed = "numeric"),
 )
 
 
- 
+#' @rdname generateRandomSequences
 setMethod("genSeq", signature(obj = "chenPar", r = "missing", seed = "missing"),
           function(obj, r, seed) {
             seed <- sample(.Machine$integer.max, 1)
@@ -226,7 +226,7 @@ setMethod("genSeq", signature(obj = "chenPar", r = "missing", seed = "missing"),
                 seed = seed)
           }
 )
-
+#' @rdname getDesign
 setMethod("getDesign", 
           signature(obj = "chenPar"),
           function(obj) {

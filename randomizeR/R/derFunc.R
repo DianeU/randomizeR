@@ -134,7 +134,7 @@ setMethod("show", "derFunc", function(object) {
 setMethod("$", "derFunc",
           function(x, name) slot(x, name))
 
-#' Function returning the targeet value slot of an S4 object
+#' Function returning the target value slot of an S4 object
 #'
 #' @param obj object inheriting from derFunc 
 #' 

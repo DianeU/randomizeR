@@ -122,7 +122,7 @@ gbcdRand <- function(N, rho, K = 2) {
 # --------------------------------------------
 # Methods for gbcdPar
 # --------------------------------------------
-
+#' @rdname generateAllSequences
 setMethod("getAllSeq", signature(obj = "gbcdPar"),
           function(obj) {
             allSeqs <- compltSet(obj) 
@@ -140,7 +140,7 @@ setMethod("getAllSeq", signature(obj = "gbcdPar"),
           }
 )
 
-
+#' @rdname generateRandomSequences
 setMethod("genSeq", signature(obj = "gbcdPar", r = "numeric", seed = "numeric"),
           function(obj, r, seed) {
             set.seed(seed)
@@ -156,7 +156,7 @@ setMethod("genSeq", signature(obj = "gbcdPar", r = "numeric", seed = "numeric"),
                 seed = seed)
           }
 )
-
+#' @rdname generateRandomSequences
 setMethod("genSeq", signature(obj = "gbcdPar", r = "numeric", seed = "missing"),
           function(obj, r, seed) {
             seed <- sample(.Machine$integer.max, 1)
@@ -175,7 +175,7 @@ setMethod("genSeq", signature(obj = "gbcdPar", r = "numeric", seed = "missing"),
 )
 
 
-
+#' @rdname generateRandomSequences
 setMethod("genSeq", signature(obj = "gbcdPar", r = "missing", seed = "numeric"),
           function(obj, r, seed) {
             set.seed(seed)
@@ -191,7 +191,7 @@ setMethod("genSeq", signature(obj = "gbcdPar", r = "missing", seed = "numeric"),
 )
 
 
-
+#' @rdname generateRandomSequences
 setMethod("genSeq", signature(obj = "gbcdPar", r = "missing", seed = "missing"),
           function(obj, r, seed) {
             seed <- sample(.Machine$integer.max, 1)
@@ -207,7 +207,7 @@ setMethod("genSeq", signature(obj = "gbcdPar", r = "missing", seed = "missing"),
           }
 )
 
-
+#' @rdname getDesign
 setMethod("getDesign", 
           signature(obj = "gbcdPar"),
           function(obj) {

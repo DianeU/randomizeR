@@ -5,7 +5,7 @@
 # setwd("C:/Users/kfuge/Documents/GitHub/randomizeR")
 # setwd("C:/Users/Marcia/Documents/randomizeR-Logrank")
 # setwd("C:/Users/Marcia/Documents/randomizeR-Logrank")
-setwd("C:/Users/mmart/Desktop/randomizeR")
+setwd("C:\\Users\\mmartini\\Desktop\\randomizeR")
 
 
 library(knitr)
@@ -27,7 +27,7 @@ current.code <- as.package("randomizeR")
 # load_all(current.code) 
  test(current.code)
 # load_all(current.code)
-# run_examples(current.code)
+ run_examples(current.code)
 # build_vignettes(current.code)
 # check(current.code)
 # build(current.code)

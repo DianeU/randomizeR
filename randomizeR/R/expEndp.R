@@ -65,14 +65,7 @@ setClass("expEndp",
 #' #Set the Parameters of two exponentially distributed endpoints
 #' endp <- expEndp(lambda = c(1, 2))
 #' @export
-expEndp <- function(lambda, 
-                    cenRate = NULL, accrualTime = 0, cenTime = NULL) {
-
-                    if(is.null(cenRate) && is.null(cenTime)){
-                      cenRate <- min(lambda)*10^{-5}
-                      cenTime <- qexp(1-10^{-5}, rate = min(lambda))
-                    } 
-                    # elseif ThrowError MSG
+expEndp <- function(lambda, cenRate, accrualTime = 0, cenTime){
   
   new("expEndp", lambda = lambda, cenRate = cenRate, accrualTime = accrualTime, cenTime = cenTime)
 }
