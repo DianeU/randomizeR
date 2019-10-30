@@ -9,7 +9,7 @@ Authors@R: c(
     person(given="Marcia Viviane", family="Rueckbeil", email="mrueckbeil@ukaachen.de", role ="ctb"),
     person(given="Martin", family="Manolov", email="martin.manolov@rwth-aachen.de", role="ctb"),
 	person(given="Thi Mui", family="Pham", email="thi.mui.pham@rwth-aachen.de", role="ctb"),
-	person(given="Michael", family="Martini",email="mmartini@ukaachen.de"),
+	person(given="Michael", family="Martini",email="mmartini@ukaachen.de", role="ctb"),
 	person(given="Ralf-Dieter", family="Hilgers", email="rhilgers@ukaachen.de", role=c("aut","ths")),
 	person(given="Nicole", family="Heussen", email="nheussen@ukaachen.de", role=c("aut","ths"))
     )

@@ -63,7 +63,7 @@ setClass("expEndp",
 #' 
 #' @examples
 #' #Set the Parameters of two exponentially distributed endpoints
-#' endp <- expEndp(lambda = c(1, 2))
+#' endp <- expEndp(lambda = c(1, 2), cenTime = 10, cenRate = 0.01)
 #' @export
 expEndp <- function(lambda, cenRate, accrualTime = 0, cenTime){
   

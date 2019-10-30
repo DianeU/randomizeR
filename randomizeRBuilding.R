@@ -4,8 +4,7 @@
 # setwd("C:/Users/mmanolov/Documents/GitHub/randomizeR")
 # setwd("C:/Users/kfuge/Documents/GitHub/randomizeR")
 # setwd("C:/Users/Marcia/Documents/randomizeR-Logrank")
-# setwd("C:/Users/Marcia/Documents/randomizeR-Logrank")
-setwd("C:\\Users\\mmartini\\Desktop\\randomizeR")
+setwd("C:/Users/mmartini/Desktop/randomizeR")
 
 
 library(knitr)
@@ -20,17 +19,17 @@ library(testthat)
 #devtools::install_github("gustavdelius/roxygen") 
 
 current.code <- as.package("randomizeR")
-# devtools::use_vignette("randomizeR")
+#devtools::use_vignette("randomizeR")
 # in case something was deleted or renamed, run (twice)
-# load_all(current.code, recompile = TRUE)
- document(current.code)
-# load_all(current.code) 
- test(current.code)
-# load_all(current.code)
- run_examples(current.code)
-# build_vignettes(current.code)
-# check(current.code)
-# build(current.code)
+load_all(current.code, recompile = TRUE)
+document(current.code)
+load_all(current.code) 
+#test(current.code)
+load_all(current.code)
+run_examples(current.code)
+build_vignettes(current.code)
+check(current.code)
+#build(current.code, path = 'C:\\Users\\mmartini\\Desktop\\randomizeR')
 ### devtools::release(pkg=current.code) ### Publish package on CRAN
 
 # generate manual
@@ -42,4 +41,5 @@ if (file.exists("./randomizeR.pdf")) file.remove("./randomizeR.pdf")
 
 # library(randomizeR)
 # vignette(package = "randomizeR")
+# vignette(topic = 'article', package = "randomizeR")
 # vignette()
