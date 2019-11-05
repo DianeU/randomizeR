@@ -42,7 +42,7 @@
 #' @docType package
 #' @name randomizeR-package
 #' @aliases randomizeR
-#' @author David Schindler \email{dschindler@@ukaachen.de}, Diane Uschner \email{duschner@@ukaachen.de}, Ralf-Dieter Hilgers, Nicole Heussen, Marcia Viviane Rueckbeil \email{mrueckbeil@@ukaachen.de}
+#' @author David Schindler \email{dv.schindler@@gmail.com}, Diane Uschner \email{Diane.Uschner@@gmail.com}, Ralf-Dieter Hilgers, Nicole Heussen, Marcia Viviane Rueckbeil \email{marcia.rueckbeil@@rwth-aachen.de}
 #' 
 #' @import methods
 #' @import ggplot2

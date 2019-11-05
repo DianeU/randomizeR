@@ -4,12 +4,12 @@ Version: 2.0
 Date: 2019-10-01
 Encoding: UTF-8
 Authors@R: c(
-    person(given="David", family="Schindler", email="dschindler@ukaachen.de", role="aut"),
-    person(given="Diane", family="Uschner", email="duschner@ukaachen.de", role=c("aut","cre")),
-    person(given="Marcia Viviane", family="Rueckbeil", email="mrueckbeil@ukaachen.de", role ="ctb"),
+    person(given="David", family="Schindler", email="dv.schindler@gmail.com", role="aut"),
+    person(given="Diane", family="Uschner", email="Diane.Uschner@gmail.com", role=c("aut","cre")),
+    person(given="Marcia Viviane", family="Rueckbeil", email="marcia.rueckbeil@rwth-aachen.de", role ="ctb"),
     person(given="Martin", family="Manolov", email="martin.manolov@rwth-aachen.de", role="ctb"),
 	person(given="Thi Mui", family="Pham", email="thi.mui.pham@rwth-aachen.de", role="ctb"),
-	person(given="Michael", family="Martini",email="mmartini@ukaachen.de", role="ctb"),
+	person(given="Michael", family="Martini",email="michael.martini1@rwth-aachen.de", role="ctb"),
 	person(given="Ralf-Dieter", family="Hilgers", email="rhilgers@ukaachen.de", role=c("aut","ths")),
 	person(given="Nicole", family="Heussen", email="nheussen@ukaachen.de", role=c("aut","ths"))
     )

@@ -4,7 +4,7 @@
 # setwd("C:/Users/mmanolov/Documents/GitHub/randomizeR")
 # setwd("C:/Users/kfuge/Documents/GitHub/randomizeR")
 # setwd("C:/Users/Marcia/Documents/randomizeR-Logrank")
-setwd("C:/Users/mmartini/Desktop/randomizeR")
+setwd("C:\\Users\\49171\\Documents\\randomizeR")
 
 
 library(knitr)
@@ -13,7 +13,7 @@ library(testthat)
 # devtools::session_info() ## Check package information
 
 # For new Packages use this
-# create("randomizeR")
+#create("randomizeR")
 
 ### Current work around
 #devtools::install_github("gustavdelius/roxygen") 
@@ -21,7 +21,7 @@ library(testthat)
 current.code <- as.package("randomizeR")
 #devtools::use_vignette("randomizeR")
 # in case something was deleted or renamed, run (twice)
-load_all(current.code, recompile = TRUE)
+#load_all(current.code, recompile = TRUE)
 document(current.code)
 load_all(current.code) 
 #test(current.code)
