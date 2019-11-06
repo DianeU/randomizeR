@@ -66,10 +66,10 @@ setClass("weibEndp",
 #' @seealso Compute exact or simulated type-I-error: \code{\link{assess}}.
 #' 
 #' @export
-weibEndp <- function(shape = c(1, 1), scale = c(1, 1), cenRate = min(shape)*10^{-5}, accrualTime = 0, 
-                      cenTime = qweibull(1-10^{-5}, shape = min(shape), scale = max(scale)), weights = c(0, 0)) {
+weibEndp <- function(shape = c(1, 1), scale = c(1, 1), cenRate , accrualTime = 0, 
+                      cenTime, weights = c(0, 0), c , exp ) {
   new("weibEndp", shape = shape, scale = scale, cenRate = cenRate, accrualTime = accrualTime, 
-      cenTime = cenTime, weights = weights)
+      cenTime = cenTime, weights = weights, c = c , exp = exp)
 }
 
 

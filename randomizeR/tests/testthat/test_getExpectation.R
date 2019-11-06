@@ -45,5 +45,23 @@ test_that("tests of equality of getExpectation", {
   biasCB <- chronBias("linT", log(1/2), "exact")
   expect_equal(getExpectation(randSeq, biasCB, endp), 
                matrix(rep(c(0.5, 1), 6) / exp(log(1/2)*(0:11)/11), nrow = 1))
+  
+  # tenth scenario weibEndpoint and CS selection bias
+  endp     <- weibEndp(shape = , scale =)
+  biasSB <- selBias("CS", log(2), "exact")
+  expect_equal(getExpectation(randSeq, biasSB, endp), 
+               matrix(rep(c(0.5, 2), 6), nrow = 1))
+  
+  # eleventh scenario weibEndpoint and CS2 selection bias
+  biasSB <- selBias("CS2", log(2), "exact")
+  expect_equal(getExpectation(randSeq, biasSB, endp), 
+               matrix(rep(c(0.5, 2), 6), nrow = 1))
+  # twelves scenario weibEndpoint with Parameters equal to an expEndpoint
+  
+  expect_equal(getExpectation(randSeq, biasSB, weibEndp(shape = c(1,1) , scale = c(0.5,1.5))), 
+               getExpectation(randSeq, biasSB, expEndp(lamda = c(0.5,1.5))))
+  
+  # thirteehns scenario weibEndpoint with CS2 bias and missing c and d (Fail Test)
+  
   }
 )

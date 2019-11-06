@@ -3,6 +3,7 @@
 #' @include testDec.R
 #' @include getExpectation.R
 #' @include endpoint.R
+#' @include getParameters.R
 NULL
 
 ###############################################
@@ -302,11 +303,25 @@ setMethod("getExpectation", signature(randSeq = "randSeq", issue = "selBias",
                 issue
               }))
             }
-            issue[randSeq@M == 0] <- exp(issue[randSeq@M == 0])^{-1/endp@shape[1]} * 
-              endp@scale[1] * gamma(1+1/endp@shape[1])
-            issue[randSeq@M == 1] <- exp(issue[randSeq@M == 1])^{-1/endp@shape[2]} * 
-              endp@scale[2] * gamma(1+1/endp@shape[2])
-            issue
+            
+            if (issue@type == "CS2"){
+              # Add a Sanity Check for C/D default
+              issue[randSeq@M == 0] <-  endp@scale[1] * ((endp@shape[1] + endp@exp[1])/endp@shape[1]*
+                endp@c[1]*endp@scale[1]^{endp@exp[1]})^{1/(endp@shape[1] + endp@exp[1])}*gamma(1+1/(endp@shape[1]*endp@exp[1]))
+              issue[randSeq@M == 1] <- endp@scale[2] * ((endp@shape[2] + endp@exp[2])/endp@shape[2]*
+                endp@c[2]*endp@scale[2]^{endp@exp[2]})^{1/(endp@shape[2] + endp@exp[2])}*gamma(1+1/(endp@shape[2]*endp@exp[2]))
+              issue
+            }
+            
+            else{
+              
+              issue[randSeq@M == 0] <- exp(issue[randSeq@M == 0])^{-1/endp@shape[1]} * 
+                endp@scale[1] * gamma(1+1/endp@shape[1])
+              issue[randSeq@M == 1] <- exp(issue[randSeq@M == 1])^{-1/endp@shape[2]} * 
+                endp@scale[2] * gamma(1+1/endp@shape[2])
+              issue
+              
+            }
           }
 )
 
@@ -374,14 +389,28 @@ setMethod("getDistributionPars", signature(randSeq = "randSeq", issue = "selBias
                 issue
               }))
             }
+            
+            
             shape <- matrix(numeric(0), ncol = ncol(randSeq@M), 
                             nrow = nrow(randSeq@M))
             scale <- matrix(numeric(0), ncol = ncol(randSeq@M), 
                             nrow = nrow(randSeq@M))
-            for(i in 0:(randSeq@K-1)) {
-              shape[randSeq@M == i] <- endp@shape[i+1]
-              scale[randSeq@M == i] <- exp(issue[randSeq@M == i])^{-1/endp@shape[i+1]} * endp@scale[i+1]
-            }  
+            if (issue@type == "CS2") {
+              # Add a Sanity Check for C/D Default
+              for(i in 0:(randSeq@K-1)) {
+                # Check for Correct definition of Weibull  
+                shape[randSeq@M == i] <- endp@shape[i+1] + endp@exp[i+1]
+                scale[randSeq@M == i] <- endp@scale[i+1] * ((endp@shape[i+1] + endp@exp[i+1])/endp@shape[i+1]*
+                  endp@c[i+1]*endp@scale[i+1]^{endp@exp[i+1]})^{1/(endp@shape[i+1] + endp@exp[i+1])}
+              }
+            }
+            else {
+              for(i in 0:(randSeq@K-1)) {
+                
+                shape[randSeq@M == i] <- endp@shape[i+1]
+                scale[randSeq@M == i] <- exp(issue[randSeq@M == i])^{-1/endp@shape[i+1]} * endp@scale[i+1]
+              }  
+            }
             list(shape = shape, scale = scale)
           }
 )
