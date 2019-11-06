@@ -380,7 +380,7 @@ setGeneric("getAllSeq", function(obj) standardGeneric("getAllSeq"))
 #' myPar <- crPar(10)
 #' genSeq(myPar, 4)
 #' genSeq(myPar)
-
+#'
 #' # Generate randomization sequences using the Random Allocation Rule for N = 10
 #' myPar <- rarPar(10)
 #' genSeq(myPar, 4)
