@@ -14,7 +14,7 @@ test_that("assess returns valid object", {
 	method <- sample(c("sim", "exact"), 1)
 	i2 <- selBias(type, 1, method)
 	endp1 <- normEndp(c(0,0), c(1,1))
-	survendp <- expEndp(c(1,1))
+	survendp <- expEndp(c(1,1),cenTime = qexp(1-10^{-5}, rate = min(1,1)),cenRate = min(c(1,1))*10^{-5} )
 	expect_is(assess(seqs, i1), "assessment")
 	expect_is(assess(seqs, i1, i2, endp = endp1), "assessment")
 	expect_is(assess(seqs, i1, i2, endp = survendp), "assessment")

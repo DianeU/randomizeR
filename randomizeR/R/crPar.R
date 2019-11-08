@@ -166,7 +166,6 @@ setMethod("genSeq",
 		            seed = seed)
           }
 )
-
 #' @rdname getDesign
 setMethod("getDesign", 
           signature(obj = "crPar"),

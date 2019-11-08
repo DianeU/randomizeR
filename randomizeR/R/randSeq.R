@@ -79,7 +79,7 @@ setClass("rRandSeq",
 # --------------------------------------------
 
 #' Method defining the $ operator for the randSeq class
-#' 
+#' @keywords internal
 #' @inheritParams overview
 setMethod("$", "randSeq",
           function(x, name) slot(x, name))

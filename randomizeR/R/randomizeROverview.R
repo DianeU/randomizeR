@@ -13,10 +13,9 @@
 #' @param bc vector which contains the lengths \code{k_1,...,k_l} of each block. 
 #' This means that the vector \code{bc} will have one entry for each block.
 #' @param b numeric vector of length at most 2 specifying the weight(s) for the punishment of 
-# deviations from the target value.
+#' deviations from the target value.
 #' @param cenRate exponential censoring rate in a survival study.
 #' @param cenTime total duration of a survival study (maximum length of followup).
-#' @param compr factor of compression for the sigmoid-time trend.
 #' @param d effect size.
 #' @param df degrees of freedom (i.a. \code{N-2}).
 #' @param eta numeric specifying the magnitude of selection bias.
@@ -33,8 +32,6 @@
 #' against one control treatment).
 #' @param lb lower bound for the starting value of the poisson distribution.
 #' @param lambda vector of the exponential rate parameters in each treatment group.
-#' @param lambda1 the first non-centrality parameter of the doubly noncentral t-distribution.
-#' @param lambda2 the second non-centrality parameter of the doubly noncentral t-distribution.
 #' @param method  method that is used to generate the (random) allocation
 #' sequence. It can take values \code{PBR}, \code{RAR}, \code{HAD}, \code{PWR},
 #' \code{EBC}, \code{BSD}, \code{CR}, \code{TBD}, \code{UD}, and \code{MP}.

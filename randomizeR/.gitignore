@@ -8,3 +8,5 @@ inst/doc
 *.out
 *.synctex
 *.RD
+doc
+Meta

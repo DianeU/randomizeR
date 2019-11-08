@@ -42,7 +42,6 @@ setClass("rGbcdSeq", contains = c("rRandSeq", "gbcdSeq"))
 # --------------------------------------------
 # Methods for gbcdSeq
 # --------------------------------------------
-
 #' @rdname getProbabilities
 setMethod("getProb", signature = c(obj = "gbcdSeq"),
           function(obj) {

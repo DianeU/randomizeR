@@ -32,7 +32,7 @@ test_that("expEnd returns valid object", {
   accrualTime <- sample(1:200, 1); cenTime <- accrualTime + sample(1:200, 1)
   expect_is(expEndp(lambda = lambda, cenRate = cenRate, accrualTime = accrualTime, cenTime = cenTime), "endpoint")
   
-  # Chech with vectors, not numericals
+  # Check with vectors, not numericals
   cenRate <- abs(rnorm(2)); accrualTime = abs(rnorm(2)); cenTime = abs(rnorm(2))
   expect_error(expEndp(lambda = lambda, cenRate = cenRate))
   expect_error(expEndp(lambda = lambda, accrualTime = accrualTime))
