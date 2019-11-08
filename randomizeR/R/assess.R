@@ -42,7 +42,7 @@ setClass("assessment",
 # --------------------------------------------
 
 #' Method defining the $ operator for the assessemnt class
-#' 
+#' @keywords internal
 #' @inheritParams overview
 setMethod("$", "assessment",
           function(x, name) slot(x, name))

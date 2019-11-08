@@ -180,7 +180,6 @@ setMethod("genSeq", signature(obj = "rtbdPar", r = "missing", seed = "missing"),
           seed = seed)
      }
 )
-
 #' @rdname getDesign
 setMethod("getDesign", 
           signature(obj = "rtbdPar"),

@@ -42,7 +42,6 @@ setClass("rbbcdSeq", contains = c("rRandSeq", "bbcdSeq"))
 # --------------------------------------------
 # Methods for bbcdSeq
 # --------------------------------------------
-
 #' @rdname getProbabilities
 setMethod("getProb", signature = c(obj = "bbcdSeq"),
           function(obj) {
@@ -66,7 +65,6 @@ setMethod("getProb", signature = c(obj = "bbcdSeq"),
             } else "Only supported for K=2."
           }  
 )
-
 #' @rdname getDesign
 setMethod("getDesign", 
           signature(obj = "bbcdSeq"),

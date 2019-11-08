@@ -44,7 +44,7 @@ setClass("probUnDesirable",
 # --------------------------------------------
 
 #' Method defining the $ operator for the probUnDesirable class
-#' 
+#' @keywords internal
 #' @inheritParams overview
 setMethod("$", "probUnDesirable",
           function(x, name) slot(x, name))

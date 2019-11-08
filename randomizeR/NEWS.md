@@ -7,13 +7,14 @@
 * Added a class for survival endpoints
 * Added a class for exponential endpoints
 * Selection bias support for exponential endpoints
-* Chronological bias support exponential endpoints
+* Chronological bias support for exponential endpoints
 * Assessment of chronological and selection bias for exponential endpoints
 
 ## Minor Changes
 * Added authors of the current version
+* Added new examples 
 
-# Major changes
+# Major Changes
 * Changed parameterization of chronological bias
 
 # Changes in randomizeR version 1.4

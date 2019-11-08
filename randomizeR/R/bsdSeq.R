@@ -59,7 +59,6 @@ setMethod("getProb", signature = c(obj = "bsdSeq"),
             else "Only supported for K=2."
           }  
 )
-
 #' @rdname getDesign
 setMethod("getDesign", 
           signature(obj = "bsdSeq"),

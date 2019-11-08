@@ -33,7 +33,7 @@
 #' 
 #' # get Expectation for an exponential endpoint
 #' cs <- selBias("CS", 0.1 , "sim")
-#' endp <- expEndp(lambda = c(0.5, 1))
+#' endp <- expEndp(lambda = c(0.5, 1), cenTime = 10, cenRate = 0.01)
 #' getExpectation(M, cs, endp)
 #' 
 #' @name getExpectation
