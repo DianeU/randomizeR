@@ -24,17 +24,17 @@ logRankDecSim <- function(randSeq, bias, endp){
   
   if (is(endp, "expEndp")){
     # calculates the bias matrix
-    biasM    <- 1 / getExpectation(randSeq, bias, endp)
+    biasM <- 1 / getExpectation(randSeq, bias, endp)
     
     decision <- sapply(1:dim(randSeq@M)[1], function(i) {
       # time matrix
-      timeVar    <- rexp(randSeq@N, rate = biasM[i,])
+      timeVar <- rexp(randSeq@N, rate = biasM[i,])
       # random censoring, common exponential censoring rate
       randCenVar <- rexp(randSeq@N, rate = endp@cenRate)
       # hard censoring
-      endCenVar  <- runif(randSeq@N, min = followUp, max = endp@cenTime )
+      endCenVar <- runif(randSeq@N, min = followUp, max = endp@cenTime )
       # observed survival time
-      randVar    <- pmin(timeVar, randCenVar, endCenVar)
+      randVar <- pmin(timeVar, randCenVar, endCenVar)
       # censoring status
       status <- (randVar == timeVar)*1
       
@@ -58,13 +58,13 @@ logRankDecSim <- function(randSeq, bias, endp){
 
     decision <- sapply(1:dim(randSeq@M)[1], function(i) {
       # time matrix
-      timeVar    <- rweibull(randSeq@N, shape = biasShape[i,], scale = biasScale[i,])
+      timeVar <- rweibull(randSeq@N, shape = biasShape[i,], scale = biasScale[i,])
       # random censoring, common exponential censoring rate
       randCenVar <- rexp(randSeq@N, rate = endp@cenRate)
       # hard censoring
-      endCenVar  <- runif(randSeq@N, min = followUp, max = endp@cenTime )
+      endCenVar <- runif(randSeq@N, min = followUp, max = endp@cenTime )
       # observed survival time
-      randVar    <- pmin(timeVar, randCenVar, endCenVar)
+      randVar <- pmin(timeVar, randCenVar, endCenVar)
       # censoring status
       status <- (randVar == timeVar)*1
       
@@ -72,7 +72,7 @@ logRankDecSim <- function(randSeq, bias, endp){
           all(status == 0)) {
         return(FALSE)
       } else {
-        df   <- data.frame(randVar, status, treat = randSeq@M[i,])
+        df <- data.frame(randVar, status, treat = randSeq@M[i,])
         
         if(endp@weights[2] == 0){ 
           # survival package
@@ -91,7 +91,7 @@ logRankDecSim <- function(randSeq, bias, endp){
         
         else{
           # PwrGSD package
-          sdf  <- wtdlogrank(Surv(randVar, status) ~ treat, data = df, WtFun = "FH",
+          sdf <- wtdlogrank(Surv(randVar, status) ~ treat, data = df, WtFun = "FH",
                              param = endp@weights)
           p.value <- 1 - pchisq(sdf$Z^2, 1)
           return(as.numeric(p.value <= bias@alpha))
@@ -143,15 +143,15 @@ logRankRejectionProb <- function(randSeq, bias, endp) {
       f1 <- function(t){weight(t)*(phi(t)-pi(t))*V(t)}
       f2 <- function(t){weight(t)^2*pi(t)*(1-pi(t))*V(t)}
       # Define integrals
-      up   <- endp@cenTime
+      up <- endp@cenTime
       int1 <- integrate(Vectorize(f1),0,up)$value
       int2 <- integrate(Vectorize(f2),0,up)$value
       
       # Compute expected value of the normal distribution
       Exp.approx  <- int1/sqrt(1/randSeq@N * int2)
       # Compute rejection probability
-      qlow     <- qnorm( alpha/2 )
-      qup      <- qnorm( 1 - alpha/2 )
+      qlow <- qnorm( alpha/2 )
+      qup <- qnorm( 1 - alpha/2 )
       rej.prob <- pnorm( qlow, Exp.approx, 1 ) + (1 - pnorm(qup, Exp.approx, 1) )
       rej.prob
       
@@ -167,30 +167,30 @@ logRankRejectionProb <- function(randSeq, bias, endp) {
     # function for calculating the rejection probability of each randomization sequence
     rej.prob <- sapply(1:dim(randSeq@M)[1], function(i) {
       # Define approximation functions
-      KM     <- function(t){ 1  - mean(pweibull(t, shape = biasShape[i,], scale = biasScale[i,])) }
+      KM <- function(t){ 1  - mean(pweibull(t, shape = biasShape[i,], scale = biasScale[i,])) }
       weight <- function(t){ KM(t)^endp@weights[1] * (1-KM(t))^endp@weights[2] }
-      phi    <- function(t){ sum( (1-randSeq@M[i,]) * 
+      phi <- function(t){ sum( (1-randSeq@M[i,]) * 
                         dweibull(t, shape = biasShape[i,], scale = biasScale[i,]) ) / 
                         sum(dweibull(t, shape = biasShape[i,], scale = biasScale[i,])) }
-      pi     <- function(t){ sum((1-randSeq@M[i,]) * 
+      pi <- function(t){ sum((1-randSeq@M[i,]) * 
                         (1-pweibull(t, shape = biasShape[i,], scale = biasScale[i,]))) / 
                         sum((1-pweibull(t, shape = biasShape[i,], scale = biasScale[i,]))) }
-      V      <- function(t){ sum( dweibull(t, shape = biasShape[i,], scale = biasScale[i,])) / randSeq@N *
+      V <- function(t){ sum( dweibull(t, shape = biasShape[i,], scale = biasScale[i,])) / randSeq@N *
                         (1-pexp(t, rate = endp@cenRate)) * (1-punif(t, min = followUp, max = endp@cenTime)) }
       
       # Define combined functions
       f1 <- function(t){weight(t)*(phi(t)-pi(t))*V(t)}
       f2 <- function(t){weight(t)^2*pi(t)*(1-pi(t))*V(t)}
       # Define integrals
-      up   <- endp@cenTime
+      up <- endp@cenTime
       int1 <- integrate(Vectorize(f1),0,up)$value
       int2 <- integrate(Vectorize(f2),0,up)$value
       
       # Compute expected value of the normal distribution
       Exp.approx  <- int1/sqrt(1/randSeq@N * int2)
       # Compute rejection probability
-      qlow     <- qnorm( alpha/2 )
-      qup      <- qnorm( 1 - alpha/2 )
+      qlow <- qnorm( alpha/2 )
+      qup <- qnorm( 1 - alpha/2 )
       rej.prob <- pnorm( qlow, Exp.approx, 1 ) + (1 - pnorm(qup, Exp.approx, 1) )
       rej.prob
       

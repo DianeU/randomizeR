@@ -1,5 +1,6 @@
 #' @include getExpectation.R
 #' @include survEndp.R
+#' @include getParameters.R
 NULL
 
 ###############################################
@@ -39,7 +40,7 @@ validateWeibEndp <- function(object) {
 
 # Representation of the Weibull endpoints
 setClass("weibEndp", 
-         slots = c(shape = "numeric", scale = "numeric"), contains = "survEndp", validity = validateWeibEndp)
+         slots = c(shape = "numeric", scale = "numeric", c = "numeric", exp = "numeric"), contains = "survEndp", validity = validateWeibEndp)
 
 
 
@@ -66,8 +67,8 @@ setClass("weibEndp",
 #' @seealso Compute exact or simulated type-I-error: \code{\link{assess}}.
 #' 
 #' @export
-weibEndp <- function(shape = c(1, 1), scale = c(1, 1), cenRate , accrualTime = 0, 
-                      cenTime, weights = c(0, 0), c , exp ) {
+weibEndp <- function(shape , scale , cenRate , accrualTime = 0, 
+                      cenTime, weights, c , exp ) {
   new("weibEndp", shape = shape, scale = scale, cenRate = cenRate, accrualTime = accrualTime, 
       cenTime = cenTime, weights = weights, c = c , exp = exp)
 }

@@ -34,7 +34,7 @@ test_that("tests of equality of getExpectation", {
   expect_equal(getExpectation(randSeqK4, endp = endpK4), 
                matrix(rep(1:4, 3), nrow = 1))
   # seventh scenario only expEndpoint object (K=2)
-  endp     <- expEndp(lambda = c(2, 1), cenTime = qexp(1-10^{-5}, rate = min(1,1)), cenRate = min(c(1,1))*10^{-5} )
+  endp     <- expEndp(lambda = c(2, 1), cenTime = 10, cenRate = 0.01 )
   expect_equal(getExpectation(randSeq, endp = endp), 
                matrix(rep(c(0.5, 1), 6), nrow = 1))
   # eighth scenario expEndpoint and selection bias
@@ -46,21 +46,30 @@ test_that("tests of equality of getExpectation", {
   expect_equal(getExpectation(randSeq, biasCB, endp), 
                matrix(rep(c(0.5, 1), 6) / exp(log(1/2)*(0:11)/11), nrow = 1))
   
-  # tenth scenario weibEndpoint and CS selection bias
-  endp     <- weibEndp(shape = , scale =)
+  # tenth scenario weibEndpoint with Parameters equal to an expEndpoint
   biasSB <- selBias("CS", log(2), "exact")
-  expect_equal(getExpectation(randSeq, biasSB, endp), 
-               matrix(rep(c(0.5, 2), 6), nrow = 1))
+  endp <- weibEndp(shape = c(1,2) , scale = c(1,2), c = c(1,1), exp = c(0,0), weights = c(0,0) , cenTime = 10, cenRate = 0.01)
+
+  expect_equal(getExpectation(randSeq, endp = endp), 
+               matrix(rep(c(, ), 6), nrow = 1))
+  
+  # eleventh scenario 
+  
+  
+  exendp <- expEndp(lambda = c(2,1), cenTime = 10, cenRate = 0.01)
+  
+  
+  # tenth scenario weibEndpoint and CS selection bias
+  #endp <- weibEndp(shape = c(1,1), scale = c(0.5,1.5), exp = , c =, cenTime = 10, cenRate = 0.01)
+  #biasSB <- selBias("CS", log(2), "exact")
+  #expect_equal(getExpectation(randSeq, biasSB, endp), 
+  #            matrix(rep(c(0.5, 2), 6), nrow = 1))
   
   # eleventh scenario weibEndpoint and CS2 selection bias
-  biasSB <- selBias("CS2", log(2), "exact")
-  expect_equal(getExpectation(randSeq, biasSB, endp), 
-               matrix(rep(c(0.5, 2), 6), nrow = 1))
-  # twelves scenario weibEndpoint with Parameters equal to an expEndpoint
-  
-  expect_equal(getExpectation(randSeq, biasSB, weibEndp(shape = c(1,1) , scale = c(0.5,1.5))), 
-               getExpectation(randSeq, biasSB, expEndp(lamda = c(0.5,1.5))))
-  
+  #biasSB <- selBias("CS2", log(2), "exact")
+  #expect_equal(getExpectation(randSeq, biasSB, endp), 
+  #             matrix(rep(c(0.5, 2), 6), nrow = 1))
+ 
   # thirteehns scenario weibEndpoint with CS2 bias and missing c and d (Fail Test)
   
   }

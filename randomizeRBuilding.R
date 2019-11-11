@@ -22,19 +22,19 @@ current.code <- as.package("randomizeR")
 #devtools::use_vignette("randomizeR")
 # in case something was deleted or renamed, run (twice)
 #load_all(current.code, recompile = TRUE)
-document(current.code)
+#document(current.code)
 load_all(current.code) 
-#test(current.code)
-load_all(current.code)
-run_examples(current.code)
-build_vignettes(current.code)
-check(current.code)
+test(current.code)
+#load_all(current.code)
+#run_examples(current.code)
+#build_vignettes(current.code)
+#check(current.code)
 #build(current.code, path = 'C:\\Users\\mmartini\\Desktop\\randomizeR')
 ### devtools::release(pkg=current.code) ### Publish package on CRAN
 
 # generate manual
-if (file.exists("./randomizeR.pdf")) file.remove("./randomizeR.pdf")
-   system(paste('R CMD Rd2pdf ',  'randomizeR'))
+#if (file.exists("./randomizeR.pdf")) file.remove("./randomizeR.pdf")
+#   system(paste('R CMD Rd2pdf ',  'randomizeR'))
 
 
 #install.packages("randomizeR_2.0.tar.gz", repos = NULL, type = "source")
