@@ -43,7 +43,6 @@ setClass("rChenSeq", contains = c("rRandSeq", "chenSeq"))
 # --------------------------------------------
 # Methods for chenSeq
 # --------------------------------------------
-
 #' @rdname getProbabilities
 setMethod("getProb", signature = c(obj = "chenSeq"),
           function(obj) {

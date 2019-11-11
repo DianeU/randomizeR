@@ -12,11 +12,12 @@
 #' @param randSeq object of the class randSeq.
 #' @param bias object of the class bias.
 #' @param endp object of the class endpoint.
-#' 
+#' @keywords internal
 #' @return a simulated test decision for each randomization sequence.
 logRankDecSim <- function(randSeq, bias, endp){
   stopifnot(is(randSeq, "randSeq"), randSeq@K == 2,
             is(bias, "issue"), is(endp, "endpoint"))  
+
   
   # variable for the defined alpha quantile
   followUp <- endp@cenTime - endp@accrualTime
@@ -99,7 +100,7 @@ logRankDecSim <- function(randSeq, bias, endp){
       }
     })
   }
-  
+
   decision
 }
 
@@ -113,7 +114,7 @@ logRankDecSim <- function(randSeq, bias, endp){
 #' @param randSeq object of the class randSeq.
 #' @param bias object of the class bias.
 #' @param endp object of the class endpoint.
-#' 
+#' @keywords internal
 #' @return the rejection probability (type I error probability resp. power) of all randomization sequences.
 logRankRejectionProb <- function(randSeq, bias, endp) {
   stopifnot(is(randSeq, "randSeq"), randSeq@K == 2,
@@ -131,11 +132,11 @@ logRankRejectionProb <- function(randSeq, bias, endp) {
     rej.prob <- sapply(1:dim(randSeq@M)[1], function(i) {
       # Define approximation functions
       weight <- function(t){ 1 }
-      phi    <- function(t){ sum( (1-randSeq@M[i,]) * dexp(t, rate = biasM[i,]) ) / 
+      phi <- function(t){ sum( (1-randSeq@M[i,]) * dexp(t, rate = biasM[i,]) ) / 
                     sum( dexp(t, rate = biasM[i,]) )  }
-      pi     <- function(t){ sum( (1-randSeq@M[i,]) * (1-pexp(t, rate = biasM[i,])) ) / 
+      pi <- function(t){ sum( (1-randSeq@M[i,]) * (1-pexp(t, rate = biasM[i,])) ) / 
                     sum( (1-pexp(t, rate = biasM[i,])) )  }
-      V      <- function(t){ sum( dexp(t, rate = biasM[i,]) ) / randSeq@N *
+      V <- function(t){ sum( dexp(t, rate = biasM[i,]) ) / randSeq@N *
                     ( 1-pexp(t, rate = endp@cenRate) ) * 
                     ( 1-punif(t, min = followUp, max = endp@cenTime) )  }
       # Define combined functions

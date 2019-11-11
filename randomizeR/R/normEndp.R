@@ -64,6 +64,9 @@ setClass("normEndp",
 #'
 #' @seealso Compute exact or simulated type-I-error: \code{\link{assess}}.
 #' 
+#' @example
+#' # Set the paramters of two normally distributied endpoints
+#' endp <- normEndp(mu = c(1, 2), sigma = c(1, 1))
 #' @export
 normEndp <- function(mu, sigma) {
   new("normEndp", mu = mu, sigma = sigma)

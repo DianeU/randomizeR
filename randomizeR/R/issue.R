@@ -73,7 +73,7 @@ setClassUnion("issue", c("selBias", "chronBias", "corGuess", "imbal", "power"))
 # --------------------------------------------
 
 #' Method defining the $ operator for the issue class
-#' 
+#' @keywords internal
 #' @inheritParams overview
 setMethod("$", "issue",
           function(x, name) slot(x, name))

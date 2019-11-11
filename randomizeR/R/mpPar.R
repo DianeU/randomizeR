@@ -226,7 +226,6 @@ countPathsToWell <- function(S, x, N) {
 # --------------------------------------------
 # Methods for mpPar
 # --------------------------------------------
-
 #' @rdname generateAllSequences
 setMethod("getAllSeq", signature(obj = "mpPar"),
           function(obj) {
@@ -319,7 +318,6 @@ setMethod("genSeq", signature(obj = "mpPar", r = "missing", seed = "missing"),
 		            seed = seed)
           }
 )
-
 #' @rdname getDesign
 setMethod("getDesign", 
           signature(obj = "mpPar"),

@@ -159,6 +159,21 @@ setClass("chronBias",
 #' 
 #' @family issues
 #' 
+#' @examples
+#' ## Get the expectation for a normal endpoint with chronological Bias and a linear time trend
+#' # Set the strength of the trend to 0.5 
+#' # Calculate the exact Type 1-Error probabilities  
+#' cs <- chronBias("linT", 0.5, "exact")
+#' 
+#' 
+#' ## Get the expectation for a normal endpoint with chronological Bias and a stepwise time trend
+#' # Set the strength of the trend to 1 and the number of steps to 10
+#' # Simulate to approaximate the Type 1-Error Probability  
+#' cs <- chronBias("stepT", 1, "sim", 10)
+#'
+#'
+#'
+#'
 #'
 #' @export
 chronBias <- function(type, theta, method, saltus, alpha = 0.05) {

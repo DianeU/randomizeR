@@ -52,7 +52,6 @@ setMethod("getProb", signature = c(obj = "crSeq"),
             else "Only supported for K=2."
           }
 )
-
 #' @rdname getDesign
 setMethod("getDesign", 
           signature(obj = "crSeq"),
@@ -60,4 +59,3 @@ setMethod("getDesign",
             "CR"
           }
 )
-

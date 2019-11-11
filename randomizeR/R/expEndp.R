@@ -60,10 +60,15 @@ setClass("expEndp",
 #'
 #' @seealso Compute exact or simulated type-I-error: \code{\link{assess}}.
 #' 
+#' @examples
+#' #Set the Parameters of two exponentially distributed endpoints
+#' endp <- expEndp(lambda = c(1, 2), cenTime = 10, cenRate = 0.01)
 #' @export
-expEndp <- function(lambda, cenRate = min(lambda)*10^{-5}, accrualTime = 0, 
-                    cenTime = qexp(1-10^{-5}, rate = min(lambda)), weights = c(0, 0) ) {
-  new("expEndp", lambda = lambda, cenRate = cenRate, accrualTime = accrualTime, cenTime = cenTime, weights = weights)
+
+expEndp <- function(lambda, cenRate, accrualTime = 0, cenTime){
+  
+  new("expEndp", lambda = lambda, cenRate = cenRate, accrualTime = accrualTime, cenTime = cenTime)
+  
 }
 
 

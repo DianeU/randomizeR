@@ -126,7 +126,6 @@ efronRand <- function(bc, p, mti, K = 2) {
 # --------------------------------------------
 # Methods for ebcPar
 # --------------------------------------------
-
 #' @rdname generateAllSequences
 setMethod("getAllSeq", signature(obj = "ebcPar"),
           function(obj) {

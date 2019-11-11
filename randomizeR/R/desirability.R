@@ -22,7 +22,7 @@ NULL
 #' \item \strong{\link{getDesScores}}
 #'    can be applied to an object of class \code{assessment} together with prespecified
 #'    desirability functions to compare the behaviour of randomization sequences (on a 
-#'    common scale [0,1]).
+#'    common scale \[0,1\]).
 #' \item \strong{\link{plotDes}}
 #'    plots a \code{desScores} object on a radar chart. 
 #' \item \strong{\link{evaluate}}
@@ -49,7 +49,7 @@ NULL
 #' d1 <- derFunc(TV = 0.5, 0.75, 2)
 #' d2 <- derFunc(0.05, c(0, 0.1), c(1, 1))
 #'
-#' # By applying the \code{getDesScores} function to the assessment output together 
+#' # By applying the getDesScores function to the assessment output together 
 #' # with the specified desirability functions the behaviour of randomization sequences 
 #' # is evaluated and scaled to [0,1]:
 #' DesScore <- getDesScores(A1, d1, d2, weights = c(5/6, 1/6))

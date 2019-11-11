@@ -114,7 +114,6 @@ tbdRand <- function(N, bc = N, K = 2, ratio = rep(1, K)) {
 # --------------------------------------------
 # Methods for tbdPar
 # --------------------------------------------
-
 #' @rdname generateAllSequences
 setMethod("getAllSeq", signature(obj = "tbdPar"),
           function(obj) {
@@ -201,7 +200,6 @@ setMethod("genSeq", signature(obj = "tbdPar", r = "missing", seed = "missing"),
 		            seed = seed)
           }
 )
-
 #' @rdname getDesign
 setMethod("getDesign", 
           signature(obj = "tbdPar"),

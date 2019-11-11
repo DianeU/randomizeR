@@ -69,7 +69,6 @@ setMethod("getProb", signature = c(obj = "udSeq"),
             else "Only supported for K=2."
           }  
 )
-
 #' @rdname getDesign
 setMethod("getDesign", 
           signature(obj = "udSeq"),

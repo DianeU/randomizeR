@@ -34,7 +34,7 @@ test_that("tests of equality of getExpectation", {
   expect_equal(getExpectation(randSeqK4, endp = endpK4), 
                matrix(rep(1:4, 3), nrow = 1))
   # seventh scenario only expEndpoint object (K=2)
-  endp     <- expEndp(lambda = c(2, 1))
+  endp     <- expEndp(lambda = c(2, 1), cenTime = qexp(1-10^{-5}, rate = min(1,1)), cenRate = min(c(1,1))*10^{-5} )
   expect_equal(getExpectation(randSeq, endp = endp), 
                matrix(rep(c(0.5, 1), 6), nrow = 1))
   # eighth scenario expEndpoint and selection bias

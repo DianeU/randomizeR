@@ -57,7 +57,7 @@ scale <- function(obj) {
 }
 
 #' Method defining the $ operator for the endpoint class
-#' 
+#' @keywords  internal
 #' @inheritParams overview
 setMethod("$", "endpoint",
           function(x, name) slot(x, name))
