@@ -91,8 +91,8 @@ setMethod("show", "comparison", function(object) {
 #' into account, e.g. for power evaluation.
 #'
 #' @examples 
-#' # compare Random Allocation Rule and Big Stick for N = 4
-#' # with respect to the correct guesses
+#' # compare Random Allocation Rule and Big Stick for N = 4 with respect to
+#' # correct guesses
 #' RAR <- getAllSeq(rarPar(4))
 #' BSD <- getAllSeq(bsdPar(4, mti = 2))
 #' corGuess <- corGuess("CS")
@@ -141,8 +141,8 @@ setGeneric("compare", function(issue, ..., endp) standardGeneric("compare"))
 #' A plot created with the additional package \code{ggplot2}.
 #' 
 #' @examples 
-#' # compare Random Allocation Rule and Big Stick for N = 4
-#' # with respect to the correct guesses
+#' # compare Random Allocation Rule and Big Stick for N = 4 with respect to
+#' # correct guesses
 #' RAR <- getAllSeq(rarPar(4))
 #' BSD <- getAllSeq(bsdPar(4, mti = 2))
 #' corGuess <- corGuess("CS")

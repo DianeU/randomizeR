@@ -57,16 +57,16 @@ setClass("expEndp",
 #' admit the calculation of the 'exact' type-I-error probability and power
 #' using an approximation formula.
 #'
-#' @family endopoint types
+#' @family endpoint types
 #'
 #' @seealso Compute exact or simulated type-I-error: \code{\link{assess}}.
 #' 
 #' @examples
-#' #Set the Parameters of two exponentially distributed endpoints
+#' # set the parameters of two exponentially distributed endpoints
 #' endp <- expEndp(lambda = c(1, 2), cenTime = 10, cenRate = 0.01)
+#' 
 #' @export
 expEndp <- function(lambda, cenRate, accrualTime = 0, cenTime){
-  
   new("expEndp", lambda = lambda, cenRate = cenRate, accrualTime = accrualTime, cenTime = cenTime)
 }
 
