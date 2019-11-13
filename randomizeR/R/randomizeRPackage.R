@@ -10,7 +10,7 @@
 #' W. F. Rosenberger and J. M. Lachin (2002) \emph{Randomization in Clinical Trials}. 
 #' Wiley.
 #' 
-#' D. Uschner, D. Schindler, R. D. Hilgers and N. Heussen (2018). "randomizeR: An R Package 
+#' #' D. Uschner, D. Schindler, R. D. Hilgers and N. Heussen (2018). "randomizeR: An R Package 
 #' for the Assessment and Implementation of Randomization in Clinical Trials." \emph{Journal 
 #' of Statistical Software}, \strong{85}(8), pp. 1-22. doi: 10.18637/jss.v085.i08 
 #' (URL: \url{http://doi.org/10.18637/jss.v085.i08}).

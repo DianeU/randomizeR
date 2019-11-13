@@ -120,7 +120,7 @@ setClass("selBias", slots = c(eta = "numeric", type = "character",
 #' \code{randSeq}. The type-I-error rate (power) is the proportion of falsely
 #' (correctly) rejected null hypotheses.
 #'  }
-#'  \item{\code{method="exact"}}{Represents the exact type-I-error proabability 
+#'  \item{\code{method="exact"}}{Represents the exact type-I-error probability 
 #'  given the level \code{alpha}, the selection effect \code{eta} and the 
 #'  biasing strategy \code{type}. When calling \code{assess} for a \code{selBias} 
 #'  object with \code{method="exact"}, the \emph{p}-value of each randomization 
@@ -150,14 +150,14 @@ setClass("selBias", slots = c(eta = "numeric", type = "character",
 #'  of the present group.
 #'  }
 #'  \item{\code{type="CS2"}}{In trials with two treatment arms, \code{type="CS2"}
-#'  is equivalent to \code{type="CS"}. In multi-arm thrials, \code{type="CS2"} refers 
+#'  is equivalent to \code{type="CS"}. In multi-arm trials, \code{type="CS2"} refers 
 #'  to the second generalization of convergence strategy according to 
 #'  Uschner et al (2018).
 #'  The investigator guesses the treatment that had been allocated less frequently
 #'  whenever all the treatments of the opposite group are larger than the smallest
 #'  of the present group.
 #'  }
-#'  }
+#' }
 #' 
 #' @return
 #' \code{S4} object of class \code{selBias}, a formal representation of the

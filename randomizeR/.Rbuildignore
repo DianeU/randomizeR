@@ -10,3 +10,5 @@ cran-comments.md
 ^README-.*\.png$
 ^doc$
 ^Meta$
+^randomizeR\.Rproj$
+^\.Rproj\.user$

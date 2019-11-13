@@ -89,7 +89,7 @@ validateRandPar <- function(object) {
 # Class definition for randPar
 # --------------------------------------------
 
-# Randomization paramters 
+# Randomization parameters 
 setClass("randPar", 
          slots = c(N = "numeric", K = "numeric" , ratio = "numeric",
            groups = "character"),
@@ -349,7 +349,7 @@ setGeneric("getAllSeq", function(obj) standardGeneric("getAllSeq"))
 #' 
 #' @details
 #' \code{genSeq} generates randomization sequences for a randomization 
-#' procedure as defined by the input paramters.
+#' procedure as defined by the input parameters.
 #' \code{genSeq} has two modes, according to the input.
 #' \enumerate{
 #'   \item \code{genSeq(obj,r)}: gives \code{r} random sequences from the 
@@ -366,7 +366,7 @@ setGeneric("getAllSeq", function(obj) standardGeneric("getAllSeq"))
 #' @inheritParams overview
 #' 
 #' @return An object inheriting from \linkS4class{randSeq}, representing the \code{r}
-#' randomisation sequences generated at random for the specified randomization procedure.
+#' randomization sequences generated at random for the specified randomization procedure.
 #' The output consists of the parameters used for the generation of the 
 #' randomization sequences (see \code{\link{createParam}}) and the matrix \code{M}
 #' that stores the randomization sequences in its \code{r} rows.

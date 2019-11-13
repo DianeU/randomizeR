@@ -69,7 +69,7 @@ validateChronBias <- function(object) {
 # Class definition for chronBias
 # --------------------------------------------
 
-# Randomization paramters generic
+# Randomization parameters generic
 setClass("chronBias",
          slots = c("type" = "character", "theta" = "numeric",
                    method = "character", alpha = "numeric"),
@@ -104,7 +104,7 @@ setClass("chronBias",
 #' \code{randSeq}. The type-I-error rate (power) is the proportion of falsely
 #' (correctly) rejected null hypotheses.
 #' 
-#' If \code{method="exact"}, the object represents the exact type-I-error proabability 
+#' If \code{method="exact"}, the object represents the exact type-I-error probability 
 #'  given the level \code{alpha}, the selection effect \code{eta} and the 
 #'  biasing strategy \code{type}. When calling \code{assess} for a \code{chronBias} 
 #'  object with \code{method="exact"}, the \emph{p}-value of each randomization
@@ -120,7 +120,7 @@ setClass("chronBias",
 #'    Represents linear time trend. Linear time trend means that the time trend function of the patients,
 #'    i.e. expected response for normal endpoints, increases evenly by \code{theta/(N-1)} with 
 #'    every patient included in the study, until reaching \code{theta} after \code{N} patients.
-#'    Linear time trend may occur as a result of gradually relaxing in- or exlusion criteria 
+#'    Linear time trend may occur as a result of gradually relaxing in- or exclusion criteria 
 #'    throughout the trial.
 #'    It can be represented by the formula: 
 #'    \deqn{f(i) = (i-1)/(N-1) \theta}{f(i) = (i-1)/(N-1) \theta}

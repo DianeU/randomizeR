@@ -18,7 +18,7 @@ doublyT <- function(x, df, lambda1, lambda2, lb = 0, ub) {
 
 #' Calculation of the NCPs of each randomization sequence for the doubly noncentral t-distribution
 #'
-#' Computes the noncentraility parameters delta and lambda for the doubly noncentral t-distribution of each randomization sequence.
+#' Computes the noncentrality parameters delta and lambda for the doubly noncentral t-distribution of each randomization sequence.
 #'
 #' @param randSeq object of the class randSeq.
 #' @param bias object of the class bias.

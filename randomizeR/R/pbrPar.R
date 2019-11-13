@@ -46,7 +46,7 @@ validatepbrPar <- function(object) {
 # Class definition for pbrPar
 # --------------------------------------------
 
-# Randomization paramters generic
+# Randomization parameters generic
 setClass("pbrPar",
          slots = c(bc = "numeric"),
          contains = "randPar",

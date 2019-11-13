@@ -32,7 +32,7 @@ validateEvaluation <- function(object) {
 # Class definition for evaluation
 # --------------------------------------------
 
-# Evaluation paramters generic
+# Evaluation parameters generic
 setClass("evaluation",
          slots = c(D = "data.frame", desFuncs = "character", weights = "numeric", 
                    statistic = "character"),
@@ -110,7 +110,7 @@ setMethod("show", "evaluation", function(object) {
 #' randomization procedures. It expects a number of objects that result when applying the 
 #' \code{getDesScores} function to an assess object and specified desirability functions. 
 #' The \code{evaluate} function summarizes the desirability scores of each randomization 
-#' procedure on the basis of a prespecified statistic and encorporates them into a data 
+#' procedure on the basis of a prespecified statistic and incorporates them into a data 
 #' frame. If no statistic is specified then it is automatically set to \code{mean}. If 
 #' the function is applied to only one object it corresponds simply to 
 #' \code{summary(getDesScores(...))}.
