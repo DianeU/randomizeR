@@ -57,7 +57,7 @@ validatertbdPar <- function(object) {
 # Class definition for tbdPar
 # --------------------------------------------
 
-# Randomization paramters generic 
+# Randomization parameters generic 
 setClass("rtbdPar",
          slots = c(rb = "numeric", filledBlock = "logical"),
          contains = "randPar",

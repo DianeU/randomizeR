@@ -37,7 +37,7 @@ validatetbdPar <- function(object) {
 # Class definition for tbdPar
 # --------------------------------------------
 
-# Randomization paramters generic 
+# Randomization parameters generic 
 setClass("tbdPar",
          slots = c(bc = "numeric"),
          contains = "randPar",
@@ -53,7 +53,7 @@ setClass("tbdPar",
 #' Represents the Truncated Binomial Design.
 #'
 #' @details
-#' A fair toin is tossed until half of the patients have been assigned to one of
+#' A fair coin is tossed until half of the patients have been assigned to one of
 #' the treatment arms. Afterwards, the randomization list is filled with the
 #' other treatment.
 #'

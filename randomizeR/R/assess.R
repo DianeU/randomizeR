@@ -30,7 +30,7 @@ validateAssessment <- function(object) {
 # Class definition for assessment
 # --------------------------------------------
 
-# Randomization paramters generic
+# Randomization parameters generic
 setClass("assessment",
          slots = c(D = "data.frame", design = "character", N = "numeric", K = "numeric",
                    groups = "character"),
@@ -107,7 +107,7 @@ setMethod("show", "assessment", function(object) {
 #' \code{\link{genSeq}} or \code{\link{getAllSeq}}.
 #' The second argument should be any number of \code{\link{issues}} arising 
 #' in a clinical trial. The last argument \code{endp} may be provided if 
-#' the assessment should take the distribution of the treamtent groups
+#' the assessment should take the distribution of the treatment groups
 #' into account, e.g. for power evaluation.
 #'
 #' @examples 

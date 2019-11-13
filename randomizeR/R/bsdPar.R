@@ -46,7 +46,7 @@ validatebsdPar <- function(object) {
 # Class definition for bsdPar
 # --------------------------------------------
 
-# Randomization paramters generic
+# Randomization parameters generic
 setClass("bsdPar",
          slots = c(mti = "numeric"),
          contains = "randPar",

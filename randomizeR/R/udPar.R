@@ -64,7 +64,7 @@ validateudpar <- function(object) {
 # Class definition for udPar
 # --------------------------------------------
 
-# Randomization paramters generic 
+# Randomization parameters generic 
 setClass("udPar",
          slots = c(ini = "numeric", add = "numeric"),
          contains = "randPar",
@@ -109,7 +109,7 @@ udPar <- function(N, ini, add, groups = LETTERS[1:2]) {
 
 # Wei's Urn design
 # 
-# Computes a randomisation sequence based on Weis Urn Design
+# Computes a randomization sequence based on Weis Urn Design
 #
 # @inheritParams overview
 # @param ini integer representing the initial urn composition.

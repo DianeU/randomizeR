@@ -17,7 +17,7 @@ makeDesignMatrix <- function(R){
 }
 
 
-#' Biasing Policy for a Group of Favoured Treatments 
+#' Biasing Policy for a Group of Favored Treatments 
 #' 
 #' Calculate vector with the selection bias for each patient
 #' 
@@ -166,9 +166,9 @@ doublyF_value <- function(R, bias, endp){
 }
 
 
-#' Check function for occurance of all treatment groups in the sequence
+#' Check function for occurrence of all treatment groups in the sequence
 #'
-#' checks wheather each group has its value coming up at least once in the sequence
+#' checks whether each group has its value coming up at least once in the sequence
 #' 
 #' @param seq randomization sequence as inverted matrix
 #' @param K number of treatment arms

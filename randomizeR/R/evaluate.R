@@ -32,7 +32,7 @@ validateEvaluation <- function(object) {
 # Class definition for evaluation
 # --------------------------------------------
 
-# Evaluation paramters generic
+# Evaluation parameters generic
 setClass("evaluation",
          slots = c(D = "data.frame", desFuncs = "character", weights = "numeric", 
                    statistic = "character"),
@@ -116,7 +116,7 @@ setMethod("show", "evaluation", function(object) {
 #' \code{summary(getDesScores(...))}.
 #'
 #' @examples 
-#' # Compare Random Allocation Rule to Big Stick Design with respect to different issues
+#' # compare Random Allocation Rule to Big Stick Design with respect to different issues
 #' # and their corresponding desirability functions
 #' issue1 <- corGuess("CS")
 #' issue2 <- corGuess("DS")
@@ -270,7 +270,7 @@ setMethod("evaluate", signature(statistic = "character"),
 #' @param cols colors of the lines representing the  desirability scores in the plot. Can be \code{NULL}.
 #' 
 #' @examples 
-#' # Compare Random Allocation Rule to Big Stick Design with respect to different issues
+#' # compare Random Allocation Rule to Big Stick Design with respect to different issues
 #' # and their corresponding desirability functions
 #' issue1 <- corGuess("CS")
 #' issue2 <- chronBias(type = "linT", theta = 1/4, method = "exact")

@@ -35,7 +35,7 @@ validateDesScores <- function(object) {
 # Class definition for desScores
 # --------------------------------------------
 
-# Randomization paramters generic
+# Randomization parameters generic
 setClass("desScores",
          slots = c(D = "data.frame", design = "character", N = "numeric", K = "numeric",
                    groups = "character", desFuncs = "character", weights = "numeric"),
@@ -121,7 +121,7 @@ setMethod("show", "desScores", function(object) {
 #' may be provided if the desirability functions should be weighted differently.  
 #'
 #' @examples 
-#' # Compute the desire-function for the full set of Random Allocation Rule for N=4 patients
+#' # compute the desire-function for the full set of Random Allocation Rule for N = 4
 #' sequences <- getAllSeq(rarPar(4))
 #' issue1 <- corGuess("CS")
 #' issue2 <- chronBias("linT", 0.25, "exact")
@@ -165,7 +165,7 @@ setGeneric("getDesScores", function(assess, ..., weights) standardGeneric("getDe
 #' Data frame with a summary of the desirability scores object. 
 #' 
 #' @examples 
-#' # Compute the desirability scores of the full set of PBR(4)
+#' # compute the desirability scores of the full set of PBR(4)
 #' seq <- getAllSeq(pbrPar(4))
 #' issue1 <- corGuess("CS")
 #' issue2 <- corGuess("DS")
@@ -307,7 +307,7 @@ setMethod("summary", signature(object = "desScores"), function(object) {
 #' @param quantiles \code{logical} whether the quantiles should be depicted in the plot.
 #' 
 #' @examples 
-#' # Compute the desirability scores of the full set of PBR(4)
+#' # compute the desirability scores of the full set of PBR(4)
 #' sequences <- getAllSeq(rarPar(4))
 #' issue1 <- corGuess("CS")
 #' issue2 <- chronBias("linT", 1/4, "exact")

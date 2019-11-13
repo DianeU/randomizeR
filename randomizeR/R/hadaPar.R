@@ -16,7 +16,7 @@ NULL
 # Class definition for hadaPar
 # --------------------------------------------
 
-# Randomization paramters generic
+# Randomization parameters generic
 setClass("hadaPar", contains = "randPar")
 
 # --------------------------------------------

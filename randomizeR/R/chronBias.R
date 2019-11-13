@@ -69,7 +69,7 @@ validateChronBias <- function(object) {
 # Class definition for chronBias
 # --------------------------------------------
 
-# Randomization paramters generic
+# Randomization parameters generic
 setClass("chronBias",
          slots = c("type" = "character", "theta" = "numeric",
                    method = "character", alpha = "numeric"),
@@ -104,7 +104,7 @@ setClass("chronBias",
 #' \code{randSeq}. The type-I-error rate (power) is the proportion of falsely
 #' (correctly) rejected null hypotheses.
 #' 
-#' If \code{method="exact"}, the object represents the exact type-I-error proabability 
+#' If \code{method="exact"}, the object represents the exact type-I-error probability 
 #'  given the level \code{alpha}, the selection effect \code{eta} and the 
 #'  biasing strategy \code{type}. When calling \code{assess} for a \code{chronBias} 
 #'  object with \code{method="exact"}, the \emph{p}-value of each randomization
@@ -120,7 +120,7 @@ setClass("chronBias",
 #'    Represents linear time trend. Linear time trend means that the time trend function of the patients,
 #'    i.e. expected response for normal endpoints, increases evenly by \code{theta/(N-1)} with 
 #'    every patient included in the study, until reaching \code{theta} after \code{N} patients.
-#'    Linear time trend may occur as a result of gradually relaxing in- or exlusion criteria 
+#'    Linear time trend may occur as a result of gradually relaxing in- or exclusion criteria 
 #'    throughout the trial.
 #'    It can be represented by the formula: 
 #'    \deqn{f(i) = (i-1)/(N-1) \theta}{f(i) = (i-1)/(N-1) \theta}
@@ -160,20 +160,13 @@ setClass("chronBias",
 #' @family issues
 #' 
 #' @examples
-#' ## Get the expectation for a normal endpoint with chronological Bias and a linear time trend
-#' # Set the strength of the trend to 0.5 
-#' # Calculate the exact Type 1-Error probabilities  
-#' cs <- chronBias("linT", 0.5, "exact")
+#' # create a linear time trend with theta = 0.5 for which the exact rejection probabilities 
+#' # are calculated
+#' cbias <- chronBias("linT", 0.5, "exact")
 #' 
-#' 
-#' ## Get the expectation for a normal endpoint with chronological Bias and a stepwise time trend
-#' # Set the strength of the trend to 1 and the number of steps to 10
-#' # Simulate to approaximate the Type 1-Error Probability  
-#' cs <- chronBias("stepT", 1, "sim", 10)
-#'
-#'
-#'
-#'
+#' # create a stepwise time trend with theta = 1 after 10 allocations for which the test 
+#' # decision is simulated  
+#' cbias <- chronBias("stepT", 1, "sim", 10)
 #'
 #' @export
 chronBias <- function(type, theta, method, saltus, alpha = 0.05) {

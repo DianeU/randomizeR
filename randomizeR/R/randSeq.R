@@ -201,12 +201,12 @@ setMethod("show", "randSeq", function(object) {
 #' M <- genSeq(myPar, 2)
 #' getProb(M)
 #' 
-#' # All Sequences
+#' # all Sequences
 #' par <- pbrPar(bc=c(2,2))
 #' refSet <- getAllSeq(myPar)
 #' probs <- getProb(refSet)
 #' 
-#' # Sequences with probabilities
+#' # sequences with probabilities
 #' cbind(probs, refSet$M)
 #' 
 #' @name getProbabilities

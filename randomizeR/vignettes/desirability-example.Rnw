@@ -16,7 +16,7 @@
 
 \section{Introduction}
 \texttt{randomizeR} is a user-friendly package that allows the user to assess and compare
-randomization procedures according to certain criteria (called issues in this package). This tutorial focuses on the comparison of randomization sequences and procedures on the basis of desirability functions. In this context, there are certain criteria and requirements given which have to be met by a randomization procedure. Desirability scores are a kind of linked optimization criteria that establish the connection between the given requirements and therby allow a comparison between them. 
+randomization procedures according to certain criteria (called issues in this package). This tutorial focuses on the comparison of randomization sequences and procedures on the basis of desirability functions. In this context, there are certain criteria and requirements given which have to be met by a randomization procedure. Desirability scores are a kind of linked optimization criteria that establish the connection between the given requirements and thereby allow a comparison between them. 
 
 Currently, \texttt{randomizeR} encompasses the class of desirability functions introduced by Derringer and Suich (1980) and corresponding functions to evaluate and compare randomization sequences which have been assessed on the basis of desirability indices of specific issues. 
 
@@ -127,7 +127,7 @@ are among the assessed ones:
 print(DesScore$D, digits = 3)
 print(DesScore2$D, digits = 3)
 @
-This observation raises the question which randomzation procedure produces more undesired randomization sequences with respect to certain issues and desirability functions? 
+This observation raises the question which randomization procedure produces more undesired randomization sequences with respect to certain issues and desirability functions? 
 The function \texttt{probUnDes} computes the probability of having desirability scores of zero for each desirability function applied to an issue:
 <<>>=
 probUnDes(DesScore)

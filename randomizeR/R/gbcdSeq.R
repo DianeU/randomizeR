@@ -24,7 +24,7 @@ NULL
 # 
 # @slot N total number of patients included in the trial.
 # @slot rho a positive parameter which my be adjusted according to how strongly it is desired to balance the experiment.
-# @slot M matrix containing randomisation sequences of length \code{N} in its rows.
+# @slot M matrix containing randomization sequences of length \code{N} in its rows.
 setClass("gbcdSeq", slots=c(rho = "numeric"), contains = "randSeq")
 
 

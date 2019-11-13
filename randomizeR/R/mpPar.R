@@ -65,7 +65,7 @@ validatempPar <- function(object) {
 # Class definition for mpPar
 # --------------------------------------------
 
-# Randomization paramters generic
+# Randomization parameters generic
 setClass("mpPar",
          slots = c(mti = "numeric"),
          contains = "randPar",
@@ -97,7 +97,7 @@ setClass("mpPar",
 #'
 #' @references
 #' V.W. Berger, A. Ivanova and M.D. Knoll (2003) Minimizing predictability while
-#' retaining balance through the use of less restrective randomization
+#' retaining balance through the use of less restrictive randomization
 #' procedures. \emph{Statistics in Medicine}, \strong{19}, 3017-28. 
 mpPar <- function(N, mti, ratio = c(1, 1), groups = LETTERS[1:2]) {
   new("mpPar", N = N, mti = mti, K = 2, ratio = ratio, groups = groups)

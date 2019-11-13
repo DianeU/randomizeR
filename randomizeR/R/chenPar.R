@@ -58,7 +58,7 @@ validateChenPar <- function(object) {
 # Class definition for chenPar
 # --------------------------------------------
 
-# Randomization paramters generic
+# Randomization parameters generic
 setClass("chenPar",
          slots = c(mti="numeric", p = "numeric"),
          contains = "randPar",
@@ -73,7 +73,7 @@ setClass("chenPar",
 #' Represents the randomization procedure Chen's Design.
 #'
 #' @details
-#' Flip a biased coin with probability \code{p} in favour of the treatment
+#' Flip a biased coin with probability \code{p} in favor of the treatment
 #' which is allocated less frequently as long as the difference in group sizes does
 #' not exceed the \code{mti}. If the \code{mti} is reached a deterministic
 #' allocation is done, so that the difference in group sizes is reduced.
