@@ -40,7 +40,7 @@ validategbcdPar <- function(object) {
 # Class definition for gbcdPar
 # --------------------------------------------
 
-# Randomization paramters generic
+# Randomization parameters generic
 setClass("gbcdPar",
          slots = c(rho = "numeric"),
          contains = "randPar",
