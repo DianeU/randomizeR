@@ -131,22 +131,6 @@ setClass("selBias", slots = c(eta = "numeric", type = "character",
 #'  endpoints the p-values are obtained using an approximation formula. 
 #'  }
 #' }
-#' \describe{
-#'  \item{\code{type="CS"}}{
-#'  
-#'  
-#'  
-#'  
-#'  
-#'  }
-#'  \item{\code{type="DS"}}{
-#'  
-#'  
-#'  
-#'  
-#'  }
-#' }
-#' 
 #' 
 #' It also supports three types of selection bias:
 #' 
@@ -173,7 +157,7 @@ setClass("selBias", slots = c(eta = "numeric", type = "character",
 #'  whenever all the treatments of the opposite group are larger than the smallest
 #'  of the present group.
 #'  }
-#'  }
+#' }
 #' 
 #' @return
 #' \code{S4} object of class \code{selBias}, a formal representation of the
@@ -188,12 +172,6 @@ setClass("selBias", slots = c(eta = "numeric", type = "character",
 #' M. Proschan (1994) Influence of selection bias on the type-I-error rate  
 #' under random permuted block designs. \emph{Statistica Sinica}, \strong{4}, 219-31. 
 #' 
-<<<<<<< HEAD
-#' @examples
-#' # Initalize the selection bias to be convergent with an selection effect of eta = 0.25
-#' # Calculate the exact Type 1-Error probabilities  
-#' cs <- selBias("CS", 0.25, "exact")
-=======
 #' D. Uschner, R.-D. Hilgers, N. Heussen (2018) The impact of selection bias in 
 #' randomized multi-arm parallel group clinical trials \emph{PLOS ONE}, \strong{13}(1), 1-18. 
 #' 
@@ -201,7 +179,6 @@ setClass("selBias", slots = c(eta = "numeric", type = "character",
 #' # create a selection bias of the convergency strategy type with eta = 0.25 for which
 #' # the exact rejection probabilities are calculated 
 #' sbias <- selBias("CS", 0.25, "exact")
->>>>>>> 00d3bf337b0a3842efc59026257fb48b1bbc23a2
 #' 
 #' @export
 selBias <- function(type, eta, method, alpha = 0.05) { 

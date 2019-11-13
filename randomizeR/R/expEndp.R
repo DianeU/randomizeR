@@ -62,19 +62,11 @@ setClass("expEndp",
 #' @seealso Compute exact or simulated type-I-error: \code{\link{assess}}.
 #' 
 #' @examples
-<<<<<<< HEAD
-#' #Set the Parameters of two exponentially distributed endpoints
-#' endp <- expEndp(lambda = c(1, 2), cenTime = 10, cenRate = 0.01)
-#' @export
-expEndp <- function(lambda, cenRate, accrualTime = 0, cenTime){
-  
-=======
 #' # set the parameters of two exponentially distributed endpoints
 #' endp <- expEndp(lambda = c(1, 2), cenTime = 10, cenRate = 0.01)
 #' 
 #' @export
 expEndp <- function(lambda, cenRate, accrualTime = 0, cenTime){
->>>>>>> 00d3bf337b0a3842efc59026257fb48b1bbc23a2
   new("expEndp", lambda = lambda, cenRate = cenRate, accrualTime = accrualTime, cenTime = cenTime)
 }
 

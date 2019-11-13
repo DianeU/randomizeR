@@ -35,7 +35,7 @@ load_all(current.code)
 run_examples(current.code)
 build_vignettes(current.code)
 check(current.code)
-build(current.code, path = 'C:\\Users\\mmartini\\Desktop\\randomizeR')
+build(current.code)
 devtools::release(pkg=current.code) ### Publish package on CRAN
 
 # generate manual
