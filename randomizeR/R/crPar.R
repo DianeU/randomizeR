@@ -26,7 +26,7 @@ validatecrPar <- function(object) {
 # Class definition for crPar
 # --------------------------------------------
 
-# Randomization paramters generic
+# Randomization parameters generic
 setClass("crPar", contains = "randPar", validity = validatecrPar)
 
 

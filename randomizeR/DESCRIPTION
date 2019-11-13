@@ -1,22 +1,41 @@
 Package: randomizeR
 Title: Randomization for Clinical Trials
 Version: 2.0
-<<<<<<< HEAD
-Date: 2019-10-01
-=======
 Date: 2019-11-01
->>>>>>> 00d3bf337b0a3842efc59026257fb48b1bbc23a2
 Encoding: UTF-8
-Authors@R: c(
-    person(given="David", family="Schindler", email="dv.schindler@gmail.com", role="aut"),
-    person(given="Diane", family="Uschner", email="Diane.Uschner@gmail.com", role=c("aut","cre")),
-    person(given="Marcia Viviane", family="Rueckbeil", email="marcia.rueckbeil@rwth-aachen.de", role ="ctb"),
-    person(given="Martin", family="Manolov", email="martin.manolov@rwth-aachen.de", role="ctb"),
-	person(given="Thi Mui", family="Pham", email="thi.mui.pham@rwth-aachen.de", role="ctb"),
-	person(given="Michael", family="Martini",email="michael.martini1@rwth-aachen.de", role="ctb"),
-	person(given="Ralf-Dieter", family="Hilgers", email="rhilgers@ukaachen.de", role=c("aut","ths")),
-	person(given="Nicole", family="Heussen", email="nheussen@ukaachen.de", role=c("aut","ths"))
-    )
+Authors@R: 
+    c(person(given = "David",
+             family = "Schindler",
+             role = "aut",
+             email = "dv.schindler@gmail.com"),
+      person(given = "Diane",
+             family = "Uschner",
+             role = c("aut", "cre"),
+             email = "mmartini@ukaachen.de"),
+      person(given = "Marcia Viviane",
+             family = "Rueckbeil",
+             role = "ctb",
+             email = "marcia.rueckbeil@rwth-aachen.de"),
+      person(given = "Martin",
+             family = "Manolov",
+             role = "ctb",
+             email = "martin.manolov@rwth-aachen.de"),
+      person(given = "Thi Mui",
+             family = "Pham",
+             role = "ctb",
+             email = "thi.mui.pham@rwth-aachen.de"),
+      person(given = "Michael",
+             family = "Martini",
+             role = "ctb",
+             email = "michael.martini1@rwth-aachen.de"),
+      person(given = "Ralf-Dieter",
+             family = "Hilgers",
+             role = c("aut", "ths"),
+             email = "rhilgers@ukaachen.de"),
+      person(given = "Nicole",
+             family = "Heussen",
+             role = c("aut", "ths"),
+             email = "nheussen@ukaachen.de"))
 Description: This tool enables the user to choose a randomization procedure
     based on sound scientific criteria. It comprises the generation of
     randomization sequences as well the assessment of randomization procedures
