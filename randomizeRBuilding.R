@@ -25,22 +25,22 @@ current.code <- as.package("randomizeR")
 # in case something was deleted or renamed, run (twice)
 load_all(current.code, recompile = TRUE)
 document(current.code)
-load_all(current.code) 
-test(current.code)
+#load_all(current.code) 
+#test(current.code)
 ## Runs a Spell checker on all Files including the Vignettes, Ignores words saved in the Wordlist, run document beforehand to catch changes
 #print(spell_check(current.code))
 ## Update the wordlist through invokation of a spell_checker call
 #update_wordlist(current.code)
-load_all(current.code)
-run_examples(current.code)
+#load_all(current.code)
+#run_examples(current.code)
 build_vignettes(current.code)
-check(current.code)
-build(current.code)
-devtools::release(pkg=current.code) ### Publish package on CRAN
+#check(current.code)
+#build(current.code)
+#devtools::release(pkg=current.code) ### Publish package on CRAN
 
 # generate manual
-#if (file.exists("./randomizeR.pdf")) file.remove("./randomizeR.pdf")
-#   system(paste('R CMD Rd2pdf ',  'randomizeR'))
+if (file.exists("./randomizeR.pdf")) file.remove("./randomizeR.pdf")
+     system(paste('R CMD Rd2pdf ',  'randomizeR'))
 
 
 #install.packages("randomizeR_2.0.tar.gz", repos = NULL, type = "source")
