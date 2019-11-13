@@ -83,7 +83,7 @@ setClass("mpPar",
 #'
 #' @details
 #' Fix the total sample size \code{N} and the \code{mti}. Afterwards, the patients
-#' are assigend to each treatment arm according to the \code{ratio}.
+#' are assigned to each treatment arm according to the \code{ratio}.
 #' All randomization sequences are equiprobable.
 #'
 #' @family randomization procedures

@@ -61,7 +61,7 @@ setClass("bsdPar",
 #' Represents the randomization procedure Big Stick Design.
 #'
 #' @details
-#' Tossing a fair coin as long as the difference in group sizes doesn`t
+#' Tossing a fair coin as long as the difference in group sizes does not
 #' exceed the \code{mti}. If the \code{mti} is reached a deterministic
 #' allocation is done, so that the difference in group sizes is reduced.
 #' 

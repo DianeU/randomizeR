@@ -76,7 +76,7 @@ setClass("rtbdPar",
 #' Fix the possible random block lengths \code{rb} and the sample size of the trial \code{N}.
 #'  Afterwards, one block length is
 #' randomly selected of the random block lengths. In this block a fair coin is tossed
-#' for the patient assignments until half of the patients have been assigend to one of
+#' for the patient assignments until half of the patients have been assigned to one of
 #' the treatment arms. Afterwards, the block is filled with the
 #' other treatment. This procedure is repeated
 #' until \code{N} patients are assigned.

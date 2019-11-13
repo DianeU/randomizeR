@@ -81,7 +81,7 @@ setMethod("show", "probUnDesirable", function(object) {
 # Generic functions for using objects of type desScores
 # --------------------------------------------
 
-#' Computing the probability of having desirabilty scores of zero
+#' Computing the probability of having desirability scores of zero
 #' 
 #' Computing the probability of having desirabilty scores of zero for each desirability
 #' function applied to an issue. 

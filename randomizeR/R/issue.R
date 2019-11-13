@@ -26,7 +26,7 @@ NULL
 #' \itemize{
 #' \item \strong{Selection bias} 
 #' 		can occur if future treatment allocations are predictable due to 
-#' 		restricted randomization and unmasking of past treatment assigments.
+#' 		restricted randomization and unmasking of past treatment assignments.
 #'		The influence of selection bias on the test decision is represented by 
 #'		the \code{\link{selBias}} class. The measure for the predictability of
 #'		a randomization procedure is impemented in the \code{\link{corGuess}} class

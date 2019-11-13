@@ -83,7 +83,7 @@ setClass("udPar",
 #' An urn is filled with a number of \code{ini} balls of both of the treatments.
 #' Afterwards, a ball is drawn randomly from the urn. Finally, \code{add} balls
 #' are added to the urn from the opposite treatment. This procedure is repeated until
-#' \code{N} patients are assigend.
+#' \code{N} patients are assigned.
 #' 
 #' @family randomization procedures
 #' 

@@ -41,7 +41,7 @@ setClass("assessment",
 # Accesssor functions for asssessment
 # --------------------------------------------
 
-#' Method defining the $ operator for the assessemnt class
+#' Method defining the $ operator for the assessment class
 #' @keywords internal
 #' @inheritParams overview
 setMethod("$", "assessment",
@@ -101,7 +101,7 @@ setMethod("show", "assessment", function(object) {
 #' @details
 #' Randomization sequences behave differently with respect to issues
 #' like selection bias, chronological bias, or loss in power estimation.
-#' The \code{assess} function evaluates the behaviour of randomization 
+#' The \code{assess} function evaluates the behavior of randomization 
 #' sequences with respect to these issues. 
 #' The first argument should be a result of one of the functions 
 #' \code{\link{genSeq}} or \code{\link{getAllSeq}}.

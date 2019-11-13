@@ -21,7 +21,7 @@ NULL
 #'    represents the class of desirability functions according to Derringer-Suich (1980).
 #' \item \strong{\link{getDesScores}}
 #'    can be applied to an object of class \code{assessment} together with prespecified
-#'    desirability functions to compare the behaviour of randomization sequences (on a 
+#'    desirability functions to compare the behavior of randomization sequences (on a 
 #'    common scale \[0,1\]).
 #' \item \strong{\link{plotDes}}
 #'    plots a \code{desScores} object on a radar chart. 
@@ -50,7 +50,7 @@ NULL
 #' d2 <- derFunc(0.05, c(0, 0.1), c(1, 1))
 #'
 #' # By applying the getDesScores function to the assessment output together 
-#' # with the specified desirability functions the behaviour of randomization sequences 
+#' # with the specified desirability functions the behavior of randomization sequences 
 #' # is evaluated and scaled to [0,1]:
 #' DesScore <- getDesScores(A1, d1, d2, weights = c(5/6, 1/6))
 #' DesScore2 <- getDesScores(A2, d1, d2, weights = c(5/6, 1/6))

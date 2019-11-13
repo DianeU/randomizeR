@@ -42,7 +42,7 @@ setClass("comparison",
 # Accesssor functions for comparison
 # --------------------------------------------
 
-#' Method defining the $ operator for the assessemnt class
+#' Method defining the $ operator for the assessement class
 #' @keywords internal
 #' @inheritParams overview
 setMethod("$", "comparison",
@@ -79,7 +79,7 @@ setMethod("show", "comparison", function(object) {
 #' @details
 #' Randomization procedures behave differently with respect to issues
 #' like selection bias, chronological bias, or loss in power estimation.
-#' The \code{compare} function evaluates the behaviour of randomization 
+#' The \code{compare} function evaluates the behavior of randomization 
 #' procedures with respect to one issue. 
 #' Its first argument should represent one of the implemented 
 #' \code{\link{issues}}.

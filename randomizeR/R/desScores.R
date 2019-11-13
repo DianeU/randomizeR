@@ -46,7 +46,7 @@ setClass("desScores",
 # Accesssor functions for desScores
 # --------------------------------------------
 
-#' Method defining the $ operator for the assessemnt class
+#' Method defining the $ operator for the assessment class
 #' @keywords  internal
 #' @inheritParams overview
 setMethod("$", "desScores",
@@ -112,7 +112,7 @@ setMethod("show", "desScores", function(object) {
 #' @details
 #' Randomization sequences behave differently with respect to issues
 #' like selection bias, chronological bias, or loss in power estimation.
-#' The \code{getDesScores} function evaluates the behaviour of randomization 
+#' The \code{getDesScores} function evaluates the behavior of randomization 
 #' sequences with respect to these issues. The difference to the assess
 #' function is that it scales them to \[0,1\] and makes them easier interpretable.  
 #' The first argument should be a result of the \code{\link{assess}} function.

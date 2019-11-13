@@ -74,8 +74,8 @@ setClass("chenPar",
 #'
 #' @details
 #' Flip a biased coin with probability \code{p} in favour of the treatment
-#' which is allocated less frequently as long as the difference in group sizes doesn`t
-#' exceed the \code{mti}. If the \code{mti} is reached a deterministic
+#' which is allocated less frequently as long as the difference in group sizes does
+#' not exceed the \code{mti}. If the \code{mti} is reached a deterministic
 #' allocation is done, so that the difference in group sizes is reduced.
 #' If both treatments have been assigned equally often a fair coin is tossed.
 #' 

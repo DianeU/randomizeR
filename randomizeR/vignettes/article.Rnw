@@ -591,7 +591,7 @@ The second purpose is the generation of multiple sequences
 in order to assess the properties of a randomization procedure. 
 %
 Both purposes can be regarded as functions that use the randomization procedure 
-itself as basis for their behaviour. They are therefore implemented as methods 
+itself as basis for their behavior. They are therefore implemented as methods 
 that take an object representing the randomization procedure as input.
 
 \subsubsection{Representing randomization procedures}
@@ -966,7 +966,7 @@ may be extended to other endpoints such as time-to-event data, or to more than
 two treatment groups. Finally, randomization tests may be implemented to enable 
 randomization based inference independent of parametric assumptions. 
 
-\section*{Acknowledgement}
+\section*{Acknowledgment}
 This research has received funding within the IDeAl FP7 project from the 
 European Union's Seventh Framework Programme for research, technological 
 development and demonstration under Grant Agreement no 602552. 
