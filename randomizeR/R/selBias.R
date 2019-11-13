@@ -148,6 +148,33 @@ setClass("selBias", slots = c(eta = "numeric", type = "character",
 #' }
 #' 
 #' 
+#' It also supports three types of selection bias:
+#' 
+#' \describe{
+#'  \item{\code{type="DS"}}{Refers to the divergence strategy according to 
+#'  Blackwell and Hodges (1957). Under this guessing strategy, the investigator
+#'  guesses that the upcoming treatment is the one that has so far been allocated 
+#'  *more* frequently. 
+#'  }
+#'  \item{\code{type="CS"}}{Refers to the convergence strategy according to 
+#'  Blackwell and Hodges (1957). Under this guessing strategy, the investigator
+#'  guesses that the upcoming treatment is the one that has so far been allocated 
+#'  *less* frequently. In multi-arm trials, \code{type="CS"} refers to the first 
+#'  generalization of the convergence strategy according to Uschner et al (2018).
+#'  The investigator guesses the treatment that had been allocated less frequently
+#'  whenever all the treatments of the opposite group are larger than the smallest
+#'  of the present group.
+#'  }
+#'  \item{\code{type="CS2"}}{In trials with two treatment arms, \code{type="CS2"}
+#'  is equivalent to \code{type="CS"}. In multi-arm thrials, \code{type="CS2"} refers 
+#'  to the second generalization of convergence strategy according to 
+#'  Uschner et al (2018).
+#'  The investigator guesses the treatment that had been allocated less frequently
+#'  whenever all the treatments of the opposite group are larger than the smallest
+#'  of the present group.
+#'  }
+#'  }
+#' 
 #' @return
 #' \code{S4} object of class \code{selBias}, a formal representation of the
 #' issue of selection bias in a clinical trial.
@@ -161,10 +188,20 @@ setClass("selBias", slots = c(eta = "numeric", type = "character",
 #' M. Proschan (1994) Influence of selection bias on the type-I-error rate  
 #' under random permuted block designs. \emph{Statistica Sinica}, \strong{4}, 219-31. 
 #' 
+<<<<<<< HEAD
 #' @examples
 #' # Initalize the selection bias to be convergent with an selection effect of eta = 0.25
 #' # Calculate the exact Type 1-Error probabilities  
 #' cs <- selBias("CS", 0.25, "exact")
+=======
+#' D. Uschner, R.-D. Hilgers, N. Heussen (2018) The impact of selection bias in 
+#' randomized multi-arm parallel group clinical trials \emph{PLOS ONE}, \strong{13}(1), 1-18. 
+#' 
+#' @examples
+#' # create a selection bias of the convergency strategy type with eta = 0.25 for which
+#' # the exact rejection probabilities are calculated 
+#' sbias <- selBias("CS", 0.25, "exact")
+>>>>>>> 00d3bf337b0a3842efc59026257fb48b1bbc23a2
 #' 
 #' @export
 selBias <- function(type, eta, method, alpha = 0.05) { 

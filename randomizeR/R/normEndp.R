@@ -60,13 +60,20 @@ setClass("normEndp",
 #' In conjunction with the assess function, normal endpoints
 #' admit the calculation of the exact type-I-error probability and power.
 #'
-#' @family endopoint types
+#' @family endpoint types
 #'
 #' @seealso Compute exact or simulated type-I-error: \code{\link{assess}}.
 #' 
+<<<<<<< HEAD
 #' @example
 #' # Set the paramters of two normally distributied endpoints
 #' endp <- normEndp(mu = c(1, 2), sigma = c(1, 1))
+=======
+#' @examples
+#' # set the parameters of two normally distributed endpoints
+#' endp <- normEndp(mu = c(1, 2), sigma = c(1, 1))
+#' 
+>>>>>>> 00d3bf337b0a3842efc59026257fb48b1bbc23a2
 #' @export
 normEndp <- function(mu, sigma) {
   new("normEndp", mu = mu, sigma = sigma)

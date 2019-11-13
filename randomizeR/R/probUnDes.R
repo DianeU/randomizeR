@@ -101,7 +101,7 @@ setMethod("show", "probUnDesirable", function(object) {
 #' with the probability that the sequence occurs. 
 #'
 #' @examples 
-#' # Compare Random Allocation Rule to Big Stick Design with respect to different issues
+#' # compare Random Allocation Rule to Big Stick Design with respect to different issues
 #' # and their corresponding desirability functions
 #' RAR <- getAllSeq(rarPar(4))
 #' issue1 <- corGuess("CS")

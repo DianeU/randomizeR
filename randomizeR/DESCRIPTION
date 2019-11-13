@@ -1,7 +1,11 @@
 Package: randomizeR
 Title: Randomization for Clinical Trials
 Version: 2.0
+<<<<<<< HEAD
 Date: 2019-10-01
+=======
+Date: 2019-11-01
+>>>>>>> 00d3bf337b0a3842efc59026257fb48b1bbc23a2
 Encoding: UTF-8
 Authors@R: c(
     person(given="David", family="Schindler", email="dv.schindler@gmail.com", role="aut"),

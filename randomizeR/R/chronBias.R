@@ -160,6 +160,7 @@ setClass("chronBias",
 #' @family issues
 #' 
 #' @examples
+<<<<<<< HEAD
 #' ## Get the expectation for a normal endpoint with chronological Bias and a linear time trend
 #' # Set the strength of the trend to 0.5 
 #' # Calculate the exact Type 1-Error probabilities  
@@ -174,6 +175,15 @@ setClass("chronBias",
 #'
 #'
 #'
+=======
+#' # create a linear time trend with theta = 0.5 for which the exact rejection probabilities 
+#' # are calculated
+#' cbias <- chronBias("linT", 0.5, "exact")
+#' 
+#' # create a stepwise time trend with theta = 1 after 10 allocations for which the test 
+#' # decision is simulated  
+#' cbias <- chronBias("stepT", 1, "sim", 10)
+>>>>>>> 00d3bf337b0a3842efc59026257fb48b1bbc23a2
 #'
 #' @export
 chronBias <- function(type, theta, method, saltus, alpha = 0.05) {
