@@ -2,10 +2,8 @@
 # setwd("D:/David_lokal/Github/Rpackage/randomizeR")
 # setwd("U:/IDeAl/IDeAlGrit")
 # setwd("C:/Users/mmanolov/Documents/GitHub/randomizeR")
-# setwd("C:/Users/kfuge/Documents/GitHub/randomizeR")
-# setwd("C:/Users/Marcia/Documents/randomizeR-Logrank")
-# setwd("C:\\Users\\49171\\Documents\\randomizeR")
-setwd("C:\\Users\\mmartini\\Desktop\\randomizeR")
+setwd("C:\\Users\\Marcia\\GitLab\\randomizeR")
+# setwd("C:\\Users\\mmartini\\Desktop\\randomizeR")
 
 library(knitr)
 library(devtools)
@@ -15,9 +13,6 @@ library(spelling)
 
 # For new Packages use this
 #create("randomizeR")
-
-### Current work around
-#devtools::install_github("gustavdelius/roxygen") 
 
 current.code <- as.package("randomizeR")
 #devtools::use_vignette("randomizeR")
