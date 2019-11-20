@@ -81,7 +81,7 @@
 #' log-linear time trend, \code{StepT} for step time trend, \code{SigT} for
 #' sigmoid time trend, \code{PWR} for knowledge of all up to the first
 #' observation in each block, \code{MTI} the next observation after reaching the
-#' maximal tolerated imbalance is reached will be known to the physican.
+#' maximal tolerated imbalance is reached will be known to the physician.
 #' @param TV numeric specifying the optimal desired value called the target value.
 #' @param ub upper bound for the last value of the poisson distribution.
 #' @param varEq \code{logical} parameter for the t.test: Shall the variances be treated 

@@ -7,7 +7,7 @@
 
 #' Simulation of the test decision of the log rank test
 #'
-#' Simualtes one test decision of the log rank test in the presence of bias. 
+#' Simulates one test decision of the log rank test in the presence of bias. 
 #'
 #' @param randSeq object of the class randSeq.
 #' @param bias object of the class bias.
@@ -17,6 +17,7 @@
 logRankDecSim <- function(randSeq, bias, endp){
   stopifnot(is(randSeq, "randSeq"), randSeq@K == 2,
             is(bias, "issue"), is(endp, "endpoint"))  
+
 
   
   # variable for the defined alpha quantile

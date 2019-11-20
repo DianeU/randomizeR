@@ -89,7 +89,7 @@ setClass("survEndp",
 #' for an S4 object of the class \code{survEnd} representing 
 #' a survival endpoint in a clinical trial.
 #'
-#' @family endopoint types
+#' @family endpoint types
 #' 
 #' @export
 survEndp <- function(cenRate, accrualTime, cenTime, interval, weights) {

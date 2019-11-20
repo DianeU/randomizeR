@@ -121,7 +121,7 @@ setClass("selBias", slots = c(eta = "numeric", type = "character",
 #' \code{randSeq}. The type-I-error rate (power) is the proportion of falsely
 #' (correctly) rejected null hypotheses.
 #'  }
-#'  \item{\code{method="exact"}}{Represents the exact type-I-error proabability 
+#'  \item{\code{method="exact"}}{Represents the exact type-I-error probability 
 #'  given the level \code{alpha}, the selection effect \code{eta} and the 
 #'  biasing strategy \code{type}. When calling \code{assess} for a \code{selBias} 
 #'  object with \code{method="exact"}, the \emph{p}-value of each randomization 
@@ -149,6 +149,33 @@ setClass("selBias", slots = c(eta = "numeric", type = "character",
 #' }
 #' 
 #' 
+#' It also supports three types of selection bias:
+#' 
+#' \describe{
+#'  \item{\code{type="DS"}}{Refers to the divergence strategy according to 
+#'  Blackwell and Hodges (1957). Under this guessing strategy, the investigator
+#'  guesses that the upcoming treatment is the one that has so far been allocated 
+#'  *more* frequently. 
+#'  }
+#'  \item{\code{type="CS"}}{Refers to the convergence strategy according to 
+#'  Blackwell and Hodges (1957). Under this guessing strategy, the investigator
+#'  guesses that the upcoming treatment is the one that has so far been allocated 
+#'  *less* frequently. In multi-arm trials, \code{type="CS"} refers to the first 
+#'  generalization of the convergence strategy according to Uschner et al (2018).
+#'  The investigator guesses the treatment that had been allocated less frequently
+#'  whenever all the treatments of the opposite group are larger than the smallest
+#'  of the present group.
+#'  }
+#'  \item{\code{type="CS2"}}{In trials with two treatment arms, \code{type="CS2"}
+#'  is equivalent to \code{type="CS"}. In multi-arm trials, \code{type="CS2"} refers 
+#'  to the second generalization of convergence strategy according to 
+#'  Uschner et al (2018).
+#'  The investigator guesses the treatment that had been allocated less frequently
+#'  whenever all the treatments of the opposite group are larger than the smallest
+#'  of the present group.
+#'  }
+#' }
+#' 
 #' @return
 #' \code{S4} object of class \code{selBias}, a formal representation of the
 #' issue of selection bias in a clinical trial.
@@ -161,11 +188,14 @@ setClass("selBias", slots = c(eta = "numeric", type = "character",
 #' 
 #' M. Proschan (1994) Influence of selection bias on the type-I-error rate  
 #' under random permuted block designs. \emph{Statistica Sinica}, \strong{4}, 219-31. 
+#'
+#' D. Uschner, R.-D. Hilgers, N. Heussen (2018) The impact of selection bias in 
+#' randomized multi-arm parallel group clinical trials \emph{PLOS ONE}, \strong{13}(1), 1-18. 
 #' 
 #' @examples
-#' # Initalize the selection bias to be convergent with an selection effect of eta = 0.25
-#' # Calculate the exact Type 1-Error probabilities  
-#' cs <- selBias("CS", 0.25, "exact")
+#' # create a selection bias of the convergency strategy type with eta = 0.25 for which
+#' # the exact rejection probabilities are calculated 
+#' sbias <- selBias("CS", 0.25, "exact")
 #' 
 #' @export
 selBias <- function(type, eta, method, alpha = 0.05) { 
@@ -306,35 +336,38 @@ setMethod("getExpectation", signature(randSeq = "randSeq", issue = "selBias",
           function(randSeq, issue, endp) {
             stopifnot(randSeq@K == 2)
             validObject(randSeq); validObject(issue); validObject(endp)
-            if (issue@type == "CS") {
-              # convergence strategy
-              issue <- t(apply(randSeq@M, 1, function(x) {
-                issue <- sign(cumsum(2*x - 1)) * issue@eta
-                issue <- issue[-length(issue)]
-                issue <- c(0, issue)
-                issue
-              }))
-            }
-            else if (issue@type == "DS") {
-              # divergence strategy
-              issue <- t(apply(randSeq@M, 1, function(x) {
-                issue <- sign(cumsum(2*x - 1)) * issue@eta * (-1)
-                issue <- issue[-length(issue)]
-                issue <- c(0, issue)
-                issue
-              }))
-            }
             
             if (issue@type == "CS2"){
               # Add a Sanity Check for C/D default
-              issue[randSeq@M == 0] <-  endp@scale[1] * ((endp@shape[1] + endp@exp[1])/endp@shape[1]*
-                endp@c[1]*endp@scale[1]^{endp@exp[1]})^{1/(endp@shape[1] + endp@exp[1])}*gamma(1+1/(endp@shape[1]*endp@exp[1]))
-              issue[randSeq@M == 1] <- endp@scale[2] * ((endp@shape[2] + endp@exp[2])/endp@shape[2]*
-                endp@c[2]*endp@scale[2]^{endp@exp[2]})^{1/(endp@shape[2] + endp@exp[2])}*gamma(1+1/(endp@shape[2]*endp@exp[2]))
+              # Check for out of bounds
+              issue <- matrix(numeric(0), ncol = ncol(randSeq@M), nrow = nrow(randSeq@M))
+              issue[randSeq@M == 0] <- (endp@scale[1]*((endp@shape[1] + endp@exp[1])/(endp@shape[1] * endp@c[1] * 
+                (endp@scale[1]^endp@exp[1])))^(1/(endp@shape[1] + endp@exp[1])))^(-1/(endp@shape[1] + endp@exp[1])) * gamma(1+1/(endp@shape[1] + endp@exp[1]))
+              issue[randSeq@M == 1] <- (endp@scale[2]*((endp@shape[2] + endp@exp[2])/(endp@shape[2] * endp@c[2] *
+                (endp@scale[2]^endp@exp[2])))^(1/(endp@shape[2] + endp@exp[2])))^(-1/(endp@shape[2] + endp@exp[2])) * gamma(1+1/(endp@shape[2] + endp@exp[2]))
               issue
-            }
+            } 
             
-            else{
+            else {
+              
+              if (issue@type == "CS") {
+                # convergence strategy
+                issue <- t(apply(randSeq@M, 1, function(x) {
+                  issue <- sign(cumsum(2*x - 1)) * issue@eta
+                  issue <- issue[-length(issue)]
+                  issue <- c(0, issue)
+                  issue
+                }))
+              }
+              else if (issue@type == "DS") {
+                # divergence strategy
+                issue <- t(apply(randSeq@M, 1, function(x) {
+                  issue <- sign(cumsum(2*x - 1)) * issue@eta * (-1)
+                  issue <- issue[-length(issue)]
+                  issue <- c(0, issue)
+                  issue
+                }))
+              }
               
               issue[randSeq@M == 0] <- exp(issue[randSeq@M == 0])^{-1/endp@shape[1]} * 
                 endp@scale[1] * gamma(1+1/endp@shape[1])
@@ -392,25 +425,6 @@ setMethod("getDistributionPars", signature(randSeq = "randSeq", issue = "selBias
           function(randSeq, issue, endp) {
             stopifnot(randSeq@K == 2)
             validObject(randSeq); validObject(issue); validObject(endp)
-            if (issue@type == "CS") {
-              # convergence strategy
-              issue <- t(apply(randSeq@M, 1, function(x) {
-                issue <- sign(cumsum(2*x - 1)) * issue@eta
-                issue <- issue[-length(issue)]
-                issue <- c(0, issue)
-                issue
-              }))
-            }
-            else if (issue@type == "DS") {
-              # divergence strategy
-              issue <- t(apply(randSeq@M, 1, function(x) {
-                issue <- sign(cumsum(2*x - 1)) * issue@eta * (-1)
-                issue <- issue[-length(issue)]
-                issue <- c(0, issue)
-                issue
-              }))
-            }
-            
             
             shape <- matrix(numeric(0), ncol = ncol(randSeq@M), 
                             nrow = nrow(randSeq@M))
@@ -419,18 +433,34 @@ setMethod("getDistributionPars", signature(randSeq = "randSeq", issue = "selBias
             if (issue@type == "CS2") {
               # Add a Sanity Check for C/D Default
               for(i in 0:(randSeq@K-1)) {
-                # Check for Correct definition of Weibull  
-                shape[randSeq@M == i] <- endp@shape[i+1] + endp@exp[i+1]
-                scale[randSeq@M == i] <- endp@scale[i+1] * ((endp@shape[i+1] + endp@exp[i+1])/endp@shape[i+1]*
-                  endp@c[i+1]*endp@scale[i+1]^{endp@exp[i+1]})^{1/(endp@shape[i+1] + endp@exp[i+1])}
+                shape[randSeq@M == i] <- (endp@shape[i+1] + endp@exp[i+1])
+                scale[randSeq@M == i] <- (endp@scale[i+1]*((endp@shape[i+1] + endp@exp[i+1])/(endp@shape[i+1] * endp@c[i+1] * 
+                (endp@scale[i+1]^endp@exp[i+1])))^(1/(endp@shape[i+1] + endp@exp[i+1])))
               }
             }
             else {
+              if (issue@type == "CS") {
+                # convergence strategy
+                issue <- t(apply(randSeq@M, 1, function(x) {
+                  issue <- sign(cumsum(2*x - 1)) * issue@eta
+                  issue <- issue[-length(issue)]
+                  issue <- c(0, issue)
+                  issue
+                }))
+              }
+              else if (issue@type == "DS") {
+                # divergence strategy
+                issue <- t(apply(randSeq@M, 1, function(x) {
+                  issue <- sign(cumsum(2*x - 1)) * issue@eta * (-1)
+                  issue <- issue[-length(issue)]
+                  issue <- c(0, issue)
+                  issue
+                }))
+              }
               for(i in 0:(randSeq@K-1)) {
-                
                 shape[randSeq@M == i] <- endp@shape[i+1]
                 scale[randSeq@M == i] <- exp(issue[randSeq@M == i])^{-1/endp@shape[i+1]} * endp@scale[i+1]
-              }  
+              } 
             }
             list(shape = shape, scale = scale)
           }

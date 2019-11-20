@@ -47,30 +47,21 @@ test_that("tests of equality of getExpectation", {
                matrix(rep(c(0.5, 1), 6) / exp(log(1/2)*(0:11)/11), nrow = 1))
   
   # tenth scenario weibEndpoint with Parameters equal to an expEndpoint
-  biasSB <- selBias("CS", log(2), "exact")
-  endp <- weibEndp(shape = c(1,2) , scale = c(1,2), c = c(1,1), exp = c(0,0), weights = c(0,0) , cenTime = 10, cenRate = 0.01)
-
+  endp <- weibEndp(shape = c(1,1) , scale = c(0.5,1), c = c(1,1), exp = c(0,0), weights = c(0,0) , cenTime = 10, cenRate = 0.01)
   expect_equal(getExpectation(randSeq, endp = endp), 
-               matrix(rep(c(, ), 6), nrow = 1))
-  
-  # eleventh scenario 
-  
-  
-  exendp <- expEndp(lambda = c(2,1), cenTime = 10, cenRate = 0.01)
-  
-  
-  # tenth scenario weibEndpoint and CS selection bias
-  #endp <- weibEndp(shape = c(1,1), scale = c(0.5,1.5), exp = , c =, cenTime = 10, cenRate = 0.01)
-  #biasSB <- selBias("CS", log(2), "exact")
-  #expect_equal(getExpectation(randSeq, biasSB, endp), 
-  #            matrix(rep(c(0.5, 2), 6), nrow = 1))
-  
-  # eleventh scenario weibEndpoint and CS2 selection bias
-  #biasSB <- selBias("CS2", log(2), "exact")
-  #expect_equal(getExpectation(randSeq, biasSB, endp), 
-  #             matrix(rep(c(0.5, 2), 6), nrow = 1))
+               getExpectation(randSeq, endp = expEndp(lambda = c(2,1), cenTime = 10, cenRate = 0.01)))
  
-  # thirteehns scenario weibEndpoint with CS2 bias and missing c and d (Fail Test)
-  
+  # eleventh  scenario weibEndpoint and CS selection bias
+  endp <- weibEndp(shape = c(0.5,1), scale = c(1,1), exp = c(1,1), c = c(1,1), weights = c(0,0), cenTime = 10, cenRate = 0.01)
+  biasSB <- selBias("CS", log(2), "exact")
+  expect_equal(getExpectation(randSeq, biasSB, endp), 
+              matrix(rep(c(2, 2), 6), nrow = 1))
+
+  # twelfth scenario weibEndpoint and CS2 selection bias
+  biasSB <- selBias("CS2", log(2), "exact")
+  endp <- weibEndp(shape = c(0.25,0.25), scale = c(1,1), exp = c(0.25,0.25), c = c(1,2), weights = c(0,0), cenTime = 10, cenRate = 0.01)
+  expect_equal(getExpectation(randSeq, biasSB, endp), 
+               matrix(rep(c(0.125, 2), 6), nrow = 1))
+
   }
 )

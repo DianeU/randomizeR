@@ -10,18 +10,21 @@
 #' W. F. Rosenberger and J. M. Lachin (2002) \emph{Randomization in Clinical Trials}. 
 #' Wiley.
 #' 
-#' D. Uschner , D. Schindler , R. D. Hilgers and N. Heussen  (2018). "randomizeR: An R Package for the
-#' Assessment and Implementation of Randomization in Clinical Trials." \emph{Journal of Statistical
-#' Software}, \strong{85}(8), pp. 1-22. doi: 10.18637/jss.v085.i08 (URL: \url{http://doi.org/10.18637/jss.v085.i08}).
+#' #' D. Uschner, D. Schindler, R. D. Hilgers and N. Heussen (2018). "randomizeR: An R Package 
+#' for the Assessment and Implementation of Randomization in Clinical Trials." \emph{Journal 
+#' of Statistical Software}, \strong{85}(8), pp. 1-22. doi: 10.18637/jss.v085.i08 
+#' (URL: \url{http://doi.org/10.18637/jss.v085.i08}).
 #' 
 #' D. Schindler (2016) \emph{Assessment of Randomization Procedures in the Presence of 
 #' Selection and Chronological Bias}. PhD Thesis.
 #' 
-#' D. Uschner , R. D. Hilgers, N. Heussen (2018). "The impact of selection bias in randomized multi-arm parallel group clinical trials."
-#' PLOS ONE, 13(1): e0192065. doi : 10.1371/journal.pone.0192065  (URL: \url{https://doi.org/10.1371/journal.pone.0192065}).
+#' D. Uschner, R. D. Hilgers, N. Heussen (2018). "The impact of selection bias in randomized 
+#' multi-arm parallel group clinical trials." PLOS ONE, 13(1): e0192065. 
+#' doi: 10.1371/journal.pone.0192065  (URL: \url{https://doi.org/10.1371/journal.pone.0192065}).
 #'
-#' M. V. Rueckbeil , R. D. Hilgers , N. Heussen (2019). "Randomization in survival studies: An evaluation method that takes into account selection and chronological bias."
-#' PLOS ONE, 14(6): e0217946. doi: 10.1371/journal.pone.0217946  (URL: \url{https://doi.org/10.1371/journal.pone.0217946}).
+#' M. V. Rueckbeil, R. D. Hilgers, N. Heussen (2019). "Randomization in survival studies: An 
+#' evaluation method that takes into account selection and chronological bias." PLOS ONE, 14(6): 
+#' e0217946. doi: 10.1371/journal.pone.0217946 (URL: \url{https://doi.org/10.1371/journal.pone.0217946}).
 #' 
 #' 
 #' @section Acknowledgement:
@@ -42,7 +45,8 @@
 #' @docType package
 #' @name randomizeR-package
 #' @aliases randomizeR
-#' @author David Schindler \email{dv.schindler@@gmail.com}, Diane Uschner \email{Diane.Uschner@@gmail.com}, Ralf-Dieter Hilgers, Nicole Heussen, Marcia Viviane Rueckbeil \email{marcia.rueckbeil@@rwth-aachen.de}
+#' @author David Schindler \email{dv.schindler@@gmail.com}, Diane Uschner \email{Diane.Uschner@@gmail.com}, 
+#' Ralf-Dieter Hilgers, Nicole Heussen, Marcia Viviane Rueckbeil \email{marcia.rueckbeil@@rwth-aachen.de}
 #' 
 #' @import methods
 #' @import ggplot2

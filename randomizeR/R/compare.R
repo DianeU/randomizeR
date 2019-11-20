@@ -32,7 +32,7 @@ validateComparison <- function(object) {
 # Class definition for comparison
 # --------------------------------------------
 
-# Randomization paramters generic
+# Randomization parameters generic
 setClass("comparison",
          slots = c(S = "data.frame", L = "list"),
          validity = validateComparison)
@@ -42,7 +42,8 @@ setClass("comparison",
 # Accesssor functions for comparison
 # --------------------------------------------
 
-#' Method defining the $ operator for the assessemnt class
+
+#' Method defining the $ operator for the assessment class
 #' @keywords internal
 #' @inheritParams overview
 setMethod("$", "comparison",
@@ -79,7 +80,7 @@ setMethod("show", "comparison", function(object) {
 #' @details
 #' Randomization procedures behave differently with respect to issues
 #' like selection bias, chronological bias, or loss in power estimation.
-#' The \code{compare} function evaluates the behaviour of randomization 
+#' The \code{compare} function evaluates the behavior of randomization 
 #' procedures with respect to one issue. 
 #' Its first argument should represent one of the implemented 
 #' \code{\link{issues}}.
@@ -87,12 +88,12 @@ setMethod("show", "comparison", function(object) {
 #' \code{randSeq}. These objects represent the randomization procedures
 #' for the planned comparison. 
 #' The last argument \code{endp} may be provided if 
-#' the assessment should take the distribution of the treamtent groups
+#' the assessment should take the distribution of the treatment groups
 #' into account, e.g. for power evaluation.
 #'
 #' @examples 
-#' # compare Random Allocation Rule and Big Stick for N = 4
-#' # with respect to the correct guesses
+#' # compare Random Allocation Rule and Big Stick for N = 4 with respect to
+#' # correct guesses
 #' RAR <- getAllSeq(rarPar(4))
 #' BSD <- getAllSeq(bsdPar(4, mti = 2))
 #' corGuess <- corGuess("CS")
@@ -141,8 +142,8 @@ setGeneric("compare", function(issue, ..., endp) standardGeneric("compare"))
 #' A plot created with the additional package \code{ggplot2}.
 #' 
 #' @examples 
-#' # compare Random Allocation Rule and Big Stick for N = 4
-#' # with respect to the correct guesses
+#' # compare Random Allocation Rule and Big Stick for N = 4 with respect to
+#' # correct guesses
 #' RAR <- getAllSeq(rarPar(4))
 #' BSD <- getAllSeq(bsdPar(4, mti = 2))
 #' corGuess <- corGuess("CS")

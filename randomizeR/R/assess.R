@@ -30,7 +30,7 @@ validateAssessment <- function(object) {
 # Class definition for assessment
 # --------------------------------------------
 
-# Randomization paramters generic
+# Randomization parameters generic
 setClass("assessment",
          slots = c(D = "data.frame", design = "character", N = "numeric", K = "numeric",
                    groups = "character"),
@@ -41,7 +41,8 @@ setClass("assessment",
 # Accesssor functions for asssessment
 # --------------------------------------------
 
-#' Method defining the $ operator for the assessemnt class
+
+#' Method defining the $ operator for the assessment class
 #' @keywords internal
 #' @inheritParams overview
 setMethod("$", "assessment",
@@ -101,13 +102,13 @@ setMethod("show", "assessment", function(object) {
 #' @details
 #' Randomization sequences behave differently with respect to issues
 #' like selection bias, chronological bias, or loss in power estimation.
-#' The \code{assess} function evaluates the behaviour of randomization 
+#' The \code{assess} function evaluates the behavior of randomization 
 #' sequences with respect to these issues. 
 #' The first argument should be a result of one of the functions 
 #' \code{\link{genSeq}} or \code{\link{getAllSeq}}.
 #' The second argument should be any number of \code{\link{issues}} arising 
 #' in a clinical trial. The last argument \code{endp} may be provided if 
-#' the assessment should take the distribution of the treamtent groups
+#' the assessment should take the distribution of the treatment groups
 #' into account, e.g. for power evaluation.
 #'
 #' @examples 

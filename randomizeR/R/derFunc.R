@@ -72,11 +72,13 @@ setClass("derFunc",
 #' (linear loss). \cr
 #' 
 #' @examples 
-#' # Create an object of a left-sided desirability function
+#' # create an object of a left-sided desirability function
 #' dLeft <- derFunc(0.5, 0.3, 2)
-#' # Create an object of a right-sided desirability function
+#' 
+#' # create an object of a right-sided desirability function
 #' dRight <- derFunc(0.5, 0.8, 1)
-#' # Create an object of a two-sided desirability function
+#' 
+#' # create an object of a two-sided desirability function
 #' dLR <- derFunc(0.5, c(0.3, 0.9), c(3, 1))
 #' 
 #' @return 

@@ -19,7 +19,7 @@
 #' of the investigator (see \code{\link{selBias}}).
 #' \item The strength of a linear time trend, which is described by an object
 #'  of the class \code{\link{chronBias}}.
-#' \item The expectations of the investigated treatement groups can be different 
+#' \item The expectations of the investigated treatment groups can be different 
 #' (see e.g. \code{\link{normEndp}}).
 #' }
 #'

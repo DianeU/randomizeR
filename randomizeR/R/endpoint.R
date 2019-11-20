@@ -42,6 +42,7 @@ lambda <- function(obj) {
   if (.hasSlot(obj, "lambda")) obj@lambda else stop("object has no slot named lambda.") 
 }
 
+
 #' Method returning the shape parameter of an weibEndp S4 object
 #' 
 #' @param obj object of class weibEndp
@@ -55,6 +56,7 @@ shape <- function(obj) {
 scale <- function(obj) {
   if (.hasSlot(obj, "scale")) obj@scale else stop("object has no slot named scale.") 
 }
+
 
 #' Method defining the $ operator for the endpoint class
 #' @keywords  internal

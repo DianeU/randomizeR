@@ -60,13 +60,15 @@ setClass("normEndp",
 #' In conjunction with the assess function, normal endpoints
 #' admit the calculation of the exact type-I-error probability and power.
 #'
-#' @family endopoint types
+#' @family endpoint types
 #'
 #' @seealso Compute exact or simulated type-I-error: \code{\link{assess}}.
 #' 
-#' @example
-#' # Set the paramters of two normally distributied endpoints
+
+#' @examples
+#' # set the parameters of two normally distributed endpoints
 #' endp <- normEndp(mu = c(1, 2), sigma = c(1, 1))
+#' 
 #' @export
 normEndp <- function(mu, sigma) {
   new("normEndp", mu = mu, sigma = sigma)
@@ -92,23 +94,6 @@ setMethod("getExpectation", signature(randSeq = "randSeq", issue = "missing",
           }
 )
 
-#' @rdname getDistributionPars
-setMethod("getDistributionPars", signature(randSeq = "randSeq", issue = "missing", 
-                                           endp = "weibEndp"), 
-          function(randSeq, endp) {
-            stopifnot(randSeq@K == length(endp@mu))
-            validObject(randSeq); validObject(endp)
-            
-            mu <- matrix(numeric(0), ncol = ncol(randSeq@M), 
-                            nrow = nrow(randSeq@M))
-            sigma <- matrix(numeric(0), ncol = ncol(randSeq@M), 
-                            nrow = nrow(randSeq@M))
-            for(i in 0:(randSeq@K-1)) {
-              mu[randSeq@M == i] <- endp@mu[i+1]
-              sigma[randSeq@M == i] <- endp@sigma[i+1]
-            }  
-            list(mu = mu, sigma = sigma)
-          }
-)
+
 
 
