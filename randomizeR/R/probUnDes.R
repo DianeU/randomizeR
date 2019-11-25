@@ -88,7 +88,7 @@ setMethod("show", "probUnDesirable", function(object) {
 #' 
 #' @family desirability topics
 #'
-#' @inheritParams overview
+#'
 #' 
 #' @param desScore an object of the class \code{desScores}, i.e. an object resulting from
 #' applying the function \code{\link{getDesScores}}

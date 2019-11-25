@@ -96,7 +96,7 @@ setMethod("show", "evaluation", function(object) {
 #' functions applied to specified issues.
 #'
 #'
-#' @inheritParams overview
+#' 
 #' 
 #' @param ... at least one object of the class \code{desScores} or a list of objects of 
 #' the class \code{desScores}.
