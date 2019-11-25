@@ -157,7 +157,7 @@ setClass("selBias", slots = c(eta = "numeric", type = "character",
 #'  whenever all the treatments of the opposite group are larger than the smallest
 #'  of the present group.
 #'  }
-#'  }
+#' }
 #' 
 #' @return
 #' \code{S4} object of class \code{selBias}, a formal representation of the
