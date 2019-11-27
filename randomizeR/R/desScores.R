@@ -102,7 +102,7 @@ setMethod("show", "desScores", function(object) {
 #'
 #' @family desirability topics
 #'
-#' @inheritParams overview
+#' 
 #' 
 #' @param assess object of class \code{assessment}.
 #' @param ... at least one object of class \code{\link{derFunc}} or a list of objects of 

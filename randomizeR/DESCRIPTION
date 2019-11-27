@@ -1,7 +1,7 @@
 Package: randomizeR
 Title: Randomization for Clinical Trials
-Version: 2.0
-Date: 2019-11-01
+Version: 2.0.0
+Date: 2019-11-15
 Encoding: UTF-8
 Authors@R: 
     c(person(given = "David",
@@ -11,7 +11,7 @@ Authors@R:
       person(given = "Diane",
              family = "Uschner",
              role = c("aut", "cre"),
-             email = "mmartini@ukaachen.de"),
+             email = "Diane.Uschner@gmail.com"),
       person(given = "Marcia Viviane",
              family = "Rueckbeil",
              role = "ctb",
@@ -43,8 +43,7 @@ Description: This tool enables the user to choose a randomization procedure
     function for the comparison of randomization procedures.
 Roxygen: list(markdown = TRUE)
 Depends:
-    R (>= 3.5.0),
-    coin,
+    R (>= 3.6.0),
     methods,
     ggplot2,
     plotrix, 
@@ -130,4 +129,4 @@ Suggests:
     testthat,
     knitr
 VignetteBuilder: knitr
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.0

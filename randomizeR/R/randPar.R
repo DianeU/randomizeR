@@ -131,7 +131,7 @@ setClass("randPar",
 #' procedure.
 #' \code{\link{getAllSeq}}.
 #' 
-#' @inheritParams overview
+#' 
 #'
 #' @name randPar
 NULL
