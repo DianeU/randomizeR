@@ -338,8 +338,6 @@ setMethod("getExpectation", signature(randSeq = "randSeq", issue = "selBias",
             validObject(randSeq); validObject(issue); validObject(endp)
             
             if (issue@type == "CS2"){
-              # Add a Sanity Check for C/D default
-              # Check for out of bounds
               issue <- matrix(numeric(0), ncol = ncol(randSeq@M), nrow = nrow(randSeq@M))
               issue[randSeq@M == 0] <- (endp@scale[1]*((endp@shape[1] + endp@exp[1])/(endp@shape[1] * endp@c[1] * 
                 (endp@scale[1]^endp@exp[1])))^(1/(endp@shape[1] + endp@exp[1])))^(-1/(endp@shape[1] + endp@exp[1])) * gamma(1+1/(endp@shape[1] + endp@exp[1]))
@@ -431,7 +429,6 @@ setMethod("getDistributionPars", signature(randSeq = "randSeq", issue = "selBias
             scale <- matrix(numeric(0), ncol = ncol(randSeq@M), 
                             nrow = nrow(randSeq@M))
             if (issue@type == "CS2") {
-              # Add a Sanity Check for C/D Default
               for(i in 0:(randSeq@K-1)) {
                 shape[randSeq@M == i] <- (endp@shape[i+1] + endp@exp[i+1])
                 scale[randSeq@M == i] <- (endp@scale[i+1]*((endp@shape[i+1] + endp@exp[i+1])/(endp@shape[i+1] * endp@c[i+1] * 
