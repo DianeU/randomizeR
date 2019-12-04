@@ -72,7 +72,9 @@ logRankDecSim <- function(randSeq, bias, endp){
       if (sum(randSeq@M[i,]) == 0 || sum(randSeq@M[i,]) == randSeq@N ||
           all(status == 0)) {
         return(FALSE)
-      } else {
+      }
+      
+      else {
         df <- data.frame(randVar, status, treat = randSeq@M[i,])
         
         if(endp@weights[2] == 0){ 
@@ -82,15 +84,7 @@ logRankDecSim <- function(randSeq, bias, endp){
           return(as.numeric(p.value <= bias@alpha))
         }
         
-        else if (all(status == 0 || status == 1)) {
-          # Coin package
-          sdf <- logrank_test(Surv(randVar, status) ~ factor(treat), data = df, 
-                                  type = "Fleming-Harrington", rho = endp@weights[1], gamma = endp@weights[2])
-          p.value <- 1 - pchisq(sdf@statistic@teststatistic^2, 1)
-          return(as.numeric(p.value <= bias@alpha))
-        }
-        
-        else{
+        else {
           # PwrGSD package
           sdf <- wtdlogrank(Surv(randVar, status) ~ treat, data = df, WtFun = "FH",
                              param = endp@weights)
