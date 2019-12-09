@@ -338,12 +338,10 @@ setMethod("getExpectation", signature(randSeq = "randSeq", issue = "selBias",
             validObject(randSeq); validObject(issue); validObject(endp)
             
             if (issue@type == "CS2"){
-              issue <- matrix(numeric(0), ncol = ncol(randSeq@M), nrow = nrow(randSeq@M))
-              issue[randSeq@M == 0] <- (endp@scale[1]*((endp@shape[1] + endp@exp[1])/(endp@shape[1] * endp@c[1] * 
-                (endp@scale[1]^endp@exp[1])))^(1/(endp@shape[1] + endp@exp[1])))^(-1/(endp@shape[1] + endp@exp[1])) * gamma(1+1/(endp@shape[1] + endp@exp[1]))
-              issue[randSeq@M == 1] <- (endp@scale[2]*((endp@shape[2] + endp@exp[2])/(endp@shape[2] * endp@c[2] *
-                (endp@scale[2]^endp@exp[2])))^(1/(endp@shape[2] + endp@exp[2])))^(-1/(endp@shape[2] + endp@exp[2])) * gamma(1+1/(endp@shape[2] + endp@exp[2]))
-              issue
+              # convergence strategy, allocation bias model 2
+              distributionPars <- getDistributionPars(randSeq, issue, endp) 
+              issue <- distributionPars$scale * gamma(1+1/distributionPars$shape)
+              issue 
             } 
             
             else {
@@ -385,6 +383,7 @@ setMethod("getExpectation", signature(randSeq = "randSeq", issue = "selBias",
             # if no endpoint is specified, create a vector with 0s for the
             # second convergence strategy
             if(issue@type == "CS2"){
+              # convergence strategy, allocation bias model 2
               mu <- rep(0, randSeq@K)
               R_ <- genSeq(crPar(N(randSeq), K(randSeq)))
               issue_ <- t(apply(randSeq@M, 1, function(x) {
@@ -428,11 +427,20 @@ setMethod("getDistributionPars", signature(randSeq = "randSeq", issue = "selBias
                             nrow = nrow(randSeq@M))
             scale <- matrix(numeric(0), ncol = ncol(randSeq@M), 
                             nrow = nrow(randSeq@M))
+            
             if (issue@type == "CS2") {
+              # convergence strategy, allocation bias model 2
+              issue <- t(apply(randSeq@M, 1, function(x) {
+                issue <- sign(cumsum(2*x - 1))
+                issue <- issue[-length(issue)]
+                issue <- c(0, issue)
+                issue
+              }))
               for(i in 0:(randSeq@K-1)) {
-                shape[randSeq@M == i] <- (endp@shape[i+1] + endp@exp[i+1])
-                scale[randSeq@M == i] <- (endp@scale[i+1]*((endp@shape[i+1] + endp@exp[i+1])/(endp@shape[i+1] * endp@c[i+1] * 
-                (endp@scale[i+1]^endp@exp[i+1])))^(1/(endp@shape[i+1] + endp@exp[i+1])))
+                shape[randSeq@M == i] <- (endp@shape[i+1] + issue[randSeq@M == i] * endp@delta)
+                scale[randSeq@M == i] <- ((endp@shape[i+1] + issue[randSeq@M == i] * endp@delta) * endp@shape[i+1]^{-1} *
+                                            endp@scale[i+1]^endp@shape[i+1] * exp(issue[randSeq@M == i] * (-endp@eta)) 
+                                          )^(1/(endp@shape[i+1] + issue[randSeq@M == i] * endp@delta))
               }
             }
             else {

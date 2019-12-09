@@ -95,17 +95,11 @@ testDec <- function(randSeq, bias, endp) {
   else if (is(endp, "weibEndp"))
   {
     stopifnot(randSeq@K == 2)
-    # if(is(bias, "chronBias")){
-    #   stop("Error: Weibull endpoints only permit the consideration of allocation bias.")
-    # }
-    # if(is(bias, "combinedBias")){
-    #   stop("Error: Weibull endpoints only permit the consideration of allocation bias.")
-    # }
-    if(is(bias, "selBias") && bias@type == "CS2"){
-      stop("Error: Selection bias for Weibull endpoints can only be calculated for convergence and divergence strategy.")
+    if(is(bias, "chronBias")){
+      stop("Error: Weibull endpoints only permit the consideration of allocation bias.")
     }
-    if(is(bias, "combinedBias") && bias@typeSB == "CS2"){
-      stop("Error: Selection bias for Weibull endpoints can only be calculated for convergence and divergence strategy.")
+    if(is(bias, "combinedBias")){
+      stop("Error: Weibull endpoints only permit the consideration of selection bias.")
     }
     
     if (bias@method == "sim") {

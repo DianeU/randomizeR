@@ -82,14 +82,17 @@
 #' sigmoid time trend, \code{PWR} for knowledge of all up to the first
 #' observation in each block, \code{MTI} the next observation after reaching the
 #' maximal tolerated imbalance is reached will be known to the physician.
-#' @param exp STUB FOR WEIBULL
-#' @param c STUB FOR WEIBULL
-#' @param weights STUB FOR WEIBULL
 #' @param TV numeric specifying the optimal desired value called the target value.
 #' @param ub upper bound for the last value of the poisson distribution.
 #' @param varEq \code{logical} parameter for the t.test: Shall the variances be treated 
 #' as equal (TRUE= t.test) or different (FALSE= Welch.test).
 #' @param x a variable \code{x}.
+#' 
+#' @param delta STUB FOR WEIBULL 
+#' @param eta STUB FOR WEIBULL
+#' @param weights STUB FOR WEIBULL
+#' @param shape STUB FOR WEIBULL
+#' @param scale STUB FOR WEIBULL
 #'
 #' @name overview
 NULL
