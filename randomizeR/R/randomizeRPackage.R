@@ -58,6 +58,7 @@
 #' @importFrom grDevices col2rgb rainbow
 #' @importFrom graphics legend
 #' @importFrom PwrGSD wtdlogrank
+#' @importFrom coin logrank_test
 #' @importFrom stats pbeta 
 #' @importFrom stats integrate dexp pchisq pexp pnorm punif qexp qf qnorm rexp runif      
 NULL

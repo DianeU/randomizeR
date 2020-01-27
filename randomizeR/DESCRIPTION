@@ -48,6 +48,7 @@ Depends:
     ggplot2,
     plotrix, 
     PwrGSD,
+    coin,
     survival
 License: GPL (>=3)
 LazyData: true
