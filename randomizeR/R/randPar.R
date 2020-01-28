@@ -130,8 +130,6 @@ setClass("randPar",
 #' procedure.
 #' \code{\link{getAllSeq}}.
 #' 
-#' 
-#'
 #' @name randPar
 NULL
 

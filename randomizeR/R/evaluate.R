@@ -17,8 +17,6 @@ NULL
 # --------------------------------------------
 
 # Validity check function for objects of the desirability class
-# 
-# @inheritParams overview 
 #
 # @return Returns a \code{TRUE}, if the settings of the object are valid.
 validateEvaluation <- function(object) {
@@ -95,8 +93,6 @@ setMethod("show", "evaluation", function(object) {
 #' Evaluation of several randomization procedures with respect to certain desirability
 #' functions applied to specified issues.
 #'
-#'
-#' 
 #' 
 #' @param ... at least one object of the class \code{desScores} or a list of objects of 
 #' the class \code{desScores}.

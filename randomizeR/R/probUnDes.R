@@ -17,8 +17,6 @@ NULL
 # --------------------------------------------
 
 # Validity check function for objects of the desirability class
-# 
-# @inheritParams overview 
 #
 # @return Returns a \code{TRUE}, if the settings of the object are valid.
 validateProbUnDes <- function(object) {
@@ -87,8 +85,6 @@ setMethod("show", "probUnDesirable", function(object) {
 #' function applied to an issue. 
 #' 
 #' @family desirability topics
-#'
-#'
 #' 
 #' @param desScore an object of the class \code{desScores}, i.e. an object resulting from
 #' applying the function \code{\link{getDesScores}}

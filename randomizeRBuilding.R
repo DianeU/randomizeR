@@ -42,7 +42,7 @@ check(current.code)
 ## Release of new package 
 #check(current.code, run_dont_test=TRUE, manual=TRUE, remote=TRUE, incoming=TRUE, force_suggests=TRUE) ## more detailed checks
 #build(current.code) ## Funktioniert aktuell nicht
-#build(pkg="C:\\Users\\mmartini\\Desktop\\randomizeR\\randomizeR")
+build(pkg="C:\\Users\\mmartini\\Desktop\\randomizeR\\randomizeR")
 #devtools::release_checks(current.code)
 #validate_email(email = "Diane.Uschner@gmail.com", token = "cce2a98051a3445c8518223f6a00110b")
 #check_rhub(current.code,email="mmartini@ukaachen.de") # check on R-Hub

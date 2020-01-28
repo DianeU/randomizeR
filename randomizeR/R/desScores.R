@@ -100,8 +100,6 @@ setMethod("show", "desScores", function(object) {
 #' Applying desirability function on issues of individual randomization sequences.
 #'
 #' @family desirability topics
-#'
-#' 
 #' 
 #' @param assess object of class \code{assessment}.
 #' @param ... at least one object of class \code{\link{derFunc}} or a list of objects of 
