@@ -80,16 +80,20 @@ setMethod("getAllSeq",
           function(obj) {
             if(obj@K != 2 || !identical(obj@ratio, c(1,1))) {
               stop("Only possible for K equals 2 and ratio corresponds to c(1,1).")
-            }  
-            allSeqs <- compltSet(obj)
-            finBal <- apply(allSeqs, 1, function(x) 2*sum(x) == length(x))
-            new("rarSeq", 
-                M = allSeqs[finBal, ] , 
-                N = N(obj),
-                K = K(obj),
-                ratio = obj@ratio,
-                groups = obj@groups)
-          }
+            } 
+            res <- lapply(1:length(N(obj)), function(y) {
+              allSeqs <- compltSet(obj, y)
+              finBal <- apply(allSeqs, 1, function(x) 2*sum(x) == length(x))
+              new("rarSeq", 
+                  M = allSeqs[finBal, ] , 
+                  N = N(obj)[y],
+                  K = K(obj),
+                  ratio = obj@ratio,
+                  groups = obj@groups)
+          })
+          if(length(obj@N) == 1) return(res[[1]])
+          return(res)
+          } 
 )
 
 #' @rdname generateRandomSequences
@@ -97,15 +101,19 @@ setMethod("genSeq",
           signature(obj = "rarPar", r = "numeric", seed = "numeric"),
           function(obj, r, seed) {
             set.seed(seed)
-            new("rRarSeq", 
-                M = t(sapply(1:r, function(x) {
-                  blockRand(bc = N(obj), K = K(obj), ratio = ratio(obj))
-                  })), 
-                N = N(obj),
-                K = K(obj),
-                ratio = obj@ratio,
-                groups = obj@groups,
-		        seed = seed)
+            res <- lapply(1:length(N(obj)), function(y) {
+              new("rRarSeq", 
+                  M = t(sapply(1:r, function(x) {
+                    blockRand(bc = (N(obj)[y]), K = K(obj), ratio = ratio(obj))
+                    })), 
+                  N = N(obj)[y],
+                  K = K(obj),
+                  ratio = obj@ratio,
+                  groups = obj@groups,
+  		        seed = seed)
+            }) 
+            if(length(N(obj)) == 1) return(res[[1]])
+            return(res)
           }
 )
 
@@ -113,14 +121,20 @@ setMethod("genSeq",
 setMethod("genSeq", 
           signature(obj = "rarPar", r = "missing", seed = "numeric"),
           function(obj, r, seed) {
-	    set.seed(seed)
-            new("rRarSeq", 
-                M = t(blockRand(bc = N(obj), K = K(obj), ratio = ratio(obj))), 
-                N = N(obj),
-                K = K(obj),
-                ratio = obj@ratio,
-                groups = obj@groups,
-		        seed = seed)
+	          set.seed(seed)
+            
+            res <- lapply(1:length(N(obj)), function(y) { new("rRarSeq", 
+                  M = t(blockRand(bc = N(obj)[y], K = K(obj), ratio = ratio(obj))), 
+                  N = N(obj)[y],
+                  K = K(obj),
+                  ratio = obj@ratio,
+                  groups = obj@groups,
+  		        seed = seed)
+            }) 
+            
+            if(length(N(obj)) == 1) return(res[[1]])
+            return(res)
+            
           }
 )
 
@@ -130,15 +144,22 @@ setMethod("genSeq", signature(obj = "rarPar", r = "numeric", seed = "missing"),
           function(obj, r, seed) {
             seed = sample(1:(10^6),1)
             set.seed(seed)
-            new("rRarSeq", 
+            
+            res <- lapply(1:length(N(obj)), function(y) { new("rRarSeq", 
                 M = t(sapply(1:r, function(x) {
-                  blockRand(bc = N(obj), K = K(obj), ratio = ratio(obj))
+                  blockRand(bc = N(obj)[y], K = K(obj), ratio = ratio(obj))
                   })), 
-                N = N(obj),
+                N = N(obj)[y],
                 K = K(obj),
                 ratio = obj@ratio,
                 groups = obj@groups,
 		        seed = seed)
+              
+            }) 
+            
+            if(length(N(obj)) == 1) return(res[[1]])
+            return(res)
+            
           }
 )
 
@@ -146,15 +167,21 @@ setMethod("genSeq", signature(obj = "rarPar", r = "numeric", seed = "missing"),
 setMethod("genSeq", signature(obj = "rarPar", r = "missing", seed = "missing"),
           function(obj, r, seed) {
             seed = sample(1:(10^6),1)
-	    set.seed(seed)
-            new("rRarSeq", 
-                M = t(blockRand(bc = N(obj), K = K(obj), ratio = ratio(obj))), 
-                N = N(obj),
-                K = K(obj),
-                ratio = obj@ratio,
-                groups = obj@groups,
-		        seed = seed)
-          }
+	          set.seed(seed)
+	    
+      	    res <- lapply(1:length(N(obj)), function(y) { new("rRarSeq", 
+                      M = t(blockRand(bc = N(obj)[y], K = K(obj), ratio = ratio(obj))), 
+                      N = N(obj)[y],
+                      K = K(obj),
+                      ratio = obj@ratio,
+                      groups = obj@groups,
+      		        seed = seed)
+      	    })
+      	    
+      	    if(length(N(obj)) == 1) return(res[[1]])
+      	    return(res)
+      	    
+  }
 )
 
 #' @rdname getDesign

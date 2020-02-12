@@ -233,17 +233,22 @@ setMethod("getAllSeq", signature(obj = "mpPar"),
               stop("Only possible for K equals 2 and ratio corresponds to c(1,1).")
             }  
             # want to modify ratio for fixed value? or add ratio to mpPar
-            allSeqs <- compltSet(obj)
-            inside <- apply(allSeqs,1, function(x,MTI) {
-              all(abs(cumsum(2*x-1)) <= MTI) & 2*sum(x) == length(x)
-              }, MTI = mti(obj))
-            new("mpSeq",
-                M = allSeqs[inside, ],
-                mti = mti(obj),
-                N = N(obj),
-                K = K(obj),
-                ratio = ratio(obj),
-                groups = obj@groups)
+            res <- lapply(1:length(N(obj)), function(y) {
+              allSeqs <- compltSet(obj, y)
+              inside <- apply(allSeqs,1, function(x,MTI) {
+                all(abs(cumsum(2*x-1)) <= MTI) & 2*sum(x) == length(x)
+                }, MTI = mti(obj))
+              new("mpSeq",
+                  M = allSeqs[inside, ],
+                  mti = mti(obj),
+                  N = N(obj)[y],
+                  K = K(obj),
+                  ratio = ratio(obj),
+                  groups = obj@groups)
+            })
+            
+            if(length(N(obj)) == 1 ) return(res[[1]])
+            return(res)
           }
 )
 
@@ -252,15 +257,21 @@ setMethod("genSeq", signature(obj = "mpPar", r = "numeric", seed = "numeric"),
           function(obj, r, seed) {
             set.seed(seed)
             if(K(obj)>2) stop("MP: K>2 not available.")
-            S <- createMPMatrix(N(obj), mti(obj), ratio = ratio(obj))
-            new("rMpSeq", 
-                M = t(sapply(1:r,function(x) getMPRand(S, ratio(obj)))), 
-                mti = mti(obj), 
-                N = N(obj),
-                K = K(obj),
-                ratio = ratio(obj),
-                groups = obj@groups,
-		            seed = seed)
+            res <- lapply(1:length(N(obj)), function(y) {
+              S <- createMPMatrix(N(obj)[y], mti(obj), ratio = ratio(obj))
+              new("rMpSeq", 
+                  M = t(sapply(1:r,function(x) getMPRand(S, ratio(obj)))), 
+                  mti = mti(obj), 
+                  N = N(obj)[y],
+                  K = K(obj),
+                  ratio = ratio(obj),
+                  groups = obj@groups,
+  		            seed = seed)
+            })
+              
+            if(length(N(obj)) == 1 ) return(res[[1]])
+            return(res)
+            
           }
 )
 
@@ -270,15 +281,21 @@ setMethod("genSeq", signature(obj = "mpPar", r = "missing", seed = "numeric"),
             set.seed(seed)
             if(K(obj) > 2) stop("MP: K>2 not available.")
             # caution: take care of what group is the bigger one
-            S <- createMPMatrix(N(obj), mti(obj), ratio = ratio(obj))
-            new("rMpSeq", 
-                M = t(getMPRand(S, ratio(obj))), 
-                mti = mti(obj), 
-                N = N(obj),
-                K = K(obj),
-                ratio = ratio(obj),
-                groups = obj@groups,
-		            seed = seed)
+            res <- lapply(1:length(N(obj)), function(y) {
+              S <- createMPMatrix(N(obj)[y], mti(obj), ratio = ratio(obj))
+              new("rMpSeq", 
+                  M = t(getMPRand(S, ratio(obj))), 
+                  mti = mti(obj), 
+                  N = N(obj)[y],
+                  K = K(obj),
+                  ratio = ratio(obj),
+                  groups = obj@groups,
+  		            seed = seed)
+            })
+            
+            if(length(N(obj)) == 1 ) return(res[[1]])
+            return(res)
+            
           }
 )
 
@@ -288,15 +305,21 @@ setMethod("genSeq", signature(obj = "mpPar", r = "numeric", seed = "missing"),
             seed <- sample(.Machine$integer.max, 1)
             set.seed(seed)
             if(K(obj) > 2) stop("MP: K>2 not available.")
-			      S <- createMPMatrix(N(obj), mti(obj), ratio = ratio(obj))
-            new("rMpSeq", 
-                M = t(sapply(1:r,function(x) getMPRand(S, ratio(obj)))), 
-                mti = mti(obj), 
-                N = N(obj),
-                K = K(obj),
-                ratio = ratio(obj),
-                groups = obj@groups,
-		            seed = seed)
+            res <- lapply(1:length(N(obj)), function(y) {
+  			      S <- createMPMatrix(N(obj)[y], mti(obj), ratio = ratio(obj))
+              new("rMpSeq", 
+                  M = t(sapply(1:r,function(x) getMPRand(S, ratio(obj)))), 
+                  mti = mti(obj), 
+                  N = N(obj)[y],
+                  K = K(obj),
+                  ratio = ratio(obj),
+                  groups = obj@groups,
+  		            seed = seed)
+             })
+              
+             if(length(N(obj)) == 1 ) return(res[[1]])
+             return(res)
+            
           }
 )
 
@@ -307,15 +330,20 @@ setMethod("genSeq", signature(obj = "mpPar", r = "missing", seed = "missing"),
             set.seed(seed)
             if(K(obj) > 2) stop("MP: K>2 not available.")
             # caution: take care of what group is the bigger one
-            S <- createMPMatrix(N(obj), mti(obj), ratio = ratio(obj))
-            new("rMpSeq", 
-                M = t(getMPRand(S, ratio(obj))), 
-                mti = mti(obj), 
-                N = N(obj),
-                K = K(obj),
-                ratio = ratio(obj),
-                groups = obj@groups,
-		            seed = seed)
+            res <- lapply(1:length(N(obj)), function(y) {
+              S <- createMPMatrix(N(obj)[y], mti(obj), ratio = ratio(obj))
+              new("rMpSeq", 
+                  M = t(getMPRand(S, ratio(obj))), 
+                  mti = mti(obj), 
+                  N = N(obj)[y],
+                  K = K(obj),
+                  ratio = ratio(obj),
+                  groups = obj@groups,
+  		            seed = seed)
+            })
+            
+            if(length(N(obj)) == 1 ) return(res[[1]])
+            return(res)
           }
 )
 #' @rdname getDesign

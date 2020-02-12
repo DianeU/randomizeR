@@ -166,18 +166,22 @@ setMethod("getAllSeq", signature(obj = "udPar"),
 #' @rdname generateRandomSequences
 setMethod("genSeq", signature(obj = "udPar", r = "numeric", seed = "numeric"),
           function(obj, r, seed) {
-	    set.seed(seed)
-            new("rUdSeq", 
-                M = t(sapply(1:r, function(x) {
-                  urnRand(N(obj), obj@ini, obj@add)
-                  })), 
-                N = N(obj),
-                ini = obj@ini, 
-                add = obj@add,
-                K = K(obj),
-                ratio = obj@ratio,
-                groups = obj@groups,
-		            seed = seed)
+	         set.seed(seed)
+           res <- lapply(1:length(N(obj)), function(y) {
+              new("rUdSeq", 
+                  M = t(sapply(1:r, function(x) {
+                    urnRand(N(obj)[y], obj@ini, obj@add)
+                    })), 
+                  N = N(obj)[y],
+                  ini = obj@ini, 
+                  add = obj@add,
+                  K = K(obj),
+                  ratio = obj@ratio,
+                  groups = obj@groups,
+  		            seed = seed)
+            })
+           if(length(N(obj)) == 1) return(res[[1]])
+           return(res)
           }
 )
 
@@ -186,15 +190,20 @@ setMethod("genSeq", signature(obj = "udPar", r = "missing", seed = "numeric"),
           function(obj, r, seed) {
             set.seed(seed)
             if(K(obj) > 2) stop("UD: K>2 not available.")
-            new("rUdSeq", 
-                M = t(urnRand(N(obj), obj@ini, obj@add)), 
-                N = N(obj), 
-                ini = obj@ini, 
-                add = obj@add,
-                K = K(obj),
-                ratio = obj@ratio,
-                groups = obj@groups,
-		            seed = seed)
+            res <- lapply(1:length(N(obj)), function(y) {
+              new("rUdSeq", 
+                  M = t(urnRand(N(obj)[y], obj@ini, obj@add)), 
+                  N = N(obj)[y], 
+                  ini = obj@ini, 
+                  add = obj@add,
+                  K = K(obj),
+                  ratio = obj@ratio,
+                  groups = obj@groups,
+    		          seed = seed)
+            })
+            
+            if(length(N(obj)) == 1) return(res[[1]])
+            return(res)
           }
 )
 
@@ -202,19 +211,24 @@ setMethod("genSeq", signature(obj = "udPar", r = "missing", seed = "numeric"),
 #' @rdname generateRandomSequences
 setMethod("genSeq", signature(obj = "udPar", r = "numeric", seed = "missing"),
           function(obj, r, seed) {
-	    seed <- sample(.Machine$integer.max, 1)
-	    set.seed(seed)
-            new("rUdSeq", 
-                M = t(sapply(1:r,function(x) {
-                  urnRand(N(obj), obj@ini, obj@add)
-                  })), 
-                N = N(obj),
-                ini = obj@ini, 
-                add = obj@add,
-                K = K(obj),
-                ratio = obj@ratio,
-                groups = obj@groups,
-		            seed = seed)
+      	    seed <- sample(.Machine$integer.max, 1)
+      	    set.seed(seed)
+      	    res <- lapply(1:length(N(obj)), function(y) {
+              new("rUdSeq", 
+                  M = t(sapply(1:r,function(x) {
+                    urnRand(N(obj)[y], obj@ini, obj@add)
+                    })), 
+                  N = N(obj)[y],
+                  ini = obj@ini, 
+                  add = obj@add,
+                  K = K(obj),
+                  ratio = obj@ratio,
+                  groups = obj@groups,
+  		            seed = seed)
+      	    })
+            
+      	    if(length(N(obj)) == 1) return(res[[1]])
+      	    return(res)
           }
 )
 
@@ -224,15 +238,20 @@ setMethod("genSeq", signature(obj = "udPar", r = "missing", seed = "missing"),
             seed <- sample(.Machine$integer.max, 1)
             set.seed(seed)
             if(K(obj) > 2) stop("UD: K>2 not available.")
-            new("rUdSeq", 
-                M = t(urnRand(N(obj), obj@ini, obj@add)), 
-                N = N(obj), 
-                ini = obj@ini, 
-                add = obj@add,
-                K = K(obj),
-                ratio = obj@ratio,
-                groups = obj@groups,
-		            seed = seed)
+            res <- lapply(1:length(N(obj)), function(y) {
+              new("rUdSeq", 
+                  M = t(urnRand(N(obj)[y], obj@ini, obj@add)), 
+                  N = N(obj)[y], 
+                  ini = obj@ini, 
+                  add = obj@add,
+                  K = K(obj),
+                  ratio = obj@ratio,
+                  groups = obj@groups,
+  		            seed = seed)
+            })
+            
+            if(length(N(obj)) == 1) return(res[[1]])
+            return(res)
           }
 )
 #' @rdname getDesign

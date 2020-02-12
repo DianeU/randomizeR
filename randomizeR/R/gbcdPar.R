@@ -125,18 +125,22 @@ gbcdRand <- function(N, rho, K = 2) {
 #' @rdname generateAllSequences
 setMethod("getAllSeq", signature(obj = "gbcdPar"),
           function(obj) {
-            allSeqs <- compltSet(obj) 
-            # Two successive treatment assignments at the beginning of the trial 
-            # cannot be the same 
-            inside <- which(apply(allSeqs, 1, function(x) sum(x[1:2])==1)==TRUE)
-            new("gbcdSeq", 
-                M = allSeqs[inside,],
-                rho = rho(obj), 
-                N = N(obj),
-                K = K(obj),
-                ratio = obj@ratio,
-                groups = obj@groups
-            )
+            res <- lapply(1:length(N(obj)), function(y) {
+              allSeqs <- compltSet(obj, y) 
+              # Two successive treatment assignments at the beginning of the trial 
+              # cannot be the same 
+              inside <- which(apply(allSeqs, 1, function(x) sum(x[1:2])==1)==TRUE)
+              new("gbcdSeq", 
+                  M = allSeqs[inside,],
+                  rho = rho(obj), 
+                  N = N(obj)[y],
+                  K = K(obj),
+                  ratio = obj@ratio,
+                  groups = obj@groups
+              )
+            })
+            if(length(N(obj)) == 1 ) return(res[[1]])
+            return(res)
           }
 )
 
@@ -144,16 +148,20 @@ setMethod("getAllSeq", signature(obj = "gbcdPar"),
 setMethod("genSeq", signature(obj = "gbcdPar", r = "numeric", seed = "numeric"),
           function(obj, r, seed) {
             set.seed(seed)
-            new("rGbcdSeq", 
-                M = t(sapply(1:r, function(x) {
-                  gbcdRand(N = N(obj), rho = rho(obj))
-                })),
-                N = N(obj),
-                rho = rho(obj),
-                K = K(obj),
-                ratio = obj@ratio,
-                groups = obj@groups,
-                seed = seed)
+            res <- lapply(1:length(N(obj)), function(y) {
+              new("rGbcdSeq", 
+                  M = t(sapply(1:r, function(x) {
+                    gbcdRand(N = N(obj)[y], rho = rho(obj))
+                  })),
+                  N = N(obj)[y],
+                  rho = rho(obj),
+                  K = K(obj),
+                  ratio = obj@ratio,
+                  groups = obj@groups,
+                  seed = seed)
+            })
+            if(length(N(obj)) == 1 ) return(res[[1]])
+            return(res)
           }
 )
 #' @rdname generateRandomSequences
@@ -161,16 +169,20 @@ setMethod("genSeq", signature(obj = "gbcdPar", r = "numeric", seed = "missing"),
           function(obj, r, seed) {
             seed <- sample(.Machine$integer.max, 1)
             set.seed(seed)
-            new("rGbcdSeq", 
-                M = t(sapply(1:r, function(x) {
-                  gbcdRand(N = N(obj), rho = rho(obj))
-                })),
-                N = N(obj),
-                rho = rho(obj),
-                K = K(obj),
-                groups = obj@groups,
-                ratio = obj@ratio,
-                seed = seed)
+            res <- lapply(1:length(N(obj)), function(y) {
+              new("rGbcdSeq", 
+                  M = t(sapply(1:r, function(x) {
+                    gbcdRand(N = N(obj)[y], rho = rho(obj))
+                  })),
+                  N = N(obj)[y],
+                  rho = rho(obj),
+                  K = K(obj),
+                  groups = obj@groups,
+                  ratio = obj@ratio,
+                  seed = seed)
+            })
+            if(length(N(obj)) == 1 ) return(res[[1]])
+            return(res)
           }
 )
 
@@ -179,14 +191,19 @@ setMethod("genSeq", signature(obj = "gbcdPar", r = "numeric", seed = "missing"),
 setMethod("genSeq", signature(obj = "gbcdPar", r = "missing", seed = "numeric"),
           function(obj, r, seed) {
             set.seed(seed)
-            new("rGbcdSeq", 
-                M = t(gbcdRand(N = N(obj), rho = rho(obj))), 
-                rho = rho(obj), 
-                N = N(obj),
-                K = K(obj),
-                groups = obj@groups,
-                ratio = obj@ratio,
-                seed = seed)
+            res <- lapply(1:length(N(obj)), function(y) {
+              new("rGbcdSeq", 
+                  M = t(gbcdRand(N = N(obj)[y], rho = rho(obj))), 
+                  rho = rho(obj), 
+                  N = N(obj)[y],
+                  K = K(obj),
+                  groups = obj@groups,
+                  ratio = obj@ratio,
+                  seed = seed)
+            })
+            
+            if(length(N(obj)) == 1 ) return(res[[1]])
+            return(res)
           }
 )
 
@@ -196,15 +213,20 @@ setMethod("genSeq", signature(obj = "gbcdPar", r = "missing", seed = "missing"),
           function(obj, r, seed) {
             seed <- sample(.Machine$integer.max, 1)
             set.seed(seed)
-            new("rGbcdSeq", 
-                M = t(gbcdRand(N = N(obj), rho = rho(obj))), 
-                rho = rho(obj), 
-                N = N(obj),
-                K = K(obj),
-                groups = obj@groups,
-                ratio = obj@ratio,
-                seed = seed)
+            res <- lapply(1:length(N(obj)), function(y) {
+              new("rGbcdSeq", 
+                  M = t(gbcdRand(N = N(obj)[y], rho = rho(obj))), 
+                  rho = rho(obj), 
+                  N = N(obj)[y],
+                  K = K(obj),
+                  groups = obj@groups,
+                  ratio = obj@ratio,
+                  seed = seed)
+            })
+            if(length(N(obj)) == 1 ) return(res[[1]])
+            return(res)
           }
+            
 )
 
 #' @rdname getDesign

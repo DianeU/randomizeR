@@ -92,12 +92,16 @@ setMethod("getAllSeq",
             if(obj@K != 2 || !identical(obj@ratio, c(1,1))) {
               stop("Only possible for K equals 2 and ratio corresponds to c(1,1).")
             }  
-            new("crSeq", 
-                M = compltSet(obj), 
-                N = N(obj),
-                K = K(obj),
-                ratio = obj@ratio,
-                groups = obj@groups)
+            res <- lapply(1:length(N(obj)), function(y) {
+              new("crSeq", 
+                  M = compltSet(obj,y), 
+                  N = N(obj)[y],
+                  K = K(obj),
+                  ratio = obj@ratio,
+                  groups = obj@groups)
+            })
+            if(length(N(obj)) == 1) return(res[[1]])
+            return(res)
           }
 )
 
@@ -105,16 +109,20 @@ setMethod("getAllSeq",
 setMethod("genSeq", 
           signature(obj = "crPar", r = "numeric", seed = "numeric"),
           function(obj, r, seed) {
-	    set.seed(seed)
+	        set.seed(seed)
+            res <- lapply(1:length(N(obj)), function(y) {
             new("rCrSeq", 
                 M = t(sapply(1:r, function(x) {
-                  completeRand(N = N(obj), K = K(obj), ratio = ratio(obj))
+                  completeRand(N = N(obj)[y], K = K(obj), ratio = ratio(obj))
                   })),
-                N = N(obj),
+                N = N(obj)[y],
                 K = K(obj),
                 ratio = obj@ratio,
                 groups = obj@groups,
 		            seed = seed)
+            })
+            if(length(N(obj)) == 1) return(res[[1]])
+            return(res)
           }
 )
 
@@ -123,13 +131,17 @@ setMethod("genSeq",
           signature(obj = "crPar", r = "missing", seed = "numeric"),
           function(obj, r, seed) {
 			      set.seed(seed)
+            res <- lapply(1:length(N(obj)), function(y) {
             new("rCrSeq", 
-                M = t(completeRand(N = N(obj), K = K(obj), ratio = ratio(obj))), 
-                N = N(obj),
+                M = t(completeRand(N = N(obj)[y], K = K(obj), ratio = ratio(obj))), 
+                N = N(obj)[y],
                 K = K(obj),
                 ratio = obj@ratio,
                 groups = obj@groups,
 		            seed = seed)
+            })
+            if(length(N(obj)) == 1) return(res[[1]])
+            return(res)
           }
 )
 
@@ -137,18 +149,22 @@ setMethod("genSeq",
 setMethod("genSeq", 
           signature(obj = "crPar", r = "numeric", seed = "missing"),
           function(obj, r, seed) {
-	    seed <- sample(.Machine$integer.max, 1)
-	    set.seed(seed)
-            new("rCrSeq", 
-                M = t(sapply(1:r, function(x) {
-                  completeRand(N = N(obj), K = K(obj), ratio = ratio(obj))
-                  })),
-                N = N(obj),
-                K = K(obj),
-                ratio = obj@ratio,
-                groups = obj@groups,
-		            seed = seed)
-          }
+	          seed <- sample(.Machine$integer.max, 1)
+	          set.seed(seed)
+	          res <- lapply(1:length(N(obj)), function(y) {
+              new("rCrSeq", 
+                  M = t(sapply(1:r, function(x) {
+                    completeRand(N = N(obj)[y], K = K(obj), ratio = ratio(obj))
+                    })),
+                  N = N(obj)[y],
+                  K = K(obj),
+                  ratio = obj@ratio,
+                  groups = obj@groups,
+  		            seed = seed)
+  	          })
+  	          if(length(N(obj)) == 1) return(res[[1]])
+  	          return(res)
+            }
 )
 
 #' @rdname generateRandomSequences
@@ -156,14 +172,18 @@ setMethod("genSeq",
           signature(obj = "crPar", r = "missing", seed = "missing"),
           function(obj, r, seed) {
             seed <- sample(.Machine$integer.max, 1)
-	    set.seed(seed)
-            new("rCrSeq", 
-                M = t(completeRand(N = N(obj), K = K(obj), ratio = ratio(obj))), 
-                N = N(obj),
+	          set.seed(seed)
+	          res <- lapply(1:length(N(obj)), function(y) {
+	            new("rCrSeq", 
+                M = t(completeRand(N = N(obj)[y], K = K(obj), ratio = ratio(obj))), 
+                N = N(obj)[y],
                 K = K(obj),
                 ratio = obj@ratio,
                 groups = obj@groups,
 		            seed = seed)
+	          })
+	          if(length(N(obj)) == 1) return(res[[1]])
+	          return(res)
           }
 )
 #' @rdname getDesign

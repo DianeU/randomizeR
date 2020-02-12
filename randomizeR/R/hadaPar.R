@@ -97,16 +97,21 @@ hadaRand <- function(bc) {
 setMethod("getAllSeq", signature(obj = "hadaPar"),
           function(obj) {
             if(obj@N > 12) stop("Only possible up to N equals 12.")
+           
             k <- c(1,1,1,1,1,1,1,1,1,1,1,0,0,1,0,0,0,1,1,1,0,1,0,1,0,0,0,1,1,1,
                    0,1,0,1,0,0,0,1,1,1,0,1,0,0,0,0,0,1,1,1,0,1,0,0,1,0,0,1,1,1,
                    0,1,0,0,1,0,0,1,1,1,0,1,0,0,1,0,0,1,1,1,0,1,0,0,1,0,0,0,1,1,
                    0,1,0,0,1,0,0,0,1,1,0,1,0,0,1,0,0,0,1,1,0,1,0,0,1,0,0,0,1,1,
                    1,1,0,0,1,0,0,0,1,1,1,0)
-            new("hadaSeq",
-                M = matrix(k, nrow = 11, ncol = 12)[ ,1:N(obj)],
-                N = N(obj),
-                K = K(obj),
-                groups = obj@groups)
+            res <- lapply(1:length(N(obj)), function(y) {
+              new("hadaSeq",
+                  M = matrix(k, nrow = 11, ncol = 12)[ ,1:N(obj)[y]],
+                  N = N(obj)[y],
+                  K = K(obj),
+                  groups = obj@groups)
+            })
+            if(length(N(obj)) == 1) return(res[[1]])
+            return(res)
           }
 )
 
@@ -114,13 +119,17 @@ setMethod("getAllSeq", signature(obj = "hadaPar"),
 setMethod("genSeq", signature(obj = "hadaPar", r = "numeric", seed = "numeric"),
           function(obj, r, seed) {
             set.seed(seed)
-            new("rHadaSeq", 
-                M = t(sapply(1:r, function(x) hadaRand(N(obj)))), 
-                N = N(obj),
-                K = K(obj),
-                ratio = obj@ratio,
-                groups = obj@groups,
-		            seed = seed)
+            res <- lapply(1:length(N(obj)), function(y) {
+              new("rHadaSeq", 
+                  M = t(sapply(1:r, function(x) hadaRand(N(obj)[y]))), 
+                  N = N(obj)[y],
+                  K = K(obj),
+                  ratio = obj@ratio,
+                  groups = obj@groups,
+  		            seed = seed)
+            })
+            if(length(N(obj)) == 1) return(res[[1]])
+            return(res)
           }
 )
 
@@ -129,15 +138,19 @@ setMethod("genSeq", signature(obj = "hadaPar", r = "missing", seed = "numeric"),
           function(obj, r, seed) {
             set.seed(seed)
             if(K(obj) > 2) stop("HAD: K>2 not available.")
-            new("rHadaSeq",
-                M = t(hadaRand(N(obj))),
-                N = N(obj),
-                K = K(obj),
-                ratio = obj@ratio,
-                groups = obj@groups,
-		            seed = seed)
+            res <- lapply(1:length(N(obj)), function(y) {
+              new("rHadaSeq",
+                  M = t(hadaRand(N(obj)[y])),
+                  N = N(obj)[y],
+                  K = K(obj),
+                  ratio = obj@ratio,
+                  groups = obj@groups,
+  		            seed = seed)
+            })
+            if(length(N(obj)) == 1) return(res[[1]])
+            return(res)
           }
-)
+  )
 
 
 #' @rdname generateRandomSequences
@@ -145,13 +158,17 @@ setMethod("genSeq", signature(obj = "hadaPar", r = "numeric", seed = "missing"),
           function(obj, r, seed) {
             seed <- sample(.Machine$integer.max, 1)
             set.seed(seed)
-            new("rHadaSeq", 
-                M = t(sapply(1:r, function(x) hadaRand(N(obj)))), 
-                N = N(obj),
-                K = K(obj),
-                ratio = obj@ratio,
-                groups = obj@groups,
-		            seed = seed)
+            res <- lapply(1:length(N(obj)), function(y) {
+              new("rHadaSeq", 
+                  M = t(sapply(1:r, function(x) hadaRand(N(obj)[y]))), 
+                  N = N(obj)[y],
+                  K = K(obj),
+                  ratio = obj@ratio,
+                  groups = obj@groups,
+  		            seed = seed)
+            })
+            if(length(N(obj)) == 1) return(res[[1]])
+            return(res)
           }
 )
 
@@ -161,13 +178,17 @@ setMethod("genSeq", signature(obj = "hadaPar", r = "missing", seed = "missing"),
             seed <- sample(.Machine$integer.max, 1)
             set.seed(seed)
             if(K(obj) > 2) stop("HAD: K>2 not available.")
-            new("rHadaSeq",
-                M = t(hadaRand(N(obj))),
-                N = N(obj),
-                K = K(obj),
-                ratio = obj@ratio,
-                groups = obj@groups,
-		            seed = seed)
+            res <- lapply(1:length(N(obj)), function(y) {
+              new("rHadaSeq",
+                  M = t(hadaRand(N(obj)[y])),
+                  N = N(obj)[y],
+                  K = K(obj),
+                  ratio = obj@ratio,
+                  groups = obj@groups,
+  		            seed = seed)
+            })
+            if(length(N(obj)) == 1) return(res[[1]])
+            return(res)
           }
 )
 #' @rdname getDesign

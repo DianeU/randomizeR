@@ -140,37 +140,45 @@ chenRand <- function(N, mti, p, K = 2) {
 #' @rdname generateAllSequences
 setMethod("getAllSeq", signature(obj = "chenPar"),
           function(obj) {
-            allSeqs <- compltSet(obj)
-            inside <- apply(allSeqs,1, function(x, mti) {
-              all(abs(cumsum(2*x - 1)) <= mti)
-            }, mti = mti(obj))
-            new("chenSeq", 
-                M = allSeqs[inside, ], 
-                mti = mti(obj),
-                p = coin(obj),
-                N = N(obj),
-                K = K(obj),
-                ratio = obj@ratio,
-                groups = obj@groups
-            )
-          }
+            res <- lapply(1:length(N(obj)), function(y) {
+              allSeqs <- compltSet(obj,y)
+              inside <- apply(allSeqs,1, function(x, mti) {
+                all(abs(cumsum(2*x - 1)) <= mti)
+              }, mti = mti(obj))
+              new("chenSeq", 
+                  M = allSeqs[inside, ], 
+                  mti = mti(obj),
+                  p = coin(obj),
+                  N = N(obj)[y],
+                  K = K(obj),
+                  ratio = obj@ratio,
+                  groups = obj@groups
+              )
+            })
+            if(length(N(obj)) == 1) return(res[[1]])
+            return(res)
+          }            
 )
 
 #' @rdname generateRandomSequences
 setMethod("genSeq", signature(obj = "chenPar", r = "numeric", seed = "numeric"),
           function(obj, r, seed) {
             set.seed(seed)
-            new("rChenSeq", 
-                M = t(sapply(1:r, function(x) {
-                  chenRand(N = N(obj), mti = mti(obj), p = coin(obj))
-                })),
-                N = N(obj),
-                mti = mti(obj),
-                p = coin(obj),
-                K = K(obj),
-                ratio = obj@ratio,
-                groups = obj@groups,
-                seed = seed)
+            res <- lapply(1:length(N(obj)), function(y) {
+              new("rChenSeq", 
+                  M = t(sapply(1:r, function(x) {
+                    chenRand(N = N(obj)[y], mti = mti(obj), p = coin(obj))
+                  })),
+                  N = N(obj)[y],
+                  mti = mti(obj),
+                  p = coin(obj),
+                  K = K(obj),
+                  ratio = obj@ratio,
+                  groups = obj@groups,
+                  seed = seed)
+            })
+            if(length(N(obj)) == 1) return(res[[1]])
+            return(res)
           }
 )
 #' @rdname generateRandomSequences
@@ -178,17 +186,21 @@ setMethod("genSeq", signature(obj = "chenPar", r = "numeric", seed = "missing"),
           function(obj, r, seed) {
             seed <- sample(.Machine$integer.max, 1)
             set.seed(seed)
-            new("rChenSeq", 
-                M = t(sapply(1:r, function(x) {
-                  chenRand(N = N(obj), mti = mti(obj), p = coin(obj))
-                })),
-                N = N(obj),
-                mti = mti(obj),
-                p = coin(obj),
-                K = K(obj),
-                groups = obj@groups,
-                ratio = obj@ratio,
-                seed = seed)
+            res <- lapply(1:length(N(obj)), function(y) {
+              new("rChenSeq", 
+                  M = t(sapply(1:r, function(x) {
+                    chenRand(N = N(obj)[y], mti = mti(obj), p = coin(obj))
+                  })),
+                  N = N(obj)[y],
+                  mti = mti(obj),
+                  p = coin(obj),
+                  K = K(obj),
+                  groups = obj@groups,
+                  ratio = obj@ratio,
+                  seed = seed)
+            })
+            if(length(N(obj)) == 1) return(res[[1]])
+            return(res)
           }
 )
 
@@ -197,15 +209,19 @@ setMethod("genSeq", signature(obj = "chenPar", r = "numeric", seed = "missing"),
 setMethod("genSeq", signature(obj = "chenPar", r = "missing", seed = "numeric"),
           function(obj, r, seed) {
             set.seed(seed)
-            new("rChenSeq", 
-                M = t(chenRand(N = N(obj), mti = mti(obj), p = coin(obj))), 
-                mti = mti(obj), 
-                p = coin(obj),
-                N = N(obj),
-                K = K(obj),
-                groups = obj@groups,
-                ratio = obj@ratio,
-                seed = seed)
+            res <- lapply(1:length(N(obj)), function(y) {
+              new("rChenSeq", 
+                  M = t(chenRand(N = N(obj)[y], mti = mti(obj), p = coin(obj))), 
+                  mti = mti(obj), 
+                  p = coin(obj),
+                  N = N(obj)[y],
+                  K = K(obj),
+                  groups = obj@groups,
+                  ratio = obj@ratio,
+                  seed = seed)
+            })
+            if(length(N(obj)) == 1) return(res[[1]])
+            return(res)
           }
 )
 
@@ -215,15 +231,19 @@ setMethod("genSeq", signature(obj = "chenPar", r = "missing", seed = "missing"),
           function(obj, r, seed) {
             seed <- sample(.Machine$integer.max, 1)
             set.seed(seed)
-            new("rChenSeq", 
-                M = t(chenRand(N = N(obj), mti = mti(obj), p = coin(obj))), 
-                mti = mti(obj), 
-                p = coin(obj),
-                N = N(obj),
-                K = K(obj),
-                groups = obj@groups,
-                ratio = obj@ratio,
-                seed = seed)
+            res <- lapply(1:length(N(obj)), function(y) {
+              new("rChenSeq", 
+                  M = t(chenRand(N = N(obj)[y], mti = mti(obj), p = coin(obj))), 
+                  mti = mti(obj), 
+                  p = coin(obj),
+                  N = N(obj)[y],
+                  K = K(obj),
+                  groups = obj@groups,
+                  ratio = obj@ratio,
+                  seed = seed)
+            })
+            if(length(N(obj)) == 1) return(res[[1]])
+            return(res)
           }
 )
 #' @rdname getDesign

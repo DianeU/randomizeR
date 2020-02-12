@@ -120,84 +120,105 @@ setMethod("getAllSeq", signature(obj = "tbdPar"),
             if(obj@K != 2 || !identical(obj@ratio, c(1,1))) {
               stop("Only possible for K equals 2 and ratio corresponds to c(1,1).")
             }  
-            allSeqs <- compltSet(obj)
-            blockEnds <- cumsum(blocks(obj))
-            bal <- apply(allSeqs,1, function(x, blockEnds) {
-              all(cumsum(2*x - 1)[blockEnds] == 0)
-            }, blockEnds = blockEnds)
-            new("tbdSeq",
-                M = allSeqs[bal, ],
-                bc = blocks(obj),
-                N = N(obj),
-                K = K(obj),
-                ratio = obj@ratio,
-                groups = obj@groups)
+            res <- lapply(1:length(N(obj)), function(y) {
+              allSeqs <- compltSet(obj,y)
+              blockEnds <- cumsum(blocks(obj))
+              bal <- apply(allSeqs,1, function(x, blockEnds) {
+                all(cumsum(2*x - 1)[blockEnds] == 0)
+              }, blockEnds = blockEnds)
+              new("tbdSeq",
+                  M = allSeqs[bal, ],
+                  bc = blocks(obj),
+                  N = N(obj)[y],
+                  K = K(obj),
+                  ratio = obj@ratio,
+                  groups = obj@groups)
+            })
+            if(length(N(obj)) == 1) return(res[[1]])
+            return(res)
           }
 )
 
 #' @rdname generateRandomSequences
 setMethod("genSeq", signature(obj = "tbdPar", r = "numeric", seed = "numeric"),
           function(obj, r, seed) {
-	    set.seed(seed)
-            new("rTbdSeq", 
-                M = t(sapply(1:r,function(x) {
-                  tbdRand(N(obj), blocks(obj), K(obj), ratio(obj))
-                  })), 
-                N = N(obj), 
-                bc = obj@bc,
-                K = K(obj),
-                ratio = obj@ratio,
-                groups = obj@groups,
-		            seed = seed)
+	          set.seed(seed)
+            res <- lapply(1:length(N(obj)), function(y) {
+              new("rTbdSeq", 
+                  M = t(sapply(1:r,function(x) {
+                    tbdRand(N(obj)[y], blocks(obj), K(obj), ratio(obj))
+                    })), 
+                  N = N(obj)[y], 
+                  bc = obj@bc,
+                  K = K(obj),
+                  ratio = obj@ratio,
+                  groups = obj@groups,
+  		            seed = seed)
+            })
+            if(length(N(obj)) == 1) return(res[[1]])
+            return(res)
           }
+      
 )
 
 #' @rdname generateRandomSequences
 setMethod("genSeq", signature(obj = "tbdPar", r = "missing", seed = "numeric"),
           function(obj, r, seed) {
             set.seed(seed)
-            new("rTbdSeq", 
-                M = t(tbdRand(N(obj), blocks(obj), K(obj), ratio(obj))),
-                N = N(obj),  
-                bc = obj@bc,
-                K = K(obj),
-                ratio = obj@ratio,
-                groups = obj@groups,
-		            seed = seed)
+            res <- lapply(1:length(N(obj)), function(y) {
+              new("rTbdSeq", 
+                  M = t(tbdRand(N(obj)[y], blocks(obj), K(obj), ratio(obj))),
+                  N = N(obj)[y],  
+                  bc = obj@bc,
+                  K = K(obj),
+                  ratio = obj@ratio,
+                  groups = obj@groups,
+  		            seed = seed)
+            })
+            if(length(N(obj)) == 1) return(res[[1]])
+            return(res)
           }
 )
 
 #' @rdname generateRandomSequences
 setMethod("genSeq", signature(obj = "tbdPar", r = "numeric", seed = "missing"),
           function(obj, r, seed) {
-	    seed <- sample(.Machine$integer.max, 1)
+	          seed <- sample(.Machine$integer.max, 1)
             set.seed(seed)
-            new("rTbdSeq", 
-                M = t(sapply(1:r,function(x) {
-                  tbdRand(N(obj), blocks(obj), K(obj), ratio(obj))
-                  })), 
-                N = N(obj), 
-                bc = obj@bc,
-                K = K(obj),
-                ratio = obj@ratio,
-                groups = obj@groups,
-		            seed = seed)
+            res <- lapply(1:length(N(obj)), function(y) {
+              new("rTbdSeq", 
+                  M = t(sapply(1:r,function(x) {
+                    tbdRand(N(obj)[y], blocks(obj), K(obj), ratio(obj))
+                    })), 
+                  N = N(obj)[y], 
+                  bc = obj@bc,
+                  K = K(obj),
+                  ratio = obj@ratio,
+                  groups = obj@groups,
+  		            seed = seed)
+            })
+            if(length(N(obj)) == 1) return(res[[1]])
+            return(res)
           }
 )
 
 #' @rdname generateRandomSequences
 setMethod("genSeq", signature(obj = "tbdPar", r = "missing", seed = "missing"),
           function(obj, r, seed) {
-	    seed <- sample(.Machine$integer.max, 1)
-	    set.seed(seed)
-            new("rTbdSeq", 
-                M = t(tbdRand(N(obj), blocks(obj), K(obj), ratio(obj))),
-                N = N(obj), 
-                bc = obj@bc,
-                K = K(obj),
-                ratio = obj@ratio,
-                groups = obj@groups,
-		            seed = seed)
+	         seed <- sample(.Machine$integer.max, 1)
+	         set.seed(seed)
+	         res <- lapply(1:length(N(obj)), function(y) {
+              new("rTbdSeq", 
+                  M = t(tbdRand(N(obj)[y], blocks(obj), K(obj), ratio(obj))),
+                  N = N(obj)[y], 
+                  bc = obj@bc,
+                  K = K(obj),
+                  ratio = obj@ratio,
+                  groups = obj@groups,
+  		            seed = seed)
+	         })
+	         if(length(N(obj)) == 1) return(res[[1]])
+	         return(res)
           }
 )
 #' @rdname getDesign

@@ -106,39 +106,52 @@ rpbrPar <- function(N, rb, K = 2, ratio = rep(1, K), groups = LETTERS[1:K],
 setMethod("genSeq", signature(obj = "rpbrPar", r = "missing", seed = "numeric"),
           function(obj, r, seed) {
             set.seed(seed)
-            bc <- genBlockConst(N(obj), randBlocks(obj), obj@filledBlock)
-            new("rRpbrSeq", 
-                M = t(blockRand(bc = bc, K = K(obj),
-                ratio = ratio(obj))[1:N(obj)]), 
-                filledBlock = obj@filledBlock,  
-		            rb = randBlocks(obj),
-                bc = list(bc),
-                N = N(obj),
-                K = K(obj),
-		            ratio = obj@ratio,
-                groups = obj@groups,
-		            seed = seed)
-          }
+            res <- lapply(1:length(N(obj)), function(y) {
+              bc <- genBlockConst(N(obj)[y], randBlocks(obj), obj@filledBlock)
+              new("rRpbrSeq", 
+                  M = t(blockRand(bc = bc, K = K(obj),
+                  ratio = ratio(obj))[1:N(obj)[y]]), 
+                  filledBlock = obj@filledBlock,  
+  		            rb = randBlocks(obj),
+                  bc = list(bc),
+                  N = N(obj)[y],
+                  K = K(obj),
+  		            ratio = obj@ratio,
+                  groups = obj@groups,
+  		            seed = seed)
+            })
+            
+            if(length(N(obj)) == 1) return(res[[1]])
+            return(res) 
+          } 
 )
 
 #' @rdname generateRandomSequences
 setMethod("genSeq", signature(obj = "rpbrPar", r = "numeric", seed = "numeric"),
           function(obj, r, seed) {
             set.seed(seed)
-            bc <- lapply(1:r, function(x) genBlockConst(N(obj),
-                              randBlocks(obj), obj@filledBlock))
-            new("rRpbrSeq", 
-                M = t(sapply(bc, function(x) (blockRand(bc = x, K = K(obj),
-                  ratio = ratio(obj)))[1:N(obj)])), 
-                filledBlock = obj@filledBlock,  
-		            rb = randBlocks(obj),
-                bc = bc,				
-                N = N(obj),
-                K = K(obj),
-		            ratio = obj@ratio,
-                groups = obj@groups,
-		            seed = seed)
+            res <- lapply(1:length(N(obj)), function(y) {
+              bc <- lapply(1:r, function(x) genBlockConst(N(obj)[y],
+                                randBlocks(obj), obj@filledBlock))
+              new("rRpbrSeq", 
+                  M = t(sapply(bc, function(x) (blockRand(bc = x, K = K(obj),
+                    ratio = ratio(obj)))[1:N(obj)[y]])), 
+                  filledBlock = obj@filledBlock,  
+  		            rb = randBlocks(obj),
+                  bc = bc,				
+                  N = N(obj)[y],
+                  K = K(obj),
+  		            ratio = obj@ratio,
+                  groups = obj@groups,
+  		            seed = seed)
+              
+              })
+            
+              if(length(N(obj)) == 1) return(res[[1]])
+              return(res) 
           }
+          
+          
 )
 
 
@@ -147,17 +160,24 @@ setMethod("genSeq", signature(obj = "rpbrPar", r = "missing", seed = "missing"),
           function(obj, r, seed) {
             seed <- sample(.Machine$integer.max, 1)
             set.seed(seed)
-            bc <- genBlockConst(N(obj), randBlocks(obj), obj@filledBlock)
-            new("rRpbrSeq", 
-                M = t(blockRand(bc = bc, K = K(obj), ratio = ratio(obj))[1:N(obj)]),
-                filledBlock = obj@filledBlock,  
-		            rb = randBlocks(obj),
-		            bc = list(bc),
-                N = N(obj),
-                K = K(obj),
-		            ratio = obj@ratio,
-                groups = obj@groups,
-		            seed = seed)
+            res <- lapply(1:length(N(obj)), function(y) {
+              bc <- genBlockConst(N(obj)[y], randBlocks(obj), obj@filledBlock)
+              new("rRpbrSeq", 
+                  M = t(blockRand(bc = bc, K = K(obj), ratio = ratio(obj))[1:N(obj)[y]]),
+                  filledBlock = obj@filledBlock,  
+  		            rb = randBlocks(obj),
+  		            bc = list(bc),
+                  N = N(obj)[y],
+                  K = K(obj),
+  		            ratio = obj@ratio,
+                  groups = obj@groups,
+  		            seed = seed)
+              
+            })
+            
+            if(length(N(obj)) == 1) return(res[[1]])
+            return(res) 
+
           }
 )
 
@@ -166,19 +186,24 @@ setMethod("genSeq", signature(obj = "rpbrPar", r = "numeric", seed = "missing"),
           function(obj, r, seed) {
             seed <- sample(.Machine$integer.max, 1)
             set.seed(seed)
-            bc <- lapply(1:r, function(x) genBlockConst(N(obj),
-                         randBlocks(obj), obj@filledBlock))
-            new("rRpbrSeq", 
-                M = t(sapply(bc, function(x) (blockRand(bc = x, K = K(obj),
-                ratio = ratio(obj)))[1:N(obj)])), 
-                filledBlock = obj@filledBlock,  
-                bc = bc,
-		            rb = randBlocks(obj),				
-                N = N(obj),
-                K = K(obj),
-		            ratio = obj@ratio,
-                groups = obj@groups,
-		            seed = seed)
+            res <- lapply(1:length(N(obj)), function(y) {
+              bc <- lapply(1:r, function(x) genBlockConst(N(obj)[y],
+                           randBlocks(obj), obj@filledBlock))
+              new("rRpbrSeq", 
+                  M = t(sapply(bc, function(x) (blockRand(bc = x, K = K(obj),
+                  ratio = ratio(obj)))[1:N(obj)[y]])), 
+                  filledBlock = obj@filledBlock,  
+                  bc = bc,
+  		            rb = randBlocks(obj),				
+                  N = N(obj)[y],
+                  K = K(obj),
+  		            ratio = obj@ratio,
+                  groups = obj@groups,
+  		            seed = seed)
+            })
+            
+            if(length(N(obj)) == 1) return(res[[1]])
+            return(res) 
           }
 )
 

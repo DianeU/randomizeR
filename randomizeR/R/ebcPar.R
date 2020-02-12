@@ -129,43 +129,58 @@ efronRand <- function(bc, p, mti, K = 2) {
 #' @rdname generateAllSequences
 setMethod("getAllSeq", signature(obj = "ebcPar"),
           function(obj) {
-            new("ebcSeq", M = compltSet(obj), p = coin(obj),
-                N = N(obj),
+            res <- lapply(1:length(N(obj)), function(y) { new("ebcSeq",
+                M = compltSet(obj, y), p = coin(obj),
+                N = N(obj)[y],
                 K = K(obj),
                 ratio = obj@ratio,
                 groups = obj@groups)
-          }
+            })
+            
+          if(length(N(obj)) == 1) return(res[[1]])
+          return(res)   
+            
+        } 
 )
 
 #' @rdname generateRandomSequences
 setMethod("genSeq", signature(obj = "ebcPar", r = "numeric", seed = "numeric"),
           function(obj, r, seed) {
-            set.seed(seed)
-            new("rEbcSeq", 
-                M = t(sapply(1:r, function(x) {
-                  efronRand(bc = N(obj), p = coin(obj), mti = N(obj), K = K(obj))
-                          })),
-                N = N(obj),
-                p = coin(obj),
-                K = K(obj),
-                ratio = obj@ratio,
-                groups = obj@groups,
-	              seed = seed)
-          }
+            set.seed(seed) 
+            res <- lapply(1:length(N(obj)), function(y) {new("rEbcSeq", 
+                          M = t(sapply(1:r, function(x) {
+                            efronRand(bc = N(obj)[y], p = coin(obj), mti = N(obj)[y], K = K(obj))
+                                    })),
+                          N = N(obj)[y],
+                          p = coin(obj),
+                          K = K(obj),
+                          ratio = obj@ratio,
+                          groups = obj@groups,
+          	              seed = seed)
+                      })
+            
+            if(length(N(obj)) == 1) return(res[[1]])
+            return(res) 
+            
+          }             
 )
 
 #' @rdname generateRandomSequences
-setMethod("genSeq", signature(obj = "ebcPar", r = "missing", seed = "numeric"),
+setMethod("genSeq", signature(obj = "ebcPar", r = "missing", seed = "numeric"), 
           function(obj, r, seed) {
             set.seed(seed)
-            new("rEbcSeq", 
-                M = t(efronRand(bc = N(obj), p = coin(obj), mti = N(obj))), 
+            res <- lapply(1:length(N(obj)), function(y) { new("rEbcSeq", 
+                M = t(efronRand(bc = N(obj)[y], p = coin(obj), mti = N(obj)[y])), 
                 p = coin(obj), 
-                N = N(obj),
+                N = N(obj)[y],
                 K = K(obj),
                 ratio = obj@ratio,
                 groups = obj@groups,
 		            seed = seed)
+            }) 
+            
+            if(length(N(obj)) == 1) return(res[[1]])
+            return(res) 
           }
 )
 
@@ -175,16 +190,20 @@ setMethod("genSeq", signature(obj = "ebcPar", r = "numeric", seed = "missing"),
           function(obj, r, seed) {
             seed <- sample(.Machine$integer.max, 1)
             set.seed(seed)
-            new("rEbcSeq", 
-                M = t(sapply(1:r, function(x) {
-                  efronRand(bc = N(obj), p = coin(obj), mti = N(obj), K = K(obj))
-                          })),
-                N = N(obj),
-                p = coin(obj),
-                K = K(obj),
-                ratio = obj@ratio,
-                groups = obj@groups,
-		            seed = seed)
+            res <- lapply(1:length(N(obj)), function(y) { new("rEbcSeq", 
+                  M = t(sapply(1:r, function(x) {
+                    efronRand(bc = N(obj)[y], p = coin(obj), mti = N(obj)[y], K = K(obj))
+                            })),
+                  N = N(obj)[y],
+                  p = coin(obj),
+                  K = K(obj),
+                  ratio = obj@ratio,
+                  groups = obj@groups,
+  		            seed = seed)
+            }) 
+            
+            if(length(N(obj)) == 1) return(res[[1]])
+            return(res) 
           }
 )
 
@@ -192,15 +211,19 @@ setMethod("genSeq", signature(obj = "ebcPar", r = "numeric", seed = "missing"),
 setMethod("genSeq", signature(obj = "ebcPar", r = "missing", seed = "missing"),
           function(obj, r, seed) {
             seed <- sample(.Machine$integer.max, 1)
-            set.seed(seed)
-            new("rEbcSeq", 
-                M = t(efronRand(bc = N(obj), p = coin(obj), mti = N(obj))), 
+            set.seed(seed)#
+            res <- lapply(1:length(N(obj)), function(y) { new("rEbcSeq", 
+                M = t(efronRand(bc = N(obj)[y], p = coin(obj), mti = N(obj)[y])), 
                 p = coin(obj), 
-                N = N(obj),
+                N = N(obj)[y],
                 K = K(obj),
                 ratio = obj@ratio,
                 groups = obj@groups,
 		            seed = seed)
+            })
+            
+            if(length(N(obj)) == 1) return(res[[1]])
+            return(res) 
           }
 )
 

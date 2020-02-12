@@ -21,19 +21,13 @@ validateRandPar <- function(object) {
   groups <- object@groups
   ratio <- object@ratio
 
-  if(N <= 1) {
+  if(any(N <= 1)) {
     msg <- paste("N should be greater than one.",   
                  sep = "", collapse = "")
     errors <- c(errors, msg)
   }
 
-  if(!(length(N) == 1)) {
-    msg <- paste("N = ", N, " should have length 1. Has length ", length(N),
-               ".", sep = "", collapse = ",")
-    errors <- c(errors, msg)
-  }
-
-  if(!(N == ceiling(N))) {
+  if(!all((N == ceiling(N)))) {
     msg <- paste("N should be an integer.", 
                   sep = "", collapse = ",")
     errors <- c(errors, msg)
