@@ -22,7 +22,8 @@ validaterarPar <- function(object) {
   N <- object@N
   ratio <- object@ratio
   
-  if (!(N %% sum(ratio) == 0)) {
+  # Adept test 
+  if (!all(N %% sum(ratio) == 0)) {
     msg <- paste("N = ", N, " is not a multiple of sum(ratio) = "
                  , sum(ratio),".", sep = "")
     errors <- c(errors, msg)

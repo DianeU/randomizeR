@@ -198,42 +198,44 @@ NULL
 #' @export
 setGeneric("summary")
 
-
+setClassUnion('SeqObj', c('randSeq', 'list'))
 
 # --------------------------------------------
 # Methods for assessment
 # --------------------------------------------
 
 #' @rdname assess
-setMethod("assess", signature(randSeq = "randSeq", endp = "missing"),
+setMethod("assess", signature(randSeq = "SeqObj", endp = "missing"),
           function(randSeq, ...) {
             L <- list(...)
             if (length(L) == 1 && is.list(L[[1]])) {
               L <- c(...)
             }
             
-            if (randSeq@K > 2){
-              stop("Only Selection and Chronological Bias can be evaluated for K > 2.")
+            if(is.list(randSeq)){
+              if (randSeq@K > 2){
+                stop("Only Selection and Chronological Bias can be evaluated for K > 2.")
+              }
+              stopifnot(all(sapply(L, function(x)  is(x, "issue"))))
+              stopifnot(all(sapply(randSeq@ratio, function(x) x == 1)))
+              D <- data.frame("Sequence" = apply(getRandList(randSeq), 1, function(x) paste(x, sep = "", collapse = "")))
+              if (.hasSlot(randSeq, "seed")) {
+                D$Relative_Frequency <- 1/dim(randSeq@M)[1]
+              } else {
+                D$Probability <- getProb(randSeq)
+              }
+  
+              D <- cbind(D, do.call(cbind, lapply(L, function(x)  getStat(randSeq, x))))
+  
+              new("assessment",
+                  D = D, design = getDesign(randSeq),
+                  N = randSeq@N, K = randSeq@K, groups = randSeq@groups)
             }
-            stopifnot(all(sapply(L, function(x)  is(x, "issue"))))
-            stopifnot(all(sapply(randSeq@ratio, function(x) x == 1)))
-            D <- data.frame("Sequence" = apply(getRandList(randSeq), 1, function(x) paste(x, sep = "", collapse = "")))
-            if (.hasSlot(randSeq, "seed")) {
-              D$Relative_Frequency <- 1/dim(randSeq@M)[1]
-            } else {
-              D$Probability <- getProb(randSeq)
-            }
-
-            D <- cbind(D, do.call(cbind, lapply(L, function(x)  getStat(randSeq, x))))
-
-            new("assessment",
-                D = D, design = getDesign(randSeq),
-                N = randSeq@N, K = randSeq@K, groups = randSeq@groups)
           }
 )
 
 #' @rdname assess
-setMethod("assess", signature(randSeq = "randSeq", endp = "endpoint"),
+setMethod("assess", signature(randSeq = "SeqObj", endp = "endpoint"),
           function(randSeq, ..., endp) {
             L <- list(...)
             if (length(L) == 1 && is.list(L[[1]])) {

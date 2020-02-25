@@ -18,9 +18,12 @@ NULL
 # @return Returns a \code{TRUE}, if the settings of the object are valid.
 validatepbrPar <- function(object) {
   errors <- character()
+
   bc <- object@bc
   ratio <- object@ratio
-  
+  N <- object@N
+  size <- object@size
+    
 #   if(!all(bc > 0)) {
 #     msg <- paste("At least one of the block lengths has value smaller or equal to zero. 
 #                  Should be greater than zero.")
@@ -32,15 +35,29 @@ validatepbrPar <- function(object) {
 #     errors <- c(errors, msg)
 #   }
   
-  if(!all(bc %% sum(ratio) == 0)) {
-    msg <- paste("One of the block lengths is not a multiple of sum(ratio) = "
+  
+ if(!is.list(bc)){
+    if(!all(bc %% sum(ratio) == 0)){
+     msg <- paste("One of the block lengths is not a multiple of sum(ratio) = "
                   , sum(ratio), ".", sep = "", collapse = "")
     errors <- c(errors, msg)
-  }
+    }
+ } else {
+   # Double Check if this is a correct test
+   if(any(sapply(bc, function(x){!all(x %% sum(ratio) == 0)}))){
+     msg <- paste("One of the block lengths is not a multiple of sum(ratio) = "
+                  , sum(ratio), ".", sep = "", collapse = "")
+     errors <- c(errors, msg)
+   }
+   
+ }
   
+
   if(length(errors) == 0) TRUE else errors
 }
 
+# Define a Combined Class for the Input
+setClassUnion('ListOrVec', c('numeric', 'list'))
 
 # --------------------------------------------
 # Class definition for pbrPar
@@ -48,7 +65,7 @@ validatepbrPar <- function(object) {
 
 # Randomization parameters generic
 setClass("pbrPar",
-         slots = c(bc = "numeric"),
+         slots = c(bc = 'ListOrVec', size = 'numeric'),
          contains = "randPar",
          validity = validatepbrPar)
 
@@ -80,8 +97,24 @@ setClass("pbrPar",
 #' @references
 #' W. F. Rosenberger and J. M. Lachin (2002) \emph{Randomization in Clinical Trials}.
 #' Wiley.
-pbrPar <- function(bc, K = 2, ratio = rep(1, K), groups = LETTERS[1:K]) {
-  new("pbrPar", bc = bc, N = sum(bc), K = K, ratio = ratio, groups = groups)
+pbrPar <- function(bc = lapply(N, function(x){rep(size,x/size)}), K = 2, ratio = rep(1, K), groups = LETTERS[1:K], size = 2, N = NULL) {
+  
+  # Currently can only throw a warning at this point, before N is reset
+  if(!is.null(N)){
+    if(!all(sapply(N, function(x){(x %% size == 0)}))){
+     warning("Atleast one of the values in N is not a multiple of size.")
+    }
+  }
+  
+  # Intermediate solution as their is no combined function to sum over list and vectors
+  if(is.list(bc)){
+    new("pbrPar", bc = bc, N = as.vector(unlist(lapply(bc,sum))), K = K, ratio = ratio, groups = groups, size = size)
+  }else{
+    
+    new("pbrPar", bc = bc, N = sum(bc), K = K, ratio = ratio, groups = groups, size = size)
+    
+  }
+  
 }
 
 
@@ -130,22 +163,30 @@ setMethod("getAllSeq",
             if(obj@K != 2 || !identical(obj@ratio, c(1,1))) {
               stop("Only possible for K equals 2 and ratio corresponds to c(1,1).")
             } 
-            res <- lapply(1:length(N(obj)), function(y) {
-              allSeqs <- compltSet(obj, y)
-              blockEnds <- cumsum(blocks(obj))
-              bal <- apply(allSeqs,1, function(x, blockEnds) {
-                all(cumsum(2*x-1)[blockEnds] == 0)
-                }, blockEnds = blockEnds)
-              new("pbrSeq",
-                  M = allSeqs[bal, ],
-                  bc = blocks(obj),
-                  N = N(obj)[y],
-                  K = K(obj),
-                  ratio = obj@ratio,
-                  groups = obj@groups)
-            })
-           if(length(N(obj)) == 1) return(res[[1]])
-            return(res)
+            
+            if(!is.list(blocks(obj))){
+              blocks <- list(blocks(obj))
+            } else {
+              blocks <- blocks(obj)        
+            }
+            
+              res <- lapply(1:length(N(obj)), function(y) {
+                allSeqs <- compltSet(obj, y)
+                blockEnds <- cumsum(blocks[[y]])
+                bal <- apply(allSeqs,1, function(x, blockEnds) {
+                  all(cumsum(2*x-1)[blockEnds] == 0)
+                  }, blockEnds = blockEnds)
+                new("pbrSeq",
+                    M = allSeqs[bal, ],
+                    bc = blocks[[y]],
+                    N = N(obj)[y],
+                    K = K(obj),
+                    ratio = obj@ratio,
+                    groups = obj@groups)
+              })
+              
+              if(length(N(obj)) == 1) return(res[[1]])
+              return(res)
           }
 )
 
@@ -154,19 +195,29 @@ setMethod("genSeq",
           signature(obj = "pbrPar", r = "missing", seed = "numeric"),
           function(obj, r, seed) {
             set.seed(seed)
+            
+            # Check for Multicenter Studies, coerce ito list if necessarcy
+            if(!is.list(blocks(obj))){
+              blocks <- list(blocks(obj))
+            } else {
+              blocks <- blocks(obj)        
+            }
+              
             res <- lapply(1:length(N(obj)), function(y) {
               new("rPbrSeq", 
-                  M = t(blockRand(bc = blocks(obj), K = K(obj),
+                  M = t(blockRand(bc = blocks[[y]], K = K(obj),
                     ratio = ratio(obj))), 
-                  bc = blocks(obj), 
+                  bc = blocks[[y]], 
                   N = N(obj)[y],
                   K = K(obj),
                   ratio = obj@ratio,
                   groups = obj@groups,
                   seed = seed)
             })
+            
             if(length(N(obj)) == 1) return(res[[1]])
             return(res)
+           
           }
 )
 
@@ -175,20 +226,31 @@ setMethod("genSeq",
           signature(obj = "pbrPar", r = "numeric", seed = "numeric"),
           function(obj, r, seed) {
             set.seed(seed)
+            
+            if(!is.list(blocks(obj))){
+              blocks <- list(blocks(obj))
+            } else {
+              blocks <- blocks(obj)        
+            }
+              
             res <- lapply(1:length(N(obj)), function(y) {
               new("rPbrSeq", 
                   M = t(sapply(1:r, function(x) {
-                    blockRand(bc = blocks(obj), K = K(obj), ratio = ratio(obj))
+                    blockRand(bc = blocks[[y]], K = K(obj), ratio = ratio(obj))
                     })), 
-                  bc = blocks(obj), 
+                  bc = blocks[[y]], 
                   N = N(obj)[y],
                   K = K(obj),
                   ratio = obj@ratio,
                   groups = obj@groups,
   		            seed = seed)
             })
+            
+            
             if(length(N(obj)) == 1) return(res[[1]])
             return(res)
+            
+          
           }
 )
 
@@ -197,19 +259,27 @@ setMethod("genSeq",
 setMethod("genSeq", 
           signature(obj = "pbrPar", r = "missing", seed = "missing"),
           function(obj, r, seed) {
+            
+            if(!is.list(blocks(obj))){
+              blocks <- list(blocks(obj))
+            } else {
+              blocks <- blocks(obj)        
+            }
+            
             seed <- sample(.Machine$integer.max, 1)
 	          set.seed(seed)
 	          res <- lapply(1:length(N(obj)), function(y) {
               new("rPbrSeq", 
-                  M = t(blockRand(bc = blocks(obj), K = K(obj),
+                  M = t(blockRand(bc = blocks[[y]], K = K(obj),
                   ratio = ratio(obj))), 
-                  bc = blocks(obj), 
+                  bc = blocks[[y]], 
                   N = N(obj)[y],
                   K = K(obj),
                   ratio = obj@ratio,
                   groups = obj@groups,
   		            seed = seed)
 	           })
+	          
   	         if(length(N(obj)) == 1) return(res[[1]])
   	         return(res)
           }
@@ -219,21 +289,29 @@ setMethod("genSeq",
 setMethod("genSeq", 
           signature(obj = "pbrPar", r = "numeric", seed = "missing"),
           function(obj, r, seed) {
+            
+            if(!is.list(blocks(obj))){
+              blocks <- list(blocks(obj))
+            } else {
+              blocks <- blocks(obj)        
+            }
+            
       	    seed <- sample(.Machine$integer.max, 1)
       	    set.seed(seed)
       	    res <- lapply(1:length(N(obj)), function(y) {
               new("rPbrSeq", 
                   M = t(sapply(1:r, function(x) {
-                    blockRand(bc = blocks(obj), K = K(obj), ratio = ratio(obj))
+                    blockRand(bc = blocks[[y]], K = K(obj), ratio = ratio(obj))
                     })), 
-                  bc = blocks(obj), 
+                  bc = blocks[[y]], 
                   N = N(obj)[y],
                   K = K(obj),
                   ratio = obj@ratio,
                   groups = obj@groups,
   		            seed = seed)
             })
-      	    if(length(N(obj)) == 1) return(res[[1]])
+      	    
+      	    if((length(N(obj)) == 1)) return(res[[1]])
       	    return(res)
       	   }
 )

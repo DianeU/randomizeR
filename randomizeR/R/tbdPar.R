@@ -23,11 +23,11 @@ validatetbdPar <- function(object) {
   ratio <- object@ratio
   K <- object@K
   
-  if(!all(bc %% sum(ratio) == 0)) {
-    msg <- paste("One of the block length is not a multiple of sum(ratio) = "
-                 , sum(ratio), ".", sep = "", collapse = "")
-    errors <- c(errors, msg)
-  }
+  #if(!all(bc %% sum(ratio) == 0)) {
+  #  msg <- paste("One of the block length is not a multiple of sum(ratio) = "
+  #               , sum(ratio), ".", sep = "", collapse = "")
+  #  errors <- c(errors, msg)
+  #}
 
   if(length(errors) == 0) TRUE else errors
 }
@@ -39,7 +39,7 @@ validatetbdPar <- function(object) {
 
 # Randomization parameters generic 
 setClass("tbdPar",
-         slots = c(bc = "numeric"),
+         slots = c(bc = "ListOrVec"),
          contains = "randPar",
          validity = validatetbdPar)
 
@@ -70,7 +70,17 @@ setClass("tbdPar",
 #' W. F. Rosenberger and J. M. Lachin (2002) \emph{Randomization in Clinical Trials}.
 #' Wiley.
 tbdPar <- function(bc = N, groups = LETTERS[1:2]) {
-  new("tbdPar", N = sum(bc), bc = bc, K = 2, ratio = c(1, 1), groups = groups)
+ 
+  
+  if(is.list(bc)){
+    
+    new("tbdPar", N = as.vector(unlist(lapply(bc,sum))), bc = bc, K = 2, ratio = c(1, 1), groups = groups)
+    
+  }else{
+    
+    new("tbdPar", N = sum(bc), bc = bc, K = 2, ratio = c(1, 1), groups = groups)
+    
+  }
 }
 
 # --------------------------------------------
@@ -120,20 +130,29 @@ setMethod("getAllSeq", signature(obj = "tbdPar"),
             if(obj@K != 2 || !identical(obj@ratio, c(1,1))) {
               stop("Only possible for K equals 2 and ratio corresponds to c(1,1).")
             }  
+            
+            if(!is.list(blocks(obj))){
+              blocks <- list(blocks(obj))
+            } else {
+              blocks <- blocks(obj)        
+            }
+            
             res <- lapply(1:length(N(obj)), function(y) {
               allSeqs <- compltSet(obj,y)
-              blockEnds <- cumsum(blocks(obj))
+              blockEnds <- cumsum(blocks[[y]])
               bal <- apply(allSeqs,1, function(x, blockEnds) {
                 all(cumsum(2*x - 1)[blockEnds] == 0)
               }, blockEnds = blockEnds)
               new("tbdSeq",
                   M = allSeqs[bal, ],
-                  bc = blocks(obj),
+                  bc = blocks[[y]],
                   N = N(obj)[y],
                   K = K(obj),
                   ratio = obj@ratio,
                   groups = obj@groups)
             })
+            
+            
             if(length(N(obj)) == 1) return(res[[1]])
             return(res)
           }
@@ -143,13 +162,20 @@ setMethod("getAllSeq", signature(obj = "tbdPar"),
 setMethod("genSeq", signature(obj = "tbdPar", r = "numeric", seed = "numeric"),
           function(obj, r, seed) {
 	          set.seed(seed)
+            
+            if(!is.list(blocks(obj))){
+              blocks <- list(blocks(obj))
+            } else {
+              blocks <- blocks(obj)        
+            }
+            
             res <- lapply(1:length(N(obj)), function(y) {
               new("rTbdSeq", 
                   M = t(sapply(1:r,function(x) {
-                    tbdRand(N(obj)[y], blocks(obj), K(obj), ratio(obj))
+                    tbdRand(N(obj)[y],blocks[[y]], K(obj), ratio(obj))
                     })), 
                   N = N(obj)[y], 
-                  bc = obj@bc,
+                  bc = blocks[[y]],
                   K = K(obj),
                   ratio = obj@ratio,
                   groups = obj@groups,
@@ -165,11 +191,18 @@ setMethod("genSeq", signature(obj = "tbdPar", r = "numeric", seed = "numeric"),
 setMethod("genSeq", signature(obj = "tbdPar", r = "missing", seed = "numeric"),
           function(obj, r, seed) {
             set.seed(seed)
+            
+            if(!is.list(blocks(obj))){
+              blocks <- list(blocks(obj))
+            } else {
+              blocks <- blocks(obj)        
+            }
+            
             res <- lapply(1:length(N(obj)), function(y) {
               new("rTbdSeq", 
-                  M = t(tbdRand(N(obj)[y], blocks(obj), K(obj), ratio(obj))),
+                  M = t(tbdRand(N(obj)[y], blocks[[y]], K(obj), ratio(obj))),
                   N = N(obj)[y],  
-                  bc = obj@bc,
+                  bc = blocks[[y]],
                   K = K(obj),
                   ratio = obj@ratio,
                   groups = obj@groups,
@@ -185,13 +218,20 @@ setMethod("genSeq", signature(obj = "tbdPar", r = "numeric", seed = "missing"),
           function(obj, r, seed) {
 	          seed <- sample(.Machine$integer.max, 1)
             set.seed(seed)
+            
+            if(!is.list(blocks(obj))){
+              blocks <- list(blocks(obj))
+            } else {
+              blocks <- blocks(obj)        
+            }
+            
             res <- lapply(1:length(N(obj)), function(y) {
               new("rTbdSeq", 
                   M = t(sapply(1:r,function(x) {
-                    tbdRand(N(obj)[y], blocks(obj), K(obj), ratio(obj))
+                    tbdRand(N(obj)[y],blocks[[y]], K(obj), ratio(obj))
                     })), 
                   N = N(obj)[y], 
-                  bc = obj@bc,
+                  bc = blocks[[y]],
                   K = K(obj),
                   ratio = obj@ratio,
                   groups = obj@groups,
@@ -207,11 +247,18 @@ setMethod("genSeq", signature(obj = "tbdPar", r = "missing", seed = "missing"),
           function(obj, r, seed) {
 	         seed <- sample(.Machine$integer.max, 1)
 	         set.seed(seed)
+	         
+	         if(!is.list(blocks(obj))){
+	           blocks <- list(blocks(obj))
+	         } else {
+	           blocks <- blocks(obj)        
+	         }
+	         
 	         res <- lapply(1:length(N(obj)), function(y) {
               new("rTbdSeq", 
-                  M = t(tbdRand(N(obj)[y], blocks(obj), K(obj), ratio(obj))),
+                  M = t(tbdRand(N(obj)[y], blocks[[y]], K(obj), ratio(obj))),
                   N = N(obj)[y], 
-                  bc = obj@bc,
+                  bc = blocks[[y]],
                   K = K(obj),
                   ratio = obj@ratio,
                   groups = obj@groups,

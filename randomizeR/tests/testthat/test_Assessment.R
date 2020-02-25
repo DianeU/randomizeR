@@ -8,7 +8,7 @@ context("Assessment")
 
 test_that("assess returns valid object", {
 	seqs <- getAllSeq(pbrPar(bc = c(2, 2, 2)))
-		
+	
 	type <- sample(c("CS", "DS"), 1)
 	i1 <- corGuess(type)
 	method <- sample(c("sim", "exact"), 1)
