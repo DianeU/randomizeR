@@ -15,7 +15,7 @@
 # @return
 # vector of the simulated/exact p.value of a randomization sequence.
 testDec <- function(randSeq, bias, endp) {
-  stopifnot(is(randSeq, "randSeq"), 
+  stopifnot(is(randSeq, "SeqObj"), 
             #is(bias, "chronBias") || is(bias, "selBias") || is(bias, "power"), 
             is(endp, "normEndp") || is(endp, "expEndp") )
   
@@ -95,3 +95,8 @@ testDec <- function(randSeq, bias, endp) {
   }
   
 }
+
+
+
+setClassUnion('SeqObj', c("randSeqs", 'randSeq'))
+

@@ -82,6 +82,8 @@ setClass("selBias", slots = c(eta = "numeric", type = "character",
          validity = validateSelBias)
 
 
+setClassUnion('SeqObj', c("randSeqs", 'randSeq'))
+
 # --------------------------------------------
 # Constructor function for selBias
 # --------------------------------------------
@@ -190,11 +192,11 @@ selBias <- function(type, eta, method, alpha = 0.05) {
 # --------------------------------------------
 
 # @rdname getStat
-setMethod("getStat", signature(randSeq = "randSeq", issue = "selBias", endp = "missing"),
+setMethod("getStat", signature(randSeq = 'SeqObj', issue = "selBias", endp = "missing"),
           function(randSeq, issue, endp) stop("Need an object of endpoint class."))
 
 # @rdname getStat
-setMethod("getStat", signature(randSeq = "randSeq", issue = "selBias", endp = "normEndp"),
+setMethod("getStat", signature(randSeq = 'SeqObj', issue = "selBias", endp = "normEndp"),
           function(randSeq, issue, endp) {
             stopifnot(validObject(randSeq), validObject(issue), validObject(endp), randSeq@K == length(endp@mu))
             if (issue@method == "sim") {
@@ -210,7 +212,7 @@ setMethod("getStat", signature(randSeq = "randSeq", issue = "selBias", endp = "n
 )
 
 # @rdname getStat
-setMethod("getStat", signature(randSeq = "randSeq", issue = "selBias", endp = "expEndp"),
+setMethod("getStat", signature(randSeq = 'SeqObj', issue = "selBias", endp = "expEndp"),
           function(randSeq, issue, endp) {
             stopifnot(validObject(randSeq), validObject(issue), validObject(endp), randSeq@K == length(endp@lambda))
             if (issue@method == "sim") {

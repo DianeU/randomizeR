@@ -2,6 +2,7 @@
 #' @include randSeq.R
 #' @include util.R
 #' @include endpoint.R
+#' @include randSeqs.R
 NULL
 
 ###############################################
@@ -198,44 +199,43 @@ NULL
 #' @export
 setGeneric("summary")
 
-setClassUnion('SeqObj', c('randSeq', 'list'))
+# Define a new Class Union object
+setClassUnion('SeqObj', c("randSeqs", 'randSeq'))
 
 # --------------------------------------------
 # Methods for assessment
 # --------------------------------------------
 
 #' @rdname assess
-setMethod("assess", signature(randSeq = "SeqObj", endp = "missing"),
+setMethod("assess", signature(randSeq = 'SeqObj', endp = "missing"),
           function(randSeq, ...) {
             L <- list(...)
             if (length(L) == 1 && is.list(L[[1]])) {
               L <- c(...)
             }
             
-            if(is.list(randSeq)){
-              if (randSeq@K > 2){
-                stop("Only Selection and Chronological Bias can be evaluated for K > 2.")
-              }
-              stopifnot(all(sapply(L, function(x)  is(x, "issue"))))
-              stopifnot(all(sapply(randSeq@ratio, function(x) x == 1)))
-              D <- data.frame("Sequence" = apply(getRandList(randSeq), 1, function(x) paste(x, sep = "", collapse = "")))
-              if (.hasSlot(randSeq, "seed")) {
-                D$Relative_Frequency <- 1/dim(randSeq@M)[1]
-              } else {
-                D$Probability <- getProb(randSeq)
-              }
-  
-              D <- cbind(D, do.call(cbind, lapply(L, function(x)  getStat(randSeq, x))))
-  
-              new("assessment",
-                  D = D, design = getDesign(randSeq),
-                  N = randSeq@N, K = randSeq@K, groups = randSeq@groups)
+            if (randSeq@K > 2){
+              stop("Only Selection and Chronological Bias can be evaluated for K > 2.")
             }
+            stopifnot(all(sapply(L, function(x)  is(x, "issue"))))
+            stopifnot(all(sapply(randSeq@ratio, function(x) x == 1)))
+            D <- data.frame("Sequence" = apply(getRandList(randSeq), 1, function(x) paste(x, sep = "", collapse = "")))
+            if (.hasSlot(randSeq, "seed")) {
+              D$Relative_Frequency <- 1/dim(randSeq@M)[1]
+            } else {
+              D$Probability <- getProb(randSeq)
+            }
+
+            D <- cbind(D, do.call(cbind, lapply(L, function(x)  getStat(randSeq, x))))
+
+            new("assessment",
+                D = D, design = getDesign(randSeq),
+                N = randSeq@N, K = randSeq@K, groups = randSeq@groups)
           }
 )
 
 #' @rdname assess
-setMethod("assess", signature(randSeq = "SeqObj", endp = "endpoint"),
+setMethod("assess", signature(randSeq = 'SeqObj', endp = "endpoint"),
           function(randSeq, ..., endp) {
             L <- list(...)
             if (length(L) == 1 && is.list(L[[1]])) {
@@ -276,18 +276,42 @@ setMethod("assess", signature(randSeq = "SeqObj", endp = "endpoint"),
             
             stopifnot(all(sapply(L, function(x) is(x, "issue")))) 
             stopifnot(all(sapply(randSeq@ratio, function(x) x == 1)))
-            D <- data.frame("Sequence" = apply(getRandList(randSeq), 1, function(x) paste(x, sep = "", collapse = "")))
-            if (.hasSlot(randSeq, "seed")) { 
-              D$Relative_Frequency <- 1/dim(randSeq@M)[1]
-            } else {
-              D$Probability <- getProb(randSeq)
-            }
             
-            D <- cbind(D, do.call(cbind, lapply(L, function(x)  getStat(randSeq, x, endp = endp))))
+            if(is(randSeq,'randSeq')){
+              
+              D <- data.frame("Sequence" = apply(getRandList(randSeq), 1, function(x) paste(x, sep = "", collapse = "")))
+              if (.hasSlot(randSeq, "seed")) { 
+                D$Relative_Frequency <- 1/dim(randSeq@M)[1]
+              } else {
+                D$Probability <- getProb(randSeq)
+              }
+              
+              D <- cbind(D, do.call(cbind, lapply(L, function(x)  getStat(randSeq, x, endp = endp))))
             
             new("assessment",
                 D = D, design = getDesign(randSeq),
                 N = randSeq@N, K = randSeq@K, groups = randSeq@groups)   
+            
+            }else{
+              
+              D <-  do.call( cbind, lapply(1:length(randSeq@seqs),function(y) {
+                
+                             frame <- data.frame(apply(getRandList(randSeq@seqs[[y]]), 1, function(x) paste(x, sep = "", collapse = "")))
+                             colnames(frame) <- paste("Sequence",y)
+                             frame
+                             }
+                             ))
+              
+              if (.hasSlot(randSeq, "seed")) { 
+                #Simple Workaround to access r, consider adding to parametrisation
+                D$Relative_Frequency <- 1/dim(randSeq@seqs[[1]]@M)[1]
+              } else {
+                D$Probability <- getProb(randSeq)
+              }
+              
+              D <- cbind(D, do.call(cbind, lapply(L, function(x)  getStat(randSeq, x, endp = endp))))
+              
+            }
           }
 )
 

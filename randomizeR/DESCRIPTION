@@ -55,6 +55,7 @@ Collate:
     'randPar.R'
     'abcdPar.R'
     'randSeq.R'
+    'randSeqs.R'
     'abcdSeq.R'
     'survEndp.R'
     'getExpectation.R'
