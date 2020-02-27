@@ -288,9 +288,7 @@ setMethod("assess", signature(randSeq = 'SeqObj', endp = "endpoint"),
               
               D <- cbind(D, do.call(cbind, lapply(L, function(x)  getStat(randSeq, x, endp = endp))))
             
-            new("assessment",
-                D = D, design = getDesign(randSeq),
-                N = randSeq@N, K = randSeq@K, groups = randSeq@groups)   
+         
             
             }else{
               
@@ -299,6 +297,7 @@ setMethod("assess", signature(randSeq = 'SeqObj', endp = "endpoint"),
                              frame <- data.frame(apply(getRandList(randSeq@seqs[[y]]), 1, function(x) paste(x, sep = "", collapse = "")))
                              colnames(frame) <- paste("Sequence",y)
                              frame
+                             
                              }
                              ))
               
@@ -312,6 +311,10 @@ setMethod("assess", signature(randSeq = 'SeqObj', endp = "endpoint"),
               D <- cbind(D, do.call(cbind, lapply(L, function(x)  getStat(randSeq, x, endp = endp))))
               
             }
+            
+            new("assessment",
+                D = D, design = getDesign(randSeq),
+                N = randSeq@N, K = randSeq@K, groups = randSeq@groups)  
           }
 )
 

@@ -135,7 +135,7 @@ setMethod("genSeq",
             }) 
             
             if(length(N(obj)) == 1) return(res[[1]])
-            return(new('rRandSeqs', N = N(obj), seqs = res, K = K(obj), ratio = obj@ratio,  groups = obj@groups))
+            return(new('rRandSeqs', N = N(obj), seqs = res, K = K(obj), ratio = obj@ratio,  groups = obj@groups), seed = seed)
             
           }
 )

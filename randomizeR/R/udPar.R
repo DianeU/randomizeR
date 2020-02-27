@@ -139,28 +139,35 @@ urnRand <- function(N, ini, add) {
 #' @rdname generateAllSequences
 setMethod("getAllSeq", signature(obj = "udPar"),
           function(obj) {
-                if(obj@ini == 0) {
-                  allSeqs <- compltSet(obj)
-                  inside <- apply(allSeqs, 1, function(x) {
-                    if(sum(x[1:2]) %in% c(0, 2)) {
-                       FALSE
-                    } else {
-                      TRUE
-                    }
-                  })
-                  M = allSeqs[inside, ]
-                } else {
-                  M = compltSet(obj)
-                }
-                new("udSeq",
-                    M = M, 
-                    N = N(obj),
-                    ini = obj@ini, 
-                    add = obj@add,
-                    ratio = obj@ratio,
-                    groups = obj@groups, 
-                    K = K(obj))
+            res <- lapply(1:length(N(obj)), function(y) {
+                  if(obj@ini == 0) {
+                    allSeqs <- compltSet(obj, y)
+                    inside <- apply(allSeqs, 1, function(x) {
+                      if(sum(x[1:2]) %in% c(0, 2)) {
+                         FALSE
+                      } else {
+                        TRUE
+                      }
+                    })
+                    M = allSeqs[inside, ]
+                  } else {
+                    M = compltSet(obj, y)
+                  }
+                  new("udSeq",
+                      M = M, 
+                      N = N(obj)[y],
+                      ini = obj@ini, 
+                      add = obj@add,
+                      ratio = obj@ratio,
+                      groups = obj@groups, 
+                      K = K(obj))
+            })
+            
+              if(length(obj@N) == 1) return(res[[1]])
+              return(new('randSeqs', N = N(obj), seqs = res, K = K(obj), ratio = obj@ratio,  groups = obj@groups))
+                
           }
+          
 )
 
 #' @rdname generateRandomSequences
@@ -181,7 +188,7 @@ setMethod("genSeq", signature(obj = "udPar", r = "numeric", seed = "numeric"),
   		            seed = seed)
             })
            if(length(N(obj)) == 1) return(res[[1]])
-           return(res)
+           return(new('rRandSeqs', N = N(obj), seqs = res, K = K(obj), ratio = obj@ratio,  groups = obj@groups, seed = seed))
           }
 )
 
@@ -203,7 +210,7 @@ setMethod("genSeq", signature(obj = "udPar", r = "missing", seed = "numeric"),
             })
             
             if(length(N(obj)) == 1) return(res[[1]])
-            return(res)
+            return(new('rRandSeqs', N = N(obj), seqs = res, K = K(obj), ratio = obj@ratio,  groups = obj@groups, seed = seed))
           }
 )
 
@@ -228,7 +235,7 @@ setMethod("genSeq", signature(obj = "udPar", r = "numeric", seed = "missing"),
       	    })
             
       	    if(length(N(obj)) == 1) return(res[[1]])
-      	    return(res)
+      	    return(new('rRandSeqs', N = N(obj), seqs = res, K = K(obj), ratio = obj@ratio,  groups = obj@groups, seed = seed))
           }
 )
 
@@ -251,7 +258,7 @@ setMethod("genSeq", signature(obj = "udPar", r = "missing", seed = "missing"),
             })
             
             if(length(N(obj)) == 1) return(res[[1]])
-            return(res)
+            return(new('rRandSeqs', N = N(obj), seqs = res, K = K(obj), ratio = obj@ratio,  groups = obj@groups, seed = seed))
           }
 )
 #' @rdname getDesign

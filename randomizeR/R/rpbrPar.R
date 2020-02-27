@@ -129,8 +129,9 @@ setMethod("genSeq", signature(obj = "rpbrPar", r = "missing", seed = "numeric"),
   		            seed = seed)
             })
             
+            
             if(length(N(obj)) == 1) return(res[[1]])
-            return(res) 
+            return(new('rRandSeqs', N = N(obj), seqs = res, K = K(obj), ratio = obj@ratio,  groups = obj@groups, seed = seed))
           } 
 )
 
@@ -162,8 +163,8 @@ setMethod("genSeq", signature(obj = "rpbrPar", r = "numeric", seed = "numeric"),
               
               })
             
-              if(length(N(obj)) == 1) return(res[[1]])
-              return(res) 
+            if(length(N(obj)) == 1) return(res[[1]])
+            return(new('rRandSeqs', N = N(obj), seqs = res, K = K(obj), ratio = obj@ratio,  groups = obj@groups, seed = seed))
           }
           
           
@@ -198,7 +199,7 @@ setMethod("genSeq", signature(obj = "rpbrPar", r = "missing", seed = "missing"),
             })
             
             if(length(N(obj)) == 1) return(res[[1]])
-            return(res) 
+            return(new('rRandSeqs', N = N(obj), seqs = res, K = K(obj), ratio = obj@ratio,  groups = obj@groups, seed = seed))
 
           }
 )
@@ -232,7 +233,7 @@ setMethod("genSeq", signature(obj = "rpbrPar", r = "numeric", seed = "missing"),
             })
             
             if(length(N(obj)) == 1) return(res[[1]])
-            return(res) 
+            return(new('rRandSeqs', N = N(obj), seqs = res, K = K(obj), ratio = obj@ratio,  groups = obj@groups, seed = seed))
           }
 )
 

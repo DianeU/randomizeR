@@ -110,8 +110,8 @@ setMethod("getAllSeq", signature(obj = "hadaPar"),
                   K = K(obj),
                   groups = obj@groups)
             })
-            if(length(N(obj)) == 1) return(res[[1]])
-            return(res)
+            if(length(obj@N) == 1) return(res[[1]])
+            return(new('randSeqs', N = N(obj), seqs = res, K = K(obj), ratio = obj@ratio,  groups = obj@groups))
           }
 )
 
@@ -128,8 +128,8 @@ setMethod("genSeq", signature(obj = "hadaPar", r = "numeric", seed = "numeric"),
                   groups = obj@groups,
   		            seed = seed)
             })
-            if(length(N(obj)) == 1) return(res[[1]])
-            return(res)
+           if(length(N(obj)) == 1) return(res[[1]])
+           return(new('rRandSeqs', N = N(obj), seqs = res, K = K(obj), ratio = obj@ratio,  groups = obj@groups, seed = seed))
           }
 )
 
@@ -148,7 +148,7 @@ setMethod("genSeq", signature(obj = "hadaPar", r = "missing", seed = "numeric"),
   		            seed = seed)
             })
             if(length(N(obj)) == 1) return(res[[1]])
-            return(res)
+            return(new('rRandSeqs', N = N(obj), seqs = res, K = K(obj), ratio = obj@ratio,  groups = obj@groups, seed = seed))
           }
   )
 
@@ -168,7 +168,7 @@ setMethod("genSeq", signature(obj = "hadaPar", r = "numeric", seed = "missing"),
   		            seed = seed)
             })
             if(length(N(obj)) == 1) return(res[[1]])
-            return(res)
+            return(new('rRandSeqs', N = N(obj), seqs = res, K = K(obj), ratio = obj@ratio,  groups = obj@groups, seed = seed))
           }
 )
 
@@ -188,7 +188,7 @@ setMethod("genSeq", signature(obj = "hadaPar", r = "missing", seed = "missing"),
   		            seed = seed)
             })
             if(length(N(obj)) == 1) return(res[[1]])
-            return(res)
+            return(new('rRandSeqs', N = N(obj), seqs = res, K = K(obj), ratio = obj@ratio,  groups = obj@groups, seed = seed))
           }
 )
 #' @rdname getDesign
