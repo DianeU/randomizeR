@@ -67,8 +67,7 @@ combineBias <- function(selBias, chronBias) {
 
 setClassUnion("bias", c("combinedBias", "combinedBiasStepTrend"))
 setClassUnion("issue", c("combinedBias", "combinedBiasStepTrend")) 
-
-
+setClassUnion('SeqObj', c("randSeqs", 'randSeq'))
 # --------------------------------------------
 # Methods for combinedBias
 # --------------------------------------------
@@ -152,7 +151,7 @@ setMethod("getExpectation", signature(randSeq = "randSeq", issue = "combinedBias
 })
 
 # @rdname getStat
-setMethod("getStat", signature(randSeq = "randSeq", issue = "combinedBias",
+setMethod("getStat", signature(randSeq = "SeqObj", issue = "combinedBias",
                                endp = "endpoint"),
           function(randSeq, issue, endp) {
             stopifnot(validObject(randSeq), validObject(endp))
@@ -172,7 +171,7 @@ setMethod("getStat", signature(randSeq = "randSeq", issue = "combinedBias",
 
 
 # @rdname getStat
-setMethod("getStat", signature(randSeq = "randSeq", issue = "combinedBiasStepTrend",
+setMethod("getStat", signature(randSeq = "SeqObj", issue = "combinedBiasStepTrend",
                                endp = "endpoint"),
           function(randSeq, issue, endp) {
             stopifnot(validObject(randSeq), validObject(endp))

@@ -55,8 +55,6 @@ setMethod("$", "assessment",
 
 setMethod("show", "assessment", function(object) {
     # headline
-    #cat("\nObject of class \"", class(object)[1],"\"\n\n", sep="")
-    #cat("\nAssessment of ",slot(object, "design"),"\n\n", sep="")
     cat("\nAssessment of a randomization procedure \n\n", sep="")
     # iterate through all slots of the object
     names <- slotNames(object)
@@ -65,7 +63,7 @@ setMethod("show", "assessment", function(object) {
       cat(name, "=", slot(object, name), "\n")
     }
     cat("\n") 
-    # The data.frame D is printed seperately dependent on its size.
+    #The data.frame D is printed seperately dependent on its size.
     if (dim(object@D)[1] <= 3) {
       if (nchar(as.character(object@D[1, 1])) >= 10)
         object@D[ ,1] <- paste(substr(object@D[, 1], 1, 9), "...")
@@ -79,8 +77,8 @@ setMethod("show", "assessment", function(object) {
       obj[ ,-1] <- round(obj[ ,-1],digits = 3)
       print(obj)
       cat("...")
-    }
     cat("\n") 
+    }
   }  
 )
 
@@ -214,6 +212,7 @@ setMethod("assess", signature(randSeq = 'SeqObj', endp = "missing"),
               L <- c(...)
             }
             
+            # Add a warnings
             if (randSeq@K > 2){
               stop("Only Selection and Chronological Bias can be evaluated for K > 2.")
             }
@@ -292,14 +291,10 @@ setMethod("assess", signature(randSeq = 'SeqObj', endp = "endpoint"),
             
             }else{
               
-              D <-  do.call( cbind, lapply(1:length(randSeq@seqs),function(y) {
-                
-                             frame <- data.frame(apply(getRandList(randSeq@seqs[[y]]), 1, function(x) paste(x, sep = "", collapse = "")))
-                             colnames(frame) <- paste("Sequence",y)
-                             frame
-                             
-                             }
-                             ))
+              D <-  data.frame('Sequences' = apply(sapply(1:length(randSeq@seqs),function(y) {
+                                                     apply(getRandList(randSeq@seqs[[y]]), 1, function(x) paste(x, sep = "", collapse = ""))
+                                                   }),1,function(z){paste(z, sep = " ", collapse = " ")})
+                               )
               
               if (.hasSlot(randSeq, "seed")) { 
                 #Simple Workaround to access r, consider adding to parametrisation
@@ -324,7 +319,7 @@ setMethod("summary", signature(object = "assessment"), function(object) {
   colnames(D)[2] <- "Probability"
   probs <- D$Probability
   # if (dim(D)[1] == 1) stop("Selected randomization procedure(s) should have more than one generated sequence.")
-  D$Probability <- D$Sequence <- NULL
+  D$Probability <- D[1] <- NULL
   stat <- apply(D, 2, function(x) {
     ## weighted mean value
     x1 <- sum(x*probs)
