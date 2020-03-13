@@ -69,10 +69,12 @@ genNcps <- function(randSeq, bias, endp, weight = FALSE, power = FALSE ) {
     for(x in 1:dim(randSeq[[i]]@M)[1]){
       splitGroups <- split(expectations[[i]][x,], randSeq[[i]]@M[x,])
       # average expectations in both groups
+      # if a group is empty (For example in CrPar, set it to 0)
+      if(is.null(splitGroups$'1')) splitGroups$'1' <- 0
+      if(is.null(splitGroups$'0')) splitGroups$'0' <- 0
       avgExp[[i]][x,1] <- mean(splitGroups$`0`)
       avgExp[[i]][x,2] <- mean(splitGroups$`1`)
     }
-    avgExp[[i]][which(is.na(avgExp[[i]]))] <- 0
   }
   
   temp_delta <- list()

@@ -270,13 +270,35 @@ setMethod("show", "randPar", function(object) {
   # headline
   cat("\nObject of class \"", class(object)[1], "\"\n\n", sep = "")
   # crop the method from the class name of the randPar object
-  cat("design =", getDesign(object), "\n") 
-  # iterate through all slots of the randPar object
   names <- slotNames(object) 
+  
+  if(length(N(object)) == 1){
+   cat("design =", getDesign(object), "\n") 
+  }
+
+
+  # iterate through all slots of the randPar object
   if (K(object) == 2) names <- names[!(names %in% "K")]
   if (all(ratio(object) == rep(1, K(object)))) {
     names <- names[!(names %in% "ratio")]
   }
+  
+  if(length(N(object)) <= 5){
+    if(any((names %in% "bc"))){
+      names <- names[!(names %in% "bc")]
+      for(x in 1:length(N(object))){
+        cat(paste('bc_',x, collapse = '', sep = ''),'=',blocks(object)[[x]], '\n')
+      }
+    }
+    
+    if(any((names %in% "rb"))){
+      names <- names[!(names %in% "rb")]
+      for(x in 1:length(N(object))){
+        cat(paste('rb_',x, collapse = '', sep = ''), '=',randBlocks(object)[[x]], '\n')
+      }
+    }
+  }
+  
   
   for(name in names) {
     cat(name, "=", slot(object, name),"\n")

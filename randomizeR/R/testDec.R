@@ -19,6 +19,10 @@ testDec <- function(randSeq, bias, endp) {
             #is(bias, "chronBias") || is(bias, "selBias") || is(bias, "power"), 
             is(endp, "normEndp") || is(endp, "expEndp") )
   
+  if(is(randSeq,"randSeqs") && !(is(endp, "normEndp") && bias@method == "exact" && !(is(bias, "selBias") && bias@type == "CS2"))){
+    stop("Error: Stratified analysis are currently not supported for this parameterisation")
+  }
+  
   if (is(endp, "normEndp"))
   {
     stopifnot(randSeq@K == length(endp@mu))
@@ -27,9 +31,7 @@ testDec <- function(randSeq, bias, endp) {
       stop("Error: Selection bias for K > 2 can only be calculated for convergence strategy.")
     }
     
-    if(is(randSeq,"randSeqs") && !(is(endp, "normEndp") && bias@method == "exact" && !(is(bias, "selBias") && bias@type == "CS2"))){
-      stop("Error: Stratified analysis are currently not supported for this parameterisation")
-    }
+
     
     if (bias@method == "sim") {
       # calculates the bias matrix

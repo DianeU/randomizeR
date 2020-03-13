@@ -205,8 +205,8 @@ setMethod("compare", signature(issue = "issue", endp = "endpoint"),
               R <- c(...)
             }
             
-            if (!all(sapply(R, function(x)  is(x, "randSeq"))))
-              stop("Not all ... objects of class randSeq.")
+            if (!(all(sapply(R, function(x)  is(x, "randSeq"))) || all(sapply(R, function(x)  is(x, "randSeqs")))))
+              stop("Not all ... objects of the same class of randSeq or randSeqs")
             
             if (!all(sapply(R, function(x)  identical(x@K, 2))))
               stop("Not all ... objects have K = 2.")

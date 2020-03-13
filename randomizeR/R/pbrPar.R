@@ -24,25 +24,37 @@ validatepbrPar <- function(object) {
   N <- object@N
   size <- object@size
     
-#   if(!all(bc > 0)) {
-#     msg <- paste("At least one of the block lengths has value smaller or equal to zero. 
-#                  Should be greater than zero.")
-#     errors <- c(errors, msg)
-#   }
-#   
-#   if(!all(sapply(bc, function(x) x == round(x)))) {
-#     msg <- paste("At least one of the block lengths is not an integer. Should be though.")
-#     errors <- c(errors, msg)
-#   }
-  
+   
+   
+
   
  if(!is.list(bc)){
+   
+   if(!all(bc > 0)) {
+     msg <- paste("At least one of the block lengths has value smaller or equal to zero. 
+                  Should be greater than zero.")
+     errors <- c(errors, msg)
+   }
+   
+   if(!all(sapply(bc, function(x) x == round(x)))) {
+     msg <- paste("At least one of the block lengths is not an integer. Should be though.")
+     errors <- c(errors, msg)
+   }
+   
+   
     if(!all(bc %% sum(ratio) == 0)){
      msg <- paste("One of the block lengths is not a multiple of sum(ratio) = "
                   , sum(ratio), ".", sep = "", collapse = "")
     errors <- c(errors, msg)
     }
  } else {
+   if(!all(unlist(bc) > 0)) {
+     msg <- paste("At least one of the block lengths has value smaller or equal to zero. 
+                  Should be greater than zero.")
+     errors <- c(errors, msg)
+   }
+   
+   
    # Double Check if this is a correct test
    if(any(sapply(bc, function(x){!all(x %% sum(ratio) == 0)}))){
      msg <- paste("One of the block lengths is not a multiple of sum(ratio) = "
@@ -102,7 +114,7 @@ pbrPar <- function(bc = lapply(N, function(x){rep(size,x/size)}), K = 2, ratio =
   # Currently can only throw a warning at this point, before N is reset
   if(!is.null(N)){
     if(!all(sapply(N, function(x){(x %% size == 0)}))){
-     warning("Atleast one of the values in N is not a multiple of size.")
+     stop("Atleast one of the values in N is not a multiple of size.")
     }
   }
   

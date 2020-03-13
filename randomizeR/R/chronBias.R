@@ -177,17 +177,19 @@ chronBias <- function(type, theta, method, saltus, alpha = 0.05) {
   }  
 }
 
+setClassUnion('SeqObj', c("randSeqs", 'randSeq'))
+
 
 # --------------------------------------------
 # Methods for chronBias
 # --------------------------------------------
 
 # @rdname getStat
-setMethod("getStat", signature(randSeq = "randSeq", issue = "chronBias", endp = "missing"),
+setMethod("getStat", signature(randSeq = "SeqObj", issue = "chronBias", endp = "missing"),
           function(randSeq, issue, endp) stop("Need an object of endpoint class."))
 
 # @rdname getStat
-setMethod("getStat", signature(randSeq = "randSeq", issue = "chronBias", endp = "endpoint"),
+setMethod("getStat", signature(randSeq = "SeqObj", issue = "chronBias", endp = "endpoint"),
           function(randSeq, issue, endp) {
             validObject(randSeq); validObject(issue); validObject(endp)
             if (issue@method == "sim") {
