@@ -24,12 +24,12 @@ current.code <- as.package("randomizeR")
 # Sys.setenv(R_GSCMD = "C:\\Program Files (x86)\\gs\\gs9.07\\bin\\gswin32c.exe") ## Set ghostscript path
 
 # in case something was deleted or renamed, run (twice)
-#load_all(current.code, recompile = TRUE)
-#document(current.code)
+load_all(current.code, recompile = TRUE)
+document(current.code)
 #load_all(current.code) 
-#test(current.code)
+test(current.code)
 ## Runs a Spell checker on all Files including the Vignettes, Ignores words saved in the Wordlist, run document beforehand to catch changes
-#print(spell_check(current.code))
+print(spell_check(current.code))
 ## Update the wordlist through invokation of a spell_checker call
 #update_wordlist(current.code)
 load_all(current.code) 

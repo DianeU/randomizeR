@@ -1,8 +1,12 @@
+
+
+
 ###############################################
 # --------------------------------------------#
-# Class randSeq                               #
+# Class randSeqs                               #
 # --------------------------------------------#
 ###############################################
+
 
 # --------------------------------------------
 # Function for validity check
@@ -44,15 +48,23 @@ validateRandSeqs <- function(object) {
 
 #' @title An S4 Class for the representation of  randomization sequences
 #' 
-#' @description This set of classes provides functionality of storing randomization
-#' sequences of different randomization procedures along with the parameters 
-#' representing the design.
+#' @description This wrapper classe provides functionality of storing stratified randomization
+#' sequences of the different randomization procedures along with the parameters 
+#' representing the design. It is created instead of an \linkS4class{randSeq} object, when creating an
+#' object of \linkS4class{randPar} with \code{N} as an vector instead of a scalar value.
 #' 
-#' @slot N total number of patients included in the trial
-#' @slot M matrix containing randomization sequences of length \code{N} in its
-#' rows.
+#' 
+#' 
+#' @slot N vector of the total number of patients included in the strata
+#' @slot seqs list containing the underlying randSeq object of the randomization strategy
 #' @slot K number of treatment groups
 #' @slot groups character string of length K defining the names of the treatment groups
+#'
+#' @examples 
+#' # Create a randSeqs object containing 3 strata with N = 10, 12 and 8 and strategy CR
+#' crPar <- crPar(N = c(10, 12, 8))
+#' seqs <- genSeq(crPar, r = 10)
+#' 
 setClass("randSeqs",
          slots = c(seqs = "list", N = "numeric", K = "numeric",
                    ratio = "numeric", groups = "character"),
@@ -64,9 +76,9 @@ setClass("randSeqs",
 
 # @title An S4 Class for the representation of  randomization sequences generated at random.
 # 
-# @description This set of classes provides functionality of storing random randomization
-# sequences of different randomization procedures along with the parameters 
-# representing the design 
+# @description This wrapper classe provides functionality of storing stratified randomization
+# sequences of the different randomization procedures along with the parameters 
+# representing the design.
 # 
 # @slot seed integer specifying the seed for the generation of randomization sequences
 setClass("rRandSeqs",
@@ -78,45 +90,24 @@ setClass("rRandSeqs",
 # Accesssor functions for randSeq
 # --------------------------------------------
 
-#' Method defining the $ operator for the randSeq class
+#' Method defining the $ operator for the randSeqs class
 #' @keywords internal
 #' @inheritParams overview
 setMethod("$", "randSeqs",
           function(x, name) slot(x, name))
 
 
-#' Function returning the allocation seed slot of an object
-#'
-#' Returns the seed that was either generated at random or user specified.
-#' The seed can be specified for any random operation e.g. genSeq.
-#'
-#' @inheritParams overview
-seed <- function(obj) {
-  if (.hasSlot(obj, "seed")) obj@seed
-  else stop("Object has no slot named seed.") 
-}
 
-#' Accessor function for the randomization list 
-#'
-#' Get the randomization list coded in its groups.
-#'
-#' @param combined  logical If the Sequences should be combined in a single matrix or not 
-#' @inheritParams overview 
-#'
-#' @name getCombinedSequence
-#'
-#' @export
-getCombinedSequences <- function(obj, combined = TRUE) {
+# @rdname getRandomizationList
+#  
+# @export
+setMethod('getRandList',"randSeqs", function(obj) {
   
   seqs <- lapply(obj@seqs, function(x){getRandList(x)})
-  
-  if(combined){
+
      do.call(cbind, seqs)
-  }else{
-     seqs
-  }
      
-}
+})
     
 
 
@@ -130,11 +121,11 @@ setMethod("getDesign", "randSeqs", function(obj){
 
 setMethod("show", "randSeqs", function(object) {
   # headline
-  sequences <- getCombinedSequences(object)
+  sequences <- getRandList(object)
   
   cat("\nObject of class \"", class(object)[1],"\"\n\n", sep = "")
   # crop the method from the class name of the randPar object
-  cat("\nContaining ", length(N(object))," centers with ",dim(sequences)[2]," total patiens \n \n", sep = "")
+  cat("\nContaining ", length(N(object))," strata with a total sample size of ",dim(sequences)[2],"\n \n", sep = "")
   cat("design =", getDesign(object), "\n") 
   # iterate through all slots of the object
   names <- slotNames(object)
@@ -146,12 +137,13 @@ setMethod("show", "randSeqs", function(object) {
   for(name in names) {
     cat(name, "=", slot(object, name), "\n")
   }  
+  cat('Number of Strata','=', length(N(object)))
   # The matrix M is printed seperately dependent on its size.
   print.matrix <- function(m) {
     write.table(format(m, justify = "left"),
                 row.names = T, col.names = F, quote = F)
   }
-  sequences <- getCombinedSequences(object)
+
   
   if (nrow(sequences) %in% 2:3) {
     
@@ -185,39 +177,8 @@ setMethod("show", "randSeqs", function(object) {
 })
 
 
-# --------------------------------------------
-# Generic functions for randSeq
-# --------------------------------------------
 
-#' Theoretical probability for randomization sequences
-#'
-#' Calculate theoretical probability for observed randomization sequences
-#'
-#' @aliases getProbabilities calculateProbabilities calcProb
-#' 
-#' @param obj object of a class inheriting from randSeq. Formal representation 
-#' of a randomization sequences together with the parameters that belong to
-#' the procedure that generated the sequences.
-#'
-#' @examples 
-#' myPar <- bsdPar(10, 2)
-#' M <- genSeq(myPar, 2)
-#' getProb(M)
-#' 
-#' # all Sequences
-#' par <- pbrPar(bc=c(2,2))
-#' refSet <- getAllSeq(myPar)
-#' probs <- getProb(refSet)
-#' 
-#' # sequences with probabilities
-#' cbind(probs, refSet$M)
-#' 
-#' @name getProbabilities
-NULL
 
-#' @rdname getProbabilities
-#'
-#' @export
-setGeneric("getProb", function(obj) standardGeneric("getProb"))
+
 
 

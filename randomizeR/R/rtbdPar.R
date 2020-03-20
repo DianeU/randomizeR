@@ -94,8 +94,15 @@ setClass("rtbdPar",
 #' W. F. Rosenberger and J. M. Lachin (2002) \emph{Randomization in Clinical Trials}.
 #' Wiley.
 rtbdPar <- function(N, rb = N, groups = LETTERS[1:2], filledBlock = FALSE){
+  
+  # In production Warning
+  if(is.list(rb)){
+    warning("Stratified sequences are currently not implemented for randomized strategies")
+  }
+  
   new("rtbdPar", N = N, rb = rb, K = 2, ratio = c(1, 1), groups = groups,
       filledBlock = filledBlock)
+  
 }
 
 

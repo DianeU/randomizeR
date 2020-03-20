@@ -20,7 +20,7 @@ testDec <- function(randSeq, bias, endp) {
             is(endp, "normEndp") || is(endp, "expEndp") )
   
   if(is(randSeq,"randSeqs") && !(is(endp, "normEndp") && bias@method == "exact" && !(is(bias, "selBias") && bias@type == "CS2"))){
-    stop("Error: Stratified analysis are currently not supported for this parameterisation")
+    stop("Error: Stratified analysis is currently only supported for normal endpoints")
   }
   
   if (is(endp, "normEndp"))

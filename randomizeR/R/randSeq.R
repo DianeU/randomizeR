@@ -98,7 +98,8 @@ seed <- function(obj) {
 
 #' Accessor function for the randomization list 
 #'
-#' Get the randomization list coded in its groups.
+#' Get the randomization list coded in its groups
+#' for both randSeq and randSeqs.
 #'
 #' @inheritParams overview 
 #'
@@ -106,21 +107,25 @@ seed <- function(obj) {
 #' myPar <- bsdPar(10, 2)
 #' M <- genSeq(myPar, 2)
 #' getRandList(M)
-#'
+#' 
+#' crPar <- crPar(N = c(10,10))
+#' seqs <- genSeq(crPar, r = 10)
+#' getRandList(seqs)
 #' @name getRandomizationList
 #'
 #' @export
-getRandList <- function(obj) {
-  if (.hasSlot(obj, "M")) {
-	sequences1 <- sequences2 <- obj@M        
-    for(i in 1:obj@K) {
-      sequences1[sequences2 == i-1] <- obj@groups[i]
-    }
-    sequences1
-  }	
-  else stop("Object has no slot named M.") 
-}
+setGeneric('getRandList', function(obj) standardGeneric("getRandList"))
 
+setMethod('getRandList', "randSeq" , function(obj) {
+    if (.hasSlot(obj, "M")) {
+  	sequences1 <- sequences2 <- obj@M        
+      for(i in 1:obj@K) {
+        sequences1[sequences2 == i-1] <- obj@groups[i]
+      }
+      sequences1
+    }	
+    else stop("Object has no slot named M.") 
+})
 
 # --------------------------------------------
 # Show function for randSeq

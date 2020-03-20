@@ -1,3 +1,6 @@
+#' @include randSeqs.R
+NULL
+
 # --------------------------------------------
 # Generic function for Expectations
 # --------------------------------------------
@@ -45,4 +48,16 @@ NULL
 #' @export
 setGeneric("getExpectation", function(randSeq, issue, endp) standardGeneric("getExpectation"))
 
-
+#' @rdname getExpectation
+setMethod("getExpectation", signature(randSeq = "randSeqs", issue = "ANY", endp = "ANY"),
+          function(randSeq, issue, endp) {
+            validObject(randSeq); 
+            # Check if issue and endp are valid or Null
+            stopifnot(validObject(issue) || is.null(issue))
+            stopifnot(validObject(endp) || is.null(endp))
+            # Call getExpectation for each strata 
+            issue <- do.call(cbind,lapply(randSeq@seqs, function(x) { getExpectation(x, issue, endp = endp )}))
+            issue
+            
+          }
+)

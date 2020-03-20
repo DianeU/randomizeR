@@ -109,12 +109,12 @@ setClass("pbrPar",
 #' @references
 #' W. F. Rosenberger and J. M. Lachin (2002) \emph{Randomization in Clinical Trials}.
 #' Wiley.
-pbrPar <- function(bc = lapply(N, function(x){rep(size,x/size)}), K = 2, ratio = rep(1, K), groups = LETTERS[1:K], size = 2, N = NULL) {
+pbrPar <- function(bc = lapply(N,function(x){rep(size,x/size)}), K = 2, ratio = rep(1, K), groups = LETTERS[1:K], size = 2, N = NULL) {
   
   # Currently can only throw a warning at this point, before N is reset
   if(!is.null(N)){
     if(!all(sapply(N, function(x){(x %% size == 0)}))){
-     stop("Atleast one of the values in N is not a multiple of size.")
+     stop("At least one of the values in N is not a multiple of size.")
     }
   }
   

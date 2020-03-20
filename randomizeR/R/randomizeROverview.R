@@ -11,7 +11,8 @@
 #' urn in each step.
 #' @param alpha the significance level of the test in each simulation.
 #' @param bc vector which contains the lengths \code{k_1,...,k_l} of each block. 
-#' This means that the vector \code{bc} will have one entry for each block.
+#' This means that the vector \code{bc} will have one entry for each block. For
+#' blocks of constant length one can use \code{size} and \code{N} instead.
 #' @param b numeric vector of length at most 2 specifying the weight(s) for the punishment of 
 #' deviations from the target value.
 #' @param cenRate exponential censoring rate in a survival study.
@@ -68,6 +69,8 @@
 #' for the random number generation.
 #' @param sigma vector of the standard deviations in each treatment group, 
 #' should have length \code{K} (i.e. one entry for each treatment group).
+#' @param size the length of a block, when using a constant block length in a
+#' randomization strategy. Use in combination with \code{N} instead of \code{bc}
 #' @param SLs numeric vector of length at most 2 specifying the lower and/or upper 
 #' specified border.
 #' @param theta factor of the time trend for further details see \code{type}.

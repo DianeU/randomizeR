@@ -92,6 +92,12 @@ setClass("rpbrPar",
 #' Wiley.
 rpbrPar <- function(N, rb, K = 2, ratio = rep(1, K), groups = LETTERS[1:K],
                     filledBlock = FALSE) {
+
+  # In production Warning
+  if(is.list(rb)){
+    warning("Stratified sequences are currently not implemented for randomized strategies")
+  }
+  
   new("rpbrPar", rb = rb, N = N, K = K, ratio = ratio, groups = groups,
       filledBlock = filledBlock)
 }
