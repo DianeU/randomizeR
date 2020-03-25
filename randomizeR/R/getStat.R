@@ -25,4 +25,4 @@ NULL
 
 # @rdname getStat
 # 
-setGeneric("getStat", function(randSeq, issue, endp) standardGeneric("getStat"))
+setGeneric("getStat", function(randSeq, issue, endp, ...) standardGeneric("getStat"))

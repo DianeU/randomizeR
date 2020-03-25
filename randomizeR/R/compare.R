@@ -205,6 +205,14 @@ setMethod("compare", signature(issue = "issue", endp = "endpoint"),
               R <- c(...)
             }
             
+            if('weight' %in% names(R)){
+              weight <- R$weight
+              R$weight <- NULL  
+              # Defaulting to optimal weights  
+            }else{
+              weight <- F
+            }
+            
             if (!(all(sapply(R, function(x)  is(x, "randSeq"))) || all(sapply(R, function(x)  is(x, "randSeqs")))))
               stop("Not all ... objects of the same class of randSeq or randSeqs")
             
@@ -215,7 +223,7 @@ setMethod("compare", signature(issue = "issue", endp = "endpoint"),
               stop("Not all ... objects have ratio = c(1, 1).")
             
             output <- lapply(R, function(r) {
-              assess(r, issue, endp = endp)  
+              assess(r, issue, endp = endp, weight = weight)  
             })
             
             names <- lapply(output, function(x) {

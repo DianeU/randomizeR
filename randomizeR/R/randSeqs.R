@@ -76,7 +76,7 @@ setClass("randSeqs",
 
 # @title An S4 Class for the representation of  randomization sequences generated at random.
 # 
-# @description This wrapper classe provides functionality of storing stratified randomization
+# @description This class provides the functionality of storing stratified randomization
 # sequences of the different randomization procedures along with the parameters 
 # representing the design.
 # 

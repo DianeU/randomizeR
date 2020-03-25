@@ -33,7 +33,7 @@ validateAssessment <- function(object) {
 
 # Randomization parameters generic
 setClass("assessment",
-         slots = c(D = "data.frame", design = "character", N = "numeric", K = "numeric",
+         slots = c(D = "data.frame", design = "character", N = "numeric", K = "numeric", 
                    groups = "character"),
          validity = validateAssessment)
          
@@ -241,6 +241,15 @@ setMethod("assess", signature(randSeq = 'SeqObj', endp = "endpoint"),
               L <- c(...)
             }
             
+            # Simple Workaround to allow passing of the weight parameter
+            if('weight' %in% names(L)){
+              weight <- L$weight
+              L$weight <- NULL  
+            # Defaulting to optimal weights  
+            }else{
+              weight <- F
+            }
+             
             if (randSeq@K > 2){
               showwarning <- F
               temp <- sapply(L, function(x){ 
@@ -273,7 +282,7 @@ setMethod("assess", signature(randSeq = 'SeqObj', endp = "endpoint"),
               }
             }
             
-            stopifnot(all(sapply(L, function(x) is(x, "issue")))) 
+            stopifnot(all(sapply(L, function(x){ is(x, "issue")}))) 
             stopifnot(all(sapply(randSeq@ratio, function(x) x == 1)))
             
             if(is(randSeq,'randSeq')){
@@ -303,7 +312,7 @@ setMethod("assess", signature(randSeq = 'SeqObj', endp = "endpoint"),
                 D$Probability <- getProb(randSeq)
               }
               
-              D <- cbind(D, do.call(cbind, lapply(L, function(x)  getStat(randSeq, x, endp = endp))))
+              D <- cbind(D, do.call(cbind, lapply(L, function(x)  getStat(randSeq, x, endp = endp, weight = weight))))
               
             }
             

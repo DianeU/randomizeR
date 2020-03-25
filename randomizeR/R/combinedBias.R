@@ -153,14 +153,24 @@ setMethod("getExpectation", signature(randSeq = "randSeq", issue = "combinedBias
 # @rdname getStat
 setMethod("getStat", signature(randSeq = "SeqObj", issue = "combinedBias",
                                endp = "endpoint"),
-          function(randSeq, issue, endp) {
+          function(randSeq, issue, endp, ... ) {
+            
+            L <- list(...)
+            # Simple Workaround to allow passing of the weight parameter
+            if('weight' %in% names(L)){
+              weight <- L$weight
+              # Default to optimal weights
+            }else{
+              weight <- F
+            }
+            
             stopifnot(validObject(randSeq), validObject(endp))
             if (issue@method == "sim") {
               D <- data.frame(testDec(randSeq, issue, endp))
               colnames(D) <- paste("testDec", " ", issue@method, "(combined)", sep = "")
               D
             } else {
-              D <- data.frame(testDec(randSeq, issue, endp))
+              D <- data.frame(testDec(randSeq, issue, endp, weight))
               colnames(D) <- paste("rejection prob.", " ", issue@method, "(combined)",
                                    sep = "")
               D
@@ -173,14 +183,24 @@ setMethod("getStat", signature(randSeq = "SeqObj", issue = "combinedBias",
 # @rdname getStat
 setMethod("getStat", signature(randSeq = "SeqObj", issue = "combinedBiasStepTrend",
                                endp = "endpoint"),
-          function(randSeq, issue, endp) {
+          function(randSeq, issue, endp, ...) {
+            
+            L <- list(...)
+            # Simple Workaround to allow passing of the weight parameter
+            if('weight' %in% names(L)){
+              weight <- L$weight
+              # Default to optimal weights
+            }else{
+              weight <- F
+            }
+            
             stopifnot(validObject(randSeq), validObject(endp))
             if (issue@method == "sim") {
               D <- data.frame(testDec(randSeq, issue, endp))
               colnames(D) <- paste("testDec", " ", issue@method, "(combined)", sep = "")
               D
             } else {
-              D <- data.frame(testDec(randSeq, issue, endp))
+              D <- data.frame(testDec(randSeq, issue, endp, weight))
               colnames(D) <- paste("rejection prob.", " ", issue@method, "(combined)", sep = "")
               D
             }

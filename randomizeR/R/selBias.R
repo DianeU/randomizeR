@@ -197,14 +197,24 @@ setMethod("getStat", signature(randSeq = 'SeqObj', issue = "selBias", endp = "mi
 
 # @rdname getStat
 setMethod("getStat", signature(randSeq = 'SeqObj', issue = "selBias", endp = "normEndp"),
-          function(randSeq, issue, endp) {
+          function(randSeq, issue, endp, ...) {
+            
+            L <- list(...)
+            # Simple Workaround to allow passing of the weight parameter
+            if('weight' %in% names(L)){
+              weight <- L$weight
+            # Default to optimal weights
+            }else{
+              weight <- F
+            }
+            
             stopifnot(validObject(randSeq), validObject(issue), validObject(endp), randSeq@K == length(endp@mu))
             if (issue@method == "sim") {
-              D <- data.frame(testDec(randSeq, issue, endp))
+              D <- data.frame(testDec(randSeq, issue, endp, weight))
               colnames(D) <- paste("testDec(", issue@type, ")", sep = "")
               D
             } else {
-              D <- data.frame(testDec(randSeq, issue, endp))
+              D <- data.frame(testDec(randSeq, issue, endp, weight))
               colnames(D) <- paste("P(rej)(", issue@type, ")", sep = "")
               D
             }

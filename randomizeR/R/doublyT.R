@@ -23,12 +23,19 @@ doublyT <- function(x, df, lambda1, lambda2, lb = 0, ub) {
 #' @param randSeq object of the class randSeq.
 #' @param bias object of the class bias.
 #' @param endp object of the class endpoint.
+#' @param weight logical Defines if all weights should be set as 1 or not
 #' @keywords internal
 #' @return matrix containing the noncentrality parameters delta and lambda of all randomization sequences.
-genNcps <- function(randSeq, bias, endp, weight = FALSE, power = FALSE ) {
+genNcps <- function(randSeq, bias, endp, weight = FALSE, power = FALSE) {
   stopifnot(is(randSeq, "SeqObj"), randSeq@K == 2,
             is(bias, "issue"), is(endp, "endpoint"), sum(duplicated(endp@sigma)) == 1)
   
+  
+  if(weight){
+    warning("The weights are set to 1")
+  }else{
+    warning("The optimal weights are calculated")
+  }
   # Simple Workaround for randSeq SeqOBj 
   if(is(randSeq,"randSeqs")){
 
@@ -169,14 +176,14 @@ genNcps <- function(randSeq, bias, endp, weight = FALSE, power = FALSE ) {
 #' @param endp object of the class endpoint.
 #' @keywords internal
 #' @return the biased type-one-error probability (resp. power) of all randomization sequences.
-doublyTValues <- function(randSeq, bias, endp) {
+doublyTValues <- function(randSeq, bias, endp, weight = FALSE) {
   stopifnot(is(randSeq, "SeqObj"), randSeq@K == 2,
             is(bias, "issue"), is(endp, "endpoint"), sum(duplicated(endp@sigma)) == 1)   
   
   if(is(randSeq,'randSeqs')){
     
     # calculation of of the matrix containing the ncp
-    ncps <- genNcps(randSeq, bias, endp)
+    ncps <- genNcps(randSeq, bias, endp, weight)
     # variable for the defined alpha quantile
     alpha <- bias@alpha
     df <- sum(randSeq@N) - 2

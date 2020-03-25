@@ -11,13 +11,17 @@
 # @param randSeq object of the class randSeq.
 # @param bias object of the class bias.
 # @param endp object of the class endpoint.
+# @param weight boolean If weight is true all weights are set to 1
 # 
 # @return
 # vector of the simulated/exact p.value of a randomization sequence.
-testDec <- function(randSeq, bias, endp) {
+testDec <- function(randSeq, bias, endp, weight = FALSE) {
   stopifnot(is(randSeq, "SeqObj"), 
             #is(bias, "chronBias") || is(bias, "selBias") || is(bias, "power"), 
             is(endp, "normEndp") || is(endp, "expEndp") )
+  
+  
+  
   
   if(is(randSeq,"randSeqs") && !(is(endp, "normEndp") && bias@method == "exact" && !(is(bias, "selBias") && bias@type == "CS2"))){
     stop("Error: Stratified analysis is currently only supported for normal endpoints")
@@ -64,7 +68,7 @@ testDec <- function(randSeq, bias, endp) {
         if(is(bias, "selBias") && bias@type == "CS2"){
           doublyF_values(randSeq, bias, endp)$p
         } else{
-          doublyTValues(randSeq, bias, endp)        
+          doublyTValues(randSeq, bias, endp, weight)        
         }
       } else{
         if(is(bias, "selBias") && bias@type == "DS"){
