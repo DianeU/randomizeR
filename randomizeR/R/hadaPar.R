@@ -98,6 +98,10 @@ setMethod("getAllSeq", signature(obj = "hadaPar"),
           function(obj) {
             if(obj@N > 12) stop("Only possible up to N equals 12.")
            
+            if(length(N(obj)) != 1){
+              stop("getAllSeq is currently not implemented for stratified studies")
+            }
+            
             k <- c(1,1,1,1,1,1,1,1,1,1,1,0,0,1,0,0,0,1,1,1,0,1,0,1,0,0,0,1,1,1,
                    0,1,0,1,0,0,0,1,1,1,0,1,0,0,0,0,0,1,1,1,0,1,0,0,1,0,0,1,1,1,
                    0,1,0,0,1,0,0,1,1,1,0,1,0,0,1,0,0,1,1,1,0,1,0,0,1,0,0,0,1,1,

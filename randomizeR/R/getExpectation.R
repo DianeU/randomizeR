@@ -61,3 +61,29 @@ setMethod("getExpectation", signature(randSeq = "randSeqs", issue = "ANY", endp 
             
           }
 )
+
+#' @rdname getExpectation
+setMethod("getExpectation", signature(randSeq = "randSeqs", issue = "missing", endp = "ANY"),
+          function(randSeq, endp) {
+            validObject(randSeq); 
+            # Check if issue and endp are valid or Null
+            stopifnot(validObject(endp) || is.null(endp))
+            # Call getExpectation for each strata 
+            issue <- do.call(cbind,lapply(randSeq@seqs, function(x) { getExpectation(x, endp = endp )}))
+            issue
+            
+          }
+          
+
+)
+
+#' @rdname getExpectation
+setMethod("getExpectation", signature(randSeq = "randSeqs", issue = "missing", endp = "missing"),
+          function(randSeq) {
+            validObject(randSeq); 
+            # Call getExpectation for each strata 
+            issue <- do.call(cbind,lapply(randSeq@seqs, function(x) { getExpectation(x, endp = endp )}))
+            issue
+            
+          }
+)

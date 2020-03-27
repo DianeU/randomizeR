@@ -89,6 +89,11 @@ setMethod("getAllSeq",
           signature(obj = "crPar"),
           function(obj) {
             stopifnot(validObject(obj))
+            
+            if(length(N(obj)) != 1){
+              stop("getAllSeq is currently not implemented for stratified studies")
+            }
+            
             if(obj@K != 2 || !identical(obj@ratio, c(1,1))) {
               stop("Only possible for K equals 2 and ratio corresponds to c(1,1).")
             }  

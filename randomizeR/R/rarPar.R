@@ -80,9 +80,15 @@ rarPar <- function(N, K = 2, ratio = rep(1, K), groups = LETTERS[1:K]) {
 setMethod("getAllSeq", 
           signature(obj = "rarPar"),
           function(obj) {
+            
             if(obj@K != 2 || !identical(obj@ratio, c(1,1))) {
               stop("Only possible for K equals 2 and ratio corresponds to c(1,1).")
-            } 
+            }
+            
+            if(length(N(obj)) != 1){
+              stop("getAllSeq is currently not implemented for stratified studies")
+            }
+            
             res <- lapply(1:length(N(obj)), function(y) {
               allSeqs <- compltSet(obj, y)
               finBal <- apply(allSeqs, 1, function(x) 2*sum(x) == length(x))

@@ -20,19 +20,19 @@ validatempPar <- function(object) {
   N <- object@N
   ratio <- object@ratio
 
-  if(lengthMTI != 1) {
-    msg <- paste("mti has length  ", lengthMTI, ". Should be length one.", 
+  if(lengthMTI != length(N(object))) {
+    msg <- paste("mti has length  ", lengthMTI, ". Should be length", length(N(object)),  
                  sep = "", collapse = "")
     errors <- c(errors, msg)
   }
   
-  if (round(mti[1]) != mti) {
+  if (any(round(mti) != mti)) {
     msg <- paste("First element of mti is ", mti, ". Should be an integer.",
                  sep = "", collapse = "")
     errors <- c(errors, msg)
   }
   
-  if(mti[1] < 0){
+  if(any(mti < 0)){
     msg <- "mti must be a positive integer"
     errors <- c(errors, msg)
   }
@@ -232,6 +232,11 @@ setMethod("getAllSeq", signature(obj = "mpPar"),
             if(obj@K != 2 || !identical(obj@ratio, c(1,1))) {
               stop("Only possible for K equals 2 and ratio corresponds to c(1,1).")
             }  
+            
+            if(length(N(obj)) != 1){
+              stop("getAllSeq is currently not implemented for stratified studies")
+            }
+            
             # want to modify ratio for fixed value? or add ratio to mpPar
             res <- lapply(1:length(N(obj)), function(y) {
               allSeqs <- compltSet(obj, y)
@@ -258,10 +263,10 @@ setMethod("genSeq", signature(obj = "mpPar", r = "numeric", seed = "numeric"),
             set.seed(seed)
             if(K(obj)>2) stop("MP: K>2 not available.")
             res <- lapply(1:length(N(obj)), function(y) {
-              S <- createMPMatrix(N(obj)[y], mti(obj), ratio = ratio(obj))
+              S <- createMPMatrix(N(obj)[y], mti(obj)[y], ratio = ratio(obj))
               new("rMpSeq", 
                   M = t(sapply(1:r,function(x) getMPRand(S, ratio(obj)))), 
-                  mti = mti(obj), 
+                  mti = mti(obj)[y], 
                   N = N(obj)[y],
                   K = K(obj),
                   ratio = ratio(obj),
@@ -282,10 +287,10 @@ setMethod("genSeq", signature(obj = "mpPar", r = "missing", seed = "numeric"),
             if(K(obj) > 2) stop("MP: K>2 not available.")
             # caution: take care of what group is the bigger one
             res <- lapply(1:length(N(obj)), function(y) {
-              S <- createMPMatrix(N(obj)[y], mti(obj), ratio = ratio(obj))
+              S <- createMPMatrix(N(obj)[y], mti(obj)[y], ratio = ratio(obj))
               new("rMpSeq", 
                   M = t(getMPRand(S, ratio(obj))), 
-                  mti = mti(obj), 
+                  mti = mti(obj)[y], 
                   N = N(obj)[y],
                   K = K(obj),
                   ratio = ratio(obj),
@@ -306,10 +311,10 @@ setMethod("genSeq", signature(obj = "mpPar", r = "numeric", seed = "missing"),
             set.seed(seed)
             if(K(obj) > 2) stop("MP: K>2 not available.")
             res <- lapply(1:length(N(obj)), function(y) {
-  			      S <- createMPMatrix(N(obj)[y], mti(obj), ratio = ratio(obj))
+  			      S <- createMPMatrix(N(obj)[y], mti(obj)[y], ratio = ratio(obj))
               new("rMpSeq", 
                   M = t(sapply(1:r,function(x) getMPRand(S, ratio(obj)))), 
-                  mti = mti(obj), 
+                  mti = mti(obj)[y], 
                   N = N(obj)[y],
                   K = K(obj),
                   ratio = ratio(obj),
@@ -331,10 +336,10 @@ setMethod("genSeq", signature(obj = "mpPar", r = "missing", seed = "missing"),
             if(K(obj) > 2) stop("MP: K>2 not available.")
             # caution: take care of what group is the bigger one
             res <- lapply(1:length(N(obj)), function(y) {
-              S <- createMPMatrix(N(obj)[y], mti(obj), ratio = ratio(obj))
+              S <- createMPMatrix(N(obj)[y], mti(obj)[y], ratio = ratio(obj))
               new("rMpSeq", 
                   M = t(getMPRand(S, ratio(obj))), 
-                  mti = mti(obj), 
+                  mti = mti(obj)[y], 
                   N = N(obj)[y],
                   K = K(obj),
                   ratio = ratio(obj),

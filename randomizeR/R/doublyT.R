@@ -31,14 +31,17 @@ genNcps <- function(randSeq, bias, endp, weight = FALSE, power = FALSE) {
             is(bias, "issue"), is(endp, "endpoint"), sum(duplicated(endp@sigma)) == 1)
   
   
+
+  # Simple Workaround for randSeq SeqOBj 
+  if(is(randSeq,"randSeqs")){
+
   if(weight){
     warning("The weights are set to 1")
   }else{
     warning("The optimal weights are calculated")
-  }
-  # Simple Workaround for randSeq SeqOBj 
-  if(is(randSeq,"randSeqs")){
-
+  }  
+    
+    
   randSeq <- randSeq@seqs  
     
   # we need to iterate over all randSeq and bias objects

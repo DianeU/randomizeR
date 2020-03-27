@@ -45,5 +45,27 @@ test_that("tests of equality of getExpectation", {
   biasCB <- chronBias("linT", log(1/2), "exact")
   expect_equal(getExpectation(randSeq, biasCB, endp), 
                matrix(rep(c(0.5, 1), 6) / exp(log(1/2)*(0:11)/11), nrow = 1))
+  
+  # tenth scenario Test for stratified studies normal Endpoint
+  randSeqs <- genSeq(crPar(N = c(12,12,12)))
+  randSeqs@seqs[[1]]@M <- matrix(rep(c(0, 1), 6), nrow = 1)
+  randSeqs@seqs[[2]]@M <- matrix(rep(c(0, 1), 6), nrow = 1)
+  randSeqs@seqs[[3]]@M <- matrix(rep(c(0, 1), 6), nrow = 1)
+
+  endp <- normEndp(mu = c(0, 1), sigma = c(1, 1))
+  expect_equal(getExpectation(randSeqs, endp = endp), 
+             matrix(rep(c(0, 1), 18), nrow = 1))
+  
+  # elevenths scenario Test for stratified studies selBias
+  biasSB <- selBias("CS", 2, "exact")
+  expect_equal(getExpectation(randSeqs, biasSB, endp), 
+               matrix(rep(c(0, -1), 18), nrow = 1))
+  
+  # twelve scenario Test for stratified studies exponential endpoint
+  endp     <- expEndp(lambda = c(2, 1), cenTime = qexp(1-10^{-5}, rate = min(1,1)), cenRate = min(c(1,1))*10^{-5} )
+  expect_equal(getExpectation(randSeqs, endp = endp), 
+               matrix(rep(c(0.5, 1), 18), nrow = 1))
+  
+  
   }
 )

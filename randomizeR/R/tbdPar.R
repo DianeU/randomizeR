@@ -127,9 +127,15 @@ tbdRand <- function(N, bc = N, K = 2, ratio = rep(1, K)) {
 #' @rdname generateAllSequences
 setMethod("getAllSeq", signature(obj = "tbdPar"),
           function(obj) {
+            
             if(obj@K != 2 || !identical(obj@ratio, c(1,1))) {
               stop("Only possible for K equals 2 and ratio corresponds to c(1,1).")
             }  
+            
+            if(length(N(obj)) != 1){
+              stop("getAllSeq is currently not implemented for stratified studies")
+            }
+            
             
             if(!is.list(blocks(obj))){
               blocks <- list(blocks(obj))

@@ -21,38 +21,38 @@ validateudpar <- function(object) {
   ini <- object@ini
   add <- object@add
 
-  if(length(ini) != 1) {
-    msg <- paste("ini has length  ", length(ini), ". Should be length one.", 
+  if(length(ini) != length(N(object))) {
+    msg <- paste("ini has length  ", length(ini), ". Should be length ", length(N(object)), 
                  sep = "", collapse = "")
     errors <- c(errors, msg)
   }
   
-  if (round(ini[1]) != ini) {
-    msg <- paste("First element of ini is  ", ini, ". Should be an integer.",
+  if (any(round(ini) != ini)) {
+    msg <- paste("An element of ini is not an integer.",
                  sep = "", collapse = "")
     errors <- c(errors, msg)
   }
 
-  if (ini[1] < 0) {
-    msg <- paste("First element of ini is negative should be positive.",
+  if (any(ini < 0)) {
+    msg <- paste("An Element of ini is negative should be positive.",
                  sep = "", collapse = "")
     errors <- c(errors, msg)
   }
 
-  if(length(add) != 1) {
-    msg <- paste("add has length  ", length(add), ". Should be length one.", 
+  if(length(add) != length(N(object))) {
+    msg <- paste("add has length  ", length(add), ". Should be length ", length(N(object)), 
                  sep = "", collapse = "")
     errors <- c(errors, msg)
   }
   
-  if (round(add[1]) != add) {
-    msg <- paste("First element of add is  ", add, ". Should be an integer.",
+  if (any(round(add) != add)){
+    msg <- paste("An element of add is not an integer.",
                  sep = "", collapse = "")
     errors <- c(errors, msg)
   }
 
-  if (add[1] <= 0) {
-    msg <- paste("First element of add is negative or zero should be positive.",
+  if (any(add <= 0)) {
+    msg <- paste("An element of add is negative or zero should be positive.",
                  sep = "", collapse = "")
     errors <- c(errors, msg)
   }
@@ -139,6 +139,10 @@ urnRand <- function(N, ini, add) {
 #' @rdname generateAllSequences
 setMethod("getAllSeq", signature(obj = "udPar"),
           function(obj) {
+            
+            if(length(N(obj)) != 1){
+              stop("getAllSeq is currently not implemented for stratified studies")
+            }
             res <- lapply(1:length(N(obj)), function(y) {
                   if(obj@ini == 0) {
                     allSeqs <- compltSet(obj, y)
@@ -177,11 +181,11 @@ setMethod("genSeq", signature(obj = "udPar", r = "numeric", seed = "numeric"),
            res <- lapply(1:length(N(obj)), function(y) {
               new("rUdSeq", 
                   M = t(sapply(1:r, function(x) {
-                    urnRand(N(obj)[y], obj@ini, obj@add)
+                    urnRand(N(obj)[y], obj@ini[y], obj@add[y])
                     })), 
                   N = N(obj)[y],
-                  ini = obj@ini, 
-                  add = obj@add,
+                  ini = obj@ini[y], 
+                  add = obj@add[y],
                   K = K(obj),
                   ratio = obj@ratio,
                   groups = obj@groups,
@@ -199,10 +203,10 @@ setMethod("genSeq", signature(obj = "udPar", r = "missing", seed = "numeric"),
             if(K(obj) > 2) stop("UD: K>2 not available.")
             res <- lapply(1:length(N(obj)), function(y) {
               new("rUdSeq", 
-                  M = t(urnRand(N(obj)[y], obj@ini, obj@add)), 
+                  M = t(urnRand(N(obj)[y], obj@ini[y], obj@add[y])), 
                   N = N(obj)[y], 
-                  ini = obj@ini, 
-                  add = obj@add,
+                  ini = obj@ini[y], 
+                  add = obj@add[y],
                   K = K(obj),
                   ratio = obj@ratio,
                   groups = obj@groups,
@@ -223,11 +227,11 @@ setMethod("genSeq", signature(obj = "udPar", r = "numeric", seed = "missing"),
       	    res <- lapply(1:length(N(obj)), function(y) {
               new("rUdSeq", 
                   M = t(sapply(1:r,function(x) {
-                    urnRand(N(obj)[y], obj@ini, obj@add)
+                    urnRand(N(obj)[y], obj@ini[y], obj@add[y])
                     })), 
                   N = N(obj)[y],
-                  ini = obj@ini, 
-                  add = obj@add,
+                  ini = obj@ini[y], 
+                  add = obj@add[y],
                   K = K(obj),
                   ratio = obj@ratio,
                   groups = obj@groups,
@@ -247,10 +251,10 @@ setMethod("genSeq", signature(obj = "udPar", r = "missing", seed = "missing"),
             if(K(obj) > 2) stop("UD: K>2 not available.")
             res <- lapply(1:length(N(obj)), function(y) {
               new("rUdSeq", 
-                  M = t(urnRand(N(obj)[y], obj@ini, obj@add)), 
+                  M = t(urnRand(N(obj)[y], obj@ini[y], obj@add[y])), 
                   N = N(obj)[y], 
-                  ini = obj@ini, 
-                  add = obj@add,
+                  ini = obj@ini[y], 
+                  add = obj@add[y],
                   K = K(obj),
                   ratio = obj@ratio,
                   groups = obj@groups,

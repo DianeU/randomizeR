@@ -8,6 +8,7 @@ context("Assessment")
 
 test_that("assess returns valid object", {
 	seqs <- getAllSeq(pbrPar(bc = c(2, 2, 2)))
+	seqs1 <- genSeq(hadaPar( N = c(6,12,8)), r = 12)
 	
 	type <- sample(c("CS", "DS"), 1)
 	i1 <- corGuess(type)
@@ -27,7 +28,11 @@ test_that("assess returns valid object", {
 	expect_error(assess(seqs, "blubb"))
 	expect_error(assess(seqs, "issue"))
 	expect_error(assess(seqs, 42))
-	
+	expect_error(assess(seqs1, 42))
+	expect_error(assess(seqs1))
+	expect_error(assess(seqs1, "blubb"))
+	expect_error(assess(seqs1, "issue"))
+	expect_error(assess(seqs1, 42))
 	
 	#### Assessment object with Selection Bias for K>2
 	seqs <- genSeq(crPar(12, 3), r = 1000)
@@ -39,8 +44,14 @@ test_that("assess returns valid object", {
 	expect_error(assess(seqs, i4, endp = normEndp(c(0,0), c(1,1))))
 	expect_error(assess(seqs, i5, endp = normEndp(c(0,0), c(1,1))))
 	expect_error(assess(seqs, selBias("DS", 0.5, "exact", 0.05),endp = endp2))
-	
-	
+	 
+	endp3 <- normEndp(c(0,0), c(1,1))
+	expect_is(assess(seqs1, i4, endp = endp3), "assessment")
+	expect_is(assess(seqs1, i4, endp = endp3, weight = T), "assessment")
+	expect_error(assess(seqs1, i5, endp = endp2))
+	expect_error(assess(seqs1, i4, endp = normEndp(c(0,0,0), c(1,1,1))))
+	expect_error(assess(seqs1, i5, endp = normEndp(c(0,0,0), c(1,1,1))))
+
 	
 	
 	### A broad assessment test

@@ -176,6 +176,10 @@ setMethod("getAllSeq",
               stop("Only possible for K equals 2 and ratio corresponds to c(1,1).")
             } 
             
+            if(length(N(obj)) != 1){
+              stop("getAllSeq is currently not implemented for stratified studies")
+            }
+            
             if(!is.list(blocks(obj))){
               blocks <- list(blocks(obj))
             } else {

@@ -22,20 +22,20 @@ validatebsdPar <- function(object) {
   mti <- object@mti
   lengthMTI <- length(mti)
 
-  if(lengthMTI != 1) {
-    msg <- paste("mti has length ", lengthMTI, ". Should be length one.", 
+  if(lengthMTI != length(N(object))) {
+    msg <- paste("mti has length ", lengthMTI, ". Should be length ", length(N(object)),  
                  sep = "", collapse = "")
     errors <- c(errors, msg)
   }
   
-  if (round(mti[1]) != mti) {
-    msg <- paste("First element of mti is ", mti, ". Should be an integer.",
+  if (any(round(mti) != mti)) {
+    msg <- paste("An element of mti is not an integer.",
                  sep = "", collapse = "")
     errors <- c(errors, msg)
   }
 
-  if(mti[1] < 0){
-    msg <- "mti must be a positive integer"
+  if(any(mti < 0)){
+    msg <- "MTI must be a positive integer"
     errors <- c(errors, msg)
   }
   
@@ -127,6 +127,11 @@ bsdRand <- function(N, mti, K = 2) {
 #' @rdname generateAllSequences
 setMethod("getAllSeq", signature(obj = "bsdPar"),
           function(obj) {
+            
+            if(length(N(obj)) != 1){
+              stop("getAllSeq is currently not implemented for stratified studies")
+            }
+            
             res <- lapply(1:length(N(obj)), function(y) {
               allSeqs <- compltSet(obj, y)
               inside <- apply(allSeqs,1, function(x, mti) {
@@ -153,10 +158,10 @@ setMethod("genSeq", signature(obj = "bsdPar", r = "numeric", seed = "numeric"),
             res <- lapply(1:length(N(obj)), function(y) {
               new("rBsdSeq", 
                   M = t(sapply(1:r, function(x) {
-                    bsdRand(N = N(obj)[y], mti = mti(obj))
+                    bsdRand(N = N(obj)[y], mti = mti(obj)[y])
                     })),
                   N = N(obj)[y],
-                  mti = mti(obj),
+                  mti = mti(obj)[y],
                   K = K(obj),
                   ratio = obj@ratio,
                   groups = obj@groups,
@@ -174,10 +179,10 @@ setMethod("genSeq", signature(obj = "bsdPar", r = "numeric", seed = "missing"),
       	    res <- lapply(1:length(N(obj)), function(y) {
                   new("rBsdSeq", 
                     M = t(sapply(1:r, function(x) {
-                        bsdRand(N = N(obj)[y], mti = mti(obj))
+                        bsdRand(N = N(obj)[y], mti = mti(obj)[y])
                         })),
                     N = N(obj)[y],
-                    mti = mti(obj),
+                    mti = mti(obj)[y],
                     K = K(obj),
                     groups = obj@groups,
                     ratio = obj@ratio,
@@ -195,8 +200,8 @@ setMethod("genSeq", signature(obj = "bsdPar", r = "missing", seed = "numeric"),
             set.seed(seed)
             res <- lapply(1:length(N(obj)), function(y) {
               new("rBsdSeq", 
-                  M = t(bsdRand(N = N(obj)[y], mti = mti(obj))), 
-                  mti = mti(obj), 
+                  M = t(bsdRand(N = N(obj)[y], mti = mti(obj)[y])), 
+                  mti = mti(obj)[y], 
                   N = N(obj)[y],
                   K = K(obj),
                   groups = obj@groups,
@@ -216,8 +221,8 @@ setMethod("genSeq", signature(obj = "bsdPar", r = "missing", seed = "missing"),
             set.seed(seed)
             res <- lapply(1:length(N(obj)), function(y) {
               new("rBsdSeq", 
-                  M = t(bsdRand(N = N(obj)[y], mti = mti(obj))), 
-                  mti = mti(obj), 
+                  M = t(bsdRand(N = N(obj)[y], mti = mti(obj)[y])), 
+                  mti = mti(obj)[y], 
                   N = N(obj)[y],
                   K = K(obj),
                   groups = obj@groups,

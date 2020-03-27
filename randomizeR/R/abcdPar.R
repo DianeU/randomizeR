@@ -21,14 +21,14 @@ validateabcdPar <- function(object) {
   a <- object@a
   lengtha <- length(a)
   
-  if(lengtha != 1) {
-    msg <- paste("a has length ", lengtha, ". Should be length one.", 
+  if(lengtha != length(N(object))) {
+    msg <- paste("a has length ", lengtha, ". Should be length", length(N(object)), 
                  sep = "", collapse = "")
     errors <- c(errors, msg)
   }
   
-  if (a < 0) {
-    msg <- paste("First element of a is ", a, ". Should be positive.",
+  if (any(a < 0)) {
+    msg <- paste("An element of a is ", a, ". Should be positive.",
                  sep = "", collapse = "")
     errors <- c(errors, msg)
   }
@@ -131,6 +131,11 @@ abcdRand <- function(N, a, K = 2) {
 #' @rdname generateAllSequences
 setMethod("getAllSeq", signature(obj = "abcdPar"),
           function(obj) {
+            
+            if(length(N(obj)) != 1){
+              stop("getAllSeq is currently not implemented for stratified studies")
+            }
+            
             res <- lapply(1:length(N(obj)), function(y) {
               new("abcdSeq", 
                   M = compltSet(obj, y),
@@ -153,10 +158,10 @@ setMethod("genSeq", signature(obj = "abcdPar", r = "numeric", seed = "numeric"),
             res <- lapply(1:length(N(obj)), function(y) {
               new("rAbcdSeq", 
                   M = t(sapply(1:r, function(x) {
-                    abcdRand(N = N(obj)[y], a = a(obj))
+                    abcdRand(N = N(obj)[y], a = a(obj)[y])
                   })),
                   N = N(obj)[y],
-                  a = a(obj),
+                  a = a(obj)[y],
                   K = K(obj),
                   ratio = obj@ratio,
                   groups = obj@groups,
@@ -176,10 +181,10 @@ setMethod("genSeq", signature(obj = "abcdPar", r = "numeric", seed = "missing"),
             res <- lapply(1:length(N(obj)), function(y) {
               new("rAbcdSeq", 
                   M = t(sapply(1:r, function(x) {
-                    abcdRand(N = N(obj)[y], a = a(obj))
+                    abcdRand(N = N(obj)[y], a = a(obj)[y])
                   })),
                   N = N(obj)[y],
-                  a = a(obj),
+                  a = a(obj)[y],
                   K = K(obj),
                   groups = obj@groups,
                   ratio = obj@ratio,
@@ -197,8 +202,8 @@ setMethod("genSeq", signature(obj = "abcdPar", r = "missing", seed = "numeric"),
             set.seed(seed)
             res <- lapply(1:length(N(obj)), function(y) {
               new("rAbcdSeq", 
-                  M = t(abcdRand(N = N(obj)[y], a = a(obj))), 
-                  a = a(obj), 
+                  M = t(abcdRand(N = N(obj)[y], a = a(obj)[y])), 
+                  a = a(obj)[y], 
                   N = N(obj)[y],
                   K = K(obj),
                   groups = obj@groups,
@@ -217,8 +222,8 @@ setMethod("genSeq", signature(obj = "abcdPar", r = "missing", seed = "missing"),
             set.seed(seed)#
             res <- lapply(1:length(N(obj)), function(y) {
               new("rAbcdSeq", 
-                  M = t(abcdRand(N = N(obj)[y], a = a(obj))), 
-                  a = a(obj), 
+                  M = t(abcdRand(N = N(obj)[y], a = a(obj)[y])), 
+                  a = a(obj)[y], 
                   N = N(obj)[y],
                   K = K(obj),
                   groups = obj@groups,
