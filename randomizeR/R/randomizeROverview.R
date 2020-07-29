@@ -17,6 +17,8 @@
 #' @param cenRate exponential censoring rate in a survival study.
 #' @param cenTime total duration of a survival study (maximum length of followup).
 #' @param d effect size.
+#' @param delta optional second numeric specifying the magnitude of selection bias for 
+#' Weibull endpoints.
 #' @param df degrees of freedom (i.a. \code{N-2}).
 #' @param eta numeric specifying the magnitude of selection bias.
 #' @param file A connection, or a character string naming the file to write to.
@@ -64,8 +66,10 @@
 #' procedure.
 #' @param saltus integer or \code{missing} specifying the patient index (i.e. position)
 #' of the step in case of step time trend.
+#' @param scale vector of the Weibull scale parameters in each treatment group.
 #' @param seed a single value, interpreted as an integer, that specifies the seed 
 #' for the random number generation.
+#' @param shape vector of the Weibull shape parameters in each treatment group.
 #' @param sigma vector of the standard deviations in each treatment group, 
 #' should have length \code{K} (i.e. one entry for each treatment group).
 #' @param SLs numeric vector of length at most 2 specifying the lower and/or upper 
@@ -86,14 +90,9 @@
 #' @param ub upper bound for the last value of the poisson distribution.
 #' @param varEq \code{logical} parameter for the t.test: Shall the variances be treated 
 #' as equal (TRUE= t.test) or different (FALSE= Welch.test).
+#' @param weights weight parameters of the Fleming-Harrington test for Weibull endpoints.
 #' @param x a variable \code{x}.
 #' 
-#' @param delta STUB FOR WEIBULL 
-#' @param eta STUB FOR WEIBULL
-#' @param weights STUB FOR WEIBULL
-#' @param shape STUB FOR WEIBULL
-#' @param scale STUB FOR WEIBULL
-#'
 #' @name overview
 NULL
 

@@ -29,11 +29,6 @@ validateWeibEndp <- function(object) {
     msg <- ("The scale parameter must be positive.")
     errors <- c(errors, msg)
   }
-  
-  if (!(all(abs(object@delta) < object@shape))) {
-    msg <- ("The absolute value of the allocation bias parameter delta must be smaller than the shape parameter.")
-    errors <- c(errors, msg)
-  }
 
   if (length(errors) == 0) TRUE else errors
 }
@@ -45,7 +40,7 @@ validateWeibEndp <- function(object) {
 
 # Representation of the Weibull endpoints
 setClass("weibEndp", 
-         slots = c(shape = "numeric", scale = "numeric", eta = "numeric", delta = "numeric"), 
+         slots = c(shape = "numeric", scale = "numeric"),
          contains = "survEndp", validity = validateWeibEndp)
 
 
@@ -74,9 +69,9 @@ setClass("weibEndp",
 #' 
 #' @export
 weibEndp <- function(shape , scale , cenRate , accrualTime = 0, 
-                      cenTime, weights = c(0,0), eta = 0, delta = 0) {
+                      cenTime, weights = c(0,0)) {
   new("weibEndp", shape = shape, scale = scale, cenRate = cenRate, accrualTime = accrualTime, 
-      cenTime = cenTime, weights = weights, eta = eta , delta = delta)
+      cenTime = cenTime, weights = weights)
 }
 
 

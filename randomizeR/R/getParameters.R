@@ -12,7 +12,7 @@
 #' @param endp object of the class endpoint.
 #'
 #' @examples
-#' # return the new shape and scale parameters of a weibull distribution, when underlying selection bias
+#' # return the shape and scale parameters of a Weibull distribution
 #' endp <- weibEndp(shape = c(1,1), scale = c(0.5,1), cenTime = 10, cenRate = 0.01)
 #' biasSB <- selBias("CS", log(2), "exact")  
 #' randSeq <- genSeq(rpbrPar(rb = 2, N = 12))

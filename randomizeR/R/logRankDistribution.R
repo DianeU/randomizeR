@@ -51,6 +51,7 @@ logRankDecSim <- function(randSeq, bias, endp){
   }
   
   else if (is(endp, "weibEndp")){
+    
     # calculate the distribution parameters
     biasShape <- getDistributionPars(randSeq, bias, endp)$shape
     biasScale <- getDistributionPars(randSeq, bias, endp)$scale

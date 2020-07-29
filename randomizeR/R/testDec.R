@@ -101,6 +101,10 @@ testDec <- function(randSeq, bias, endp) {
     if(is(bias, "combinedBias")){
       stop("Error: Weibull endpoints only permit the consideration of selection bias.")
     }
+    if(!(all(abs(bias@delta) < endp@shape))){
+      stop("Error: The absolute value of the allocation bias parameter delta must be 
+           smaller than the minimum of the shape parameters.")
+    }
     
     if (bias@method == "sim") {
       logRankDecSim(randSeq, bias, endp)

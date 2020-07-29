@@ -57,8 +57,8 @@ test_that("tests of equality of getExpectation", {
   expect_equal(getExpectation(randSeq, biasSB, endp), 
               matrix(rep(c(1, 2), 6), nrow = 1))
   # twelfth scenario weibEndpoint and CS2 selection bias
-  biasSB <- selBias("CS2", 0, "exact")
-  endp <- weibEndp(shape = c(1,1), scale = c(3,3), eta = 0, delta = 0.5, cenTime = 10, cenRate = 0.01)
+  biasSB <- selBias("CS2", eta = 0, "exact", delta = 0.5)
+  endp <- weibEndp(shape = c(1,1), scale = c(3,3), cenTime = 10, cenRate = 0.01)
   expect_equal(getExpectation(randSeq, biasSB, endp), 
                matrix(rep(c(3, 4.5), 6), nrow = 1))
 

@@ -41,7 +41,13 @@ validateSelBias <- function(object) {
     msg <- paste("eta is length ", lengthEta, ". Should be 1.", sep = "")
     errors <- c(errors, msg)
   }
-
+  
+  lengthDelta <- length(object@delta)
+  if (lengthDelta != 1) {
+    msg <- paste("delta is length ", lengthDelta, ". Should be 1.", sep = "")
+    errors <- c(errors, msg)
+  }
+  
   lengthMethod <- length(object@method)
   if (lengthMethod != 1) {
     msg <- paste("Method is length ", lengthMethod, ". Should be 1.", sep = "")
@@ -78,7 +84,7 @@ validateSelBias <- function(object) {
 
 # The selBias class
 # 
-setClass("selBias", slots = c(eta = "numeric", type = "character",
+setClass("selBias", slots = c(eta = "numeric", delta = "numeric", type = "character",
                               method = "character", alpha = "numeric"), 
          validity = validateSelBias)
 
@@ -115,21 +121,21 @@ setClass("selBias", slots = c(eta = "numeric", type = "character",
 #' 
 #' \describe{
 #'  \item{\code{method="sim"}}{Represents the simulated type-I-error rate given 
-#'  the level \code{alpha}, the selection effect \code{eta} and the biasing 
-#'  strategy \code{type}. When calling \code{assess} for a \code{selBias} object 
-#'  with \code{method="sim"}, one test decision is computed for each sequence of
-#' \code{randSeq}. The type-I-error rate (power) is the proportion of falsely
-#' (correctly) rejected null hypotheses.
+#'  the level \code{alpha}, the selection effect \code{eta}, the optional selection
+#'  effect \code{delta} and the biasing strategy \code{type}. When calling \code{assess} 
+#'  for a \code{selBias} object with \code{method="sim"}, one test decision is computed 
+#'  for each sequence of \code{randSeq}. The type-I-error rate (power) is the proportion 
+#'  of falsely (correctly) rejected null hypotheses.
 #'  }
 #'  \item{\code{method="exact"}}{Represents the exact type-I-error probability 
-#'  given the level \code{alpha}, the selection effect \code{eta} and the 
-#'  biasing strategy \code{type}. When calling \code{assess} for a \code{selBias} 
-#'  object with \code{method="exact"}, the \emph{p}-value of each randomization 
-#'  sequence is computed. For normal endpoints and two treatment groups these p-values 
-#'  are exact values which can be calculated from the sum of the corresponding quantiles 
-#'  of the doubly noncentral t-distribution. For more than two treatment groups, exact 
-#'  p-values are computed using a doubly noncentral F distribution. For exponential 
-#'  endpoints the p-values are obtained using an approximation formula. 
+#'  given the level \code{alpha}, the selection effect \code{eta}, the optional selection
+#'  effect \code{delta} and the biasing strategy \code{type}. When calling \code{assess} 
+#'  for a \code{selBias} object with \code{method="exact"}, the \emph{p}-value of each 
+#'  randomization sequence is computed. For normal endpoints and two treatment groups 
+#'  these p-values are exact values which can be calculated from the sum of the 
+#'  corresponding quantiles of the doubly noncentral t-distribution. For more than two 
+#'  treatment groups, exact p-values are computed using a doubly noncentral F distribution. 
+#'  For exponential endpoints the p-values are obtained using an approximation formula. 
 #'  }
 #' }
 #' \describe{
@@ -198,8 +204,8 @@ setClass("selBias", slots = c(eta = "numeric", type = "character",
 #' sbias <- selBias("CS", 0.25, "exact")
 #' 
 #' @export
-selBias <- function(type, eta, method, alpha = 0.05) { 
-  new("selBias", type = type, eta = eta, method = method, alpha = alpha)
+selBias <- function(type, eta, method, alpha = 0.05, delta = 0) { 
+  new("selBias", type = type, eta = eta, method = method, alpha = alpha, delta = delta)
 }
 
 # --------------------------------------------
@@ -417,55 +423,55 @@ setMethod("getExpectation", signature(randSeq = "randSeq", issue = "selBias",
 # --------------------------------------------
 
 #' @rdname getDistributionPars
-setMethod("getDistributionPars", signature(randSeq = "randSeq", issue = "selBias", 
-                                           endp = "weibEndp"), 
+setMethod("getDistributionPars", signature(randSeq = "randSeq", issue = "selBias",
+                                           endp = "weibEndp"),
           function(randSeq, issue, endp) {
             stopifnot(randSeq@K == 2)
             validObject(randSeq); validObject(issue); validObject(endp)
-            
-            shape <- matrix(numeric(0), ncol = ncol(randSeq@M), 
+
+            shape <- matrix(numeric(0), ncol = ncol(randSeq@M),
                             nrow = nrow(randSeq@M))
-            scale <- matrix(numeric(0), ncol = ncol(randSeq@M), 
+            scale <- matrix(numeric(0), ncol = ncol(randSeq@M),
                             nrow = nrow(randSeq@M))
-            
+
             if (issue@type == "CS2") {
               # convergence strategy, allocation bias model 2
-              issue <- t(apply(randSeq@M, 1, function(x) {
-                issue <- sign(cumsum(2*x - 1))
-                issue <- issue[-length(issue)]
-                issue <- c(0, issue)
-                issue
+              res <- t(apply(randSeq@M, 1, function(x) {
+                res <- sign(cumsum(2*x - 1))
+                res <- res[-length(res)]
+                res <- c(0, res)
+                res
               }))
               for(i in 0:(randSeq@K-1)) {
-                shape[randSeq@M == i] <- (endp@shape[i+1] + issue[randSeq@M == i] * endp@delta)
-                scale[randSeq@M == i] <- ((endp@shape[i+1] + issue[randSeq@M == i] * endp@delta) * endp@shape[i+1]^{-1} *
-                                            endp@scale[i+1]^endp@shape[i+1] * exp(issue[randSeq@M == i] * (-endp@eta)) 
-                                          )^(1/(endp@shape[i+1] + issue[randSeq@M == i] * endp@delta))
+                shape[randSeq@M == i] <- (endp@shape[i+1] + res[randSeq@M == i] * issue@delta)
+                scale[randSeq@M == i] <- ((endp@shape[i+1] + res[randSeq@M == i] * issue@delta) * endp@shape[i+1]^{-1} *
+                                            endp@scale[i+1]^endp@shape[i+1] * exp(res[randSeq@M == i] * (-issue@eta))
+                                          )^(1/(endp@shape[i+1] + res[randSeq@M == i] * issue@delta))
               }
             }
             else {
               if (issue@type == "CS") {
                 # convergence strategy
-                issue <- t(apply(randSeq@M, 1, function(x) {
-                  issue <- sign(cumsum(2*x - 1)) * issue@eta
-                  issue <- issue[-length(issue)]
-                  issue <- c(0, issue)
-                  issue
+                res <- t(apply(randSeq@M, 1, function(x) {
+                  res <- sign(cumsum(2*x - 1)) * issue@eta
+                  res <- res[-length(res)]
+                  res <- c(0, res)
+                  res
                 }))
               }
               else if (issue@type == "DS") {
                 # divergence strategy
-                issue <- t(apply(randSeq@M, 1, function(x) {
-                  issue <- sign(cumsum(2*x - 1)) * issue@eta * (-1)
-                  issue <- issue[-length(issue)]
-                  issue <- c(0, issue)
-                  issue
+                res <- t(apply(randSeq@M, 1, function(x) {
+                  res <- sign(cumsum(2*x - 1)) * issue@eta * (-1)
+                  res <- res[-length(res)]
+                  res <- c(0, res)
+                  res
                 }))
               }
               for(i in 0:(randSeq@K-1)) {
                 shape[randSeq@M == i] <- endp@shape[i+1]
-                scale[randSeq@M == i] <- exp(issue[randSeq@M == i])^{-1/endp@shape[i+1]} * endp@scale[i+1]
-              } 
+                scale[randSeq@M == i] <- exp(res[randSeq@M == i])^{-1/endp@shape[i+1]} * endp@scale[i+1]
+              }
             }
             list(shape = shape, scale = scale)
           }
